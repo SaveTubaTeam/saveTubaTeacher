@@ -1,7 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import { getStorage  } from "firebase/storage";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+//NOTE: we are using compat instead of modular API
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import "firebase/compat/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCa8CJLDlxZav6LylYflDDQQbL_m8tTZGs", //This is the Google Cloud Console browser key inside of project savetuba-5e519
@@ -12,12 +13,17 @@ const firebaseConfig = {
   appId: "1:218900793188:web:a1cc3aa38d180fc6815c71"
  };
  
-const app = initializeApp(firebaseConfig);
-
+ let app;
+ //compat initialization
+ if (firebase.apps.length === 0) {
+   app = firebase.initializeApp(firebaseConfig);
+ } else {
+   app = firebase.app();
+ }
 
 //Please refer here for setup of new Firebase services: https://firebase.google.com/docs/web/setup
-const db = getFirestore(app);
-const storage = getStorage(app); //getting a reference to the root of our Cloud Storage bucket
-const auth = getAuth(app);
+const db = firebase.firestore();
+const auth = firebase.auth();
+const storage = firebase.storage().ref(); //.ref() is a reference to the root of our bucket
 
-export { db, app, storage, auth };
+export { db, auth, app, storage };
