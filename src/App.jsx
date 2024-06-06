@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import TableExample from './components/TableExample'
 import './App.css'
 import { Container } from '@mui/material'
+import BasicButtonGroup from './components/ButtonGroupExample'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,7 +13,9 @@ function App() {
     <>
       <Container>
         <div>
-          <h1>Hello</h1>
+          <h1 font= 'bold'>Interface Elements</h1>
+
+          <BasicButtonGroup /> {BasicButtonGroup}
           <TableExample /> {TableExample}
         </div>
       </Container>

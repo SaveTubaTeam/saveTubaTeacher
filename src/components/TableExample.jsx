@@ -1,29 +1,29 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-
+import { getGradeData, getLessonsData } from '../data/dataFunctions';
 
 const columns = [
-  { field: 'chapter', headerName: 'Chapter', type: 'number',
-  width: 90 },
+  { field: 'chapter', headerName: 'Chapter', type: 'number', width: 90 },
   {
     field: 'lesson',
     headerName: 'Lesson',
     type: 'number',
     width: 90,
-    editable: true,
+    editable: false,
   },
   {
     field: 'activity',
     headerName: 'Activity',
     width: 150,
-    editable: true,
+    editable: false,
   },
   {
     field: 'studentsCompleted',
     headerName: 'Number of Students Completed',
     width: 250,
-    editable: true,
+    editable: false,
   },
   {
     field: 'dateCompleted',
@@ -34,11 +34,48 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, chapter: 1, activity: 'Hello', lesson: 1,studentsCompleted: 30 },
-];
-
 export default function TableExample() {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const grade = 'Grade5'; // Example grade, change as needed
+      const languageCode = 'en'; // Example language code, change as needed
+
+      try {
+        console.log('Fetching grade data...');
+        const chapters = await getGradeData(grade);
+        console.log('Chapters fetched:', chapters);
+
+        const lessonsPromises = chapters.map(async (chapter, chapterIndex) => {
+          console.log(`Fetching lessons for chapter ${chapter.navigation}...`);
+          const lessons = await getLessonsData(grade, chapter.navigation, languageCode);
+          console.log(`Lessons for chapter ${chapter.navigation} fetched:`, lessons);
+          return lessons.flatMap((lesson, lessonIndex) =>
+            lesson.masteryAndMinigames.map((activity, activityIndex) => ({
+              id: `${chapterIndex + 1}-${lessonIndex + 1}-${activityIndex + 1}-${activity.navigation}`, // Unique ID
+              chapter: chapterIndex + 1,
+              lesson: lessonIndex + 1,
+              activity: activity.navigation,
+              studentsCompleted: 0, 
+              dateCompleted: '',
+            }))
+          );
+        });
+
+        const lessonsArray = await Promise.all(lessonsPromises);
+        const flattenedActivities = lessonsArray.flat();
+        console.log('Flattened activities:', flattenedActivities);
+
+        setRows(flattenedActivities);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
