@@ -1,31 +1,29 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { getGradeData } from '../data/dataFunctions';
 
-export default function ChapterSelect() {
-  const [chapter, setChapter] = useState("");
+export default function ChapterSelect({ onChange }) {
+  const grade = 'Grade5'; // Static grade value
+  const [chapter, setChapter] = useState('');
   const [chapters, setChapters] = useState([]); // State to store the chapters
 
   const handleChange = (event) => {
-    setChapter(event.target.value);
+    const selectedChapter = event.target.value;
+    setChapter(selectedChapter);
+    onChange(selectedChapter);
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const grade = "Grade5"; // Example grade, change as needed
-
       try {
-        console.log("Fetching grade data...");
         const chapters = await getGradeData(grade);
-        console.log("Chapters fetched:", chapters);
-        setChapters(chapters); // Set the chapters in state
+        setChapters(chapters);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -35,16 +33,18 @@ export default function ChapterSelect() {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Chapter</InputLabel>
+        <InputLabel id="chapter-select-label">Chapter</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="chapter-select-label"
+          id="chapter-select"
           value={chapter}
           label="Chapter"
           onChange={handleChange}
         >
-          {chapters.map((chapter, chapterIndex) => (
-            <MenuItem key={chapterIndex} value={chapter.navigation}>{chapter.navigation}</MenuItem>
+          {chapters.map((chapter, index) => (
+            <MenuItem key={index} value={chapter.navigation}>
+              {chapter.navigation}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
