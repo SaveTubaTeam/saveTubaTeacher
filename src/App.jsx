@@ -5,6 +5,7 @@ import BasicButtonGroup from './components/ButtonGroupExample';
 import ChapterSelect from './components/ChapterSelect';
 import LessonSelect from './components/LessonSelect';
 import ActivitySelect from './components/ActivitySelect';
+import DateSlider from './components/DateSlider';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <Container>
       <div>
         <h1 style={{ fontWeight: 'bold' }}>Interface Elements</h1>
+        <DateSlider/>
         <ChapterSelect onChange={(chapter) => setSelectedChapter(chapter)} />
         <LessonSelect chapter={selectedChapter} onChange={(lesson) => setSelectedLesson(lesson)} />
         <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} />
