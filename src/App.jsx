@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import TableExample from './components/TableExample'
 import './App.css'
@@ -8,6 +7,7 @@ import BasicButtonGroup from './components/ButtonGroupExample'
 import ChapterSelect from './components/ChapterSelect'
 import LessonSelect from './components/LessonSelect'
 import ActivitySelect from './components/ActivitySelect'
+import NavigationBar from './components/NavigationBar'
 
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
 
   return (
     <>
+      <NavigationBar/> {NavigationBar}
       <Container>
         <div>
           <h1 font= 'bold'>Interface Elements</h1>

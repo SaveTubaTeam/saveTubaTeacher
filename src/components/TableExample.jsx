@@ -5,7 +5,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import { getGradeData, getLessonsData } from '../data/dataFunctions';
 
 const columns = [
-  { field: 'chapter', headerName: 'Chapter', type: 'number', width: 90 },
+  { field: 'chapter', 
+    headerName: 'Chapter', 
+    type: 'number', 
+    width: 90 },
   {
     field: 'lesson',
     headerName: 'Lesson',

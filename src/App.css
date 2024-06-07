@@ -1,10 +1,11 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
-
+body, html {
+  margin: 0;
+  padding: 0;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -39,4 +40,69 @@
 
 .read-the-docs {
   color: #888;
+}
+.navbar {
+  grid-column: span 3;
+  background-color: #CCE882;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  height: 56px;
+  width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.navbar a {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+/* Change the color of links on hover */
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.navbar a.imgs {
+  padding: 0px;
+}
+.navbar img {
+  height: 56px; /* adjust the height as needed */
+  vertical-align: middle;
+}
+.sss {
+  position: relative;
+  width: 112px;
+  height: 10px;
+  top: 50%;
+  margin-top: -20px;
+  background-color: #ffffff;
+  color: #CCE882;
+  border-radius: 25px;
+  padding-left: 39px;
+  font-size: 16px;
+  line-height: 50%;
+}
+#ring, #rightt {
+  float: right;
+  position: relative;
+}
+
+/* Style the dropdown content */
+.dropdown-content {
+  display: none;
+  position: relative;
+  right: 0;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.MuiDataGrid-columnHeaders{
+  background-color: #E4F5B8;
 }
