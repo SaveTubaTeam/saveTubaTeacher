@@ -20,7 +20,7 @@ body, html {
   grid-column: span 2;
   background-color: #ffffff;
   display: flex;
-  gap: 20px;
+  gap: 5px;
 }
 
 .navbar {
@@ -65,6 +65,6 @@ body, html {
   padding: 10px;
   border-radius: 15px;
 }
-#button22{
+/* #button22{
   width: 1px;
-}
+} */

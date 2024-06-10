@@ -31,7 +31,7 @@ export default function ChapterSelect({ onChange }) {
   }, []);
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 100 }}>
       <FormControl fullWidth>
         <InputLabel id="chapter-select-label">Chapter</InputLabel>
         <Select
