@@ -94,6 +94,7 @@ export default function TableExample() {
         pageSizeOptions={[5]}
         checkboxSelection
         disableRowSelectionOnClick
+        sx={{backgroundColor:'#ffffff'}}
       />
     </Box>
   );

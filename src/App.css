@@ -9,7 +9,7 @@ body, html {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 56px 56px 330px;
+  grid-template-rows: 56px 56px 425px;
   gap: 10px;
   width: 100vw;
   height: 100vh;
@@ -22,41 +22,7 @@ body, html {
   display: flex;
   gap: 20px;
 }
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
 .navbar {
   grid-column: span 2;
   background-color: #CCE882;
@@ -83,21 +49,7 @@ body, html {
   border-radius: 25px;
   margin-top: 10px;
 }
-#ring, #rightt {
-  float: right;
-  position: relative;
-}
 
-/* Style the dropdown content */
-.dropdown-content {
-  display: none;
-  position: relative;
-  right: 0;
-  background-color: #333;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
 .MuiDataGrid-columnHeaders{
   background-color: #E4F5B8;
 }
@@ -105,6 +57,7 @@ body, html {
   grid-column: span 1;
   padding: 12px;
   overflow: hidden;
+  background-color: #CCE882;
 }
 .dayrange {
   background-color: #CCE882;
