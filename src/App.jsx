@@ -20,16 +20,16 @@ function App() {
       <NavigationBar/> {NavigationBar}
         <div class="adjustclass">
           <div>
-            <ChapterSelect/> {ChapterSelect}
+            <ChapterSelect onChange={(chapter) => setSelectedChapter(chapter)} />
           </div>
           <div>
-            <LessonSelect/> {LessonSelect}
+            <LessonSelect chapter={selectedChapter} onChange={(lesson) => setSelectedLesson(lesson)} />
           </div>
           <div>
-            <ActivitySelect/> {ActivitySelect}
+            <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} />
           </div>
           <div class="dayrange">
-            <DateSlider/> {DateSlider}
+            <DateSlider/>
           </div>
           <div id="button22">
             <BasicButtonGroup /> {BasicButtonGroup}
@@ -44,3 +44,4 @@ function App() {
 }
 
 export default App;
+
