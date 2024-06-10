@@ -46,7 +46,7 @@ export default function LessonSelect({ chapter, onChange }) {
         >
           {lessons.map((lesson, index) => (
             <MenuItem key={index} value={lesson.navigation}>
-              {lesson.navigation}
+              {lesson.title}
             </MenuItem>
           ))}
         </Select>

@@ -6,14 +6,16 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { getLessonsData } from '../data/dataFunctions';
 
-export default function ActivitySelect({ chapter, lesson }) {
+export default function ActivitySelect({ chapter, lesson, onChange }) {
   const grade = 'Grade5'; // Static grade value
   const languageCode = 'en'; // Static language code
   const [activity, setActivity] = useState('');
   const [activities, setActivities] = useState([]); // State to store the activities
 
   const handleChange = (event) => {
-    setActivity(event.target.value);
+    const selectedActivity = event.target.value;
+    setActivity(selectedActivity);
+    onChange(selectedActivity);
   };
 
   useEffect(() => {

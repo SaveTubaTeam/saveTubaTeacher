@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { getGradeData, getLessonsData } from '../data/dataFunctions';
+import { getLessonsData } from '../data/dataFunctions';
 
 const columns = [
   { field: 'chapter', 
@@ -37,47 +36,41 @@ const columns = [
   },
 ];
 
-export default function TableExample() {
+export default function TableExample({ chapter, lesson, activity }) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const grade = 'Grade5'; // Example grade, change as needed
-      const languageCode = 'en'; // Example language code, change as needed
+      if (!chapter) return;
 
       try {
-        console.log('Fetching grade data...');
-        const chapters = await getGradeData(grade);
-        console.log('Chapters fetched:', chapters);
+        const lessons = await getLessonsData('Grade5', chapter, 'en');
+        
+        const chapterNumber = parseInt(chapter.replace(/\D/g, ''), 10) || 0; // Extract chapter number
 
-        const lessonsPromises = chapters.map(async (chapter, chapterIndex) => {
-          console.log(`Fetching lessons for chapter ${chapter.navigation}...`);
-          const lessons = await getLessonsData(grade, chapter.navigation, languageCode);
-          console.log(`Lessons for chapter ${chapter.navigation} fetched:`, lessons);
-          return lessons.flatMap((lesson, lessonIndex) =>
-            lesson.masteryAndMinigames.map((activity, activityIndex) => ({
-              id: `${chapterIndex + 1}-${lessonIndex + 1}-${activityIndex + 1}-${activity.navigation}`, // Unique ID
-              chapter: chapterIndex + 1,
-              lesson: lessonIndex + 1,
+        const filteredLessons = lessons
+          .filter(l => !lesson || l.navigation === lesson)
+          .flatMap(l => {
+            const lessonNumber = parseInt(l.title.replace(/\D/g, ''), 10) || 0; // Extract lesson number
+            return l.masteryAndMinigames.map((activity, index) => ({
+              id: `${l.navigation}-${activity.navigation}`,
+              chapter: chapterNumber,
+              lesson: lessonNumber,
               activity: activity.navigation,
-              studentsCompleted: 0, 
-              dateCompleted: '',
-            }))
-          );
-        });
+              studentsCompleted: 0, // Replace with actual data if available
+              dateCompleted: '', // Replace with actual data if available
+            }));
+          })
+          .filter(a => !activity || a.activity === activity);
 
-        const lessonsArray = await Promise.all(lessonsPromises);
-        const flattenedActivities = lessonsArray.flat();
-        console.log('Flattened activities:', flattenedActivities);
-
-        setRows(flattenedActivities);
+        setRows(filteredLessons);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [chapter, lesson, activity]);
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>

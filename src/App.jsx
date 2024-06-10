@@ -13,6 +13,7 @@ import DateSlider from './components/DateSlider'
 function App() {
   const [selectedChapter, setSelectedChapter] = useState('');
   const [selectedLesson, setSelectedLesson] = useState('');
+  const [selectedActivity, setSelectedActivity] = useState('');
 
   return (
     <>
