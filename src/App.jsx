@@ -5,9 +5,9 @@ import BasicButtonGroup from './components/ButtonGroupExample';
 import ChapterSelect from './components/ChapterSelect';
 import LessonSelect from './components/LessonSelect';
 import ActivitySelect from './components/ActivitySelect';
-import DiscreteSliderValues from './components/DateSlider'; 
 import './App.css';
 import DateSlider from './components/DateSlider';
+import ResetGridButton from './components/ResetGridButton';
 
 function App() {
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -23,7 +23,8 @@ function App() {
         <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} onChange={(activity) => setSelectedActivity(activity)} />
         <DateSlider />
         <BasicButtonGroup />
-        <TableExample chapter={selectedChapter} lesson={selectedLesson} activity={selectedActivity} /> {/* Pass selected values as props */}
+        <TableExample chapter={selectedChapter} lesson={selectedLesson} activity={selectedActivity} />
+        <ResetGridButton/>
       </div>
     </Container>
   );
