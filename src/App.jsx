@@ -15,17 +15,26 @@ function App() {
 
   return (
     <>
+    <div class="grid-container">
       <NavigationBar/> {NavigationBar}
-      <Container>
         <div>
-          <h1 font= 'bold'>Interface Elements</h1>
-          <ChapterSelect/> {ChapterSelect}
-          <LessonSelect/> {LessonSelect}
-          <ActivitySelect/> {ActivitySelect}
-          <BasicButtonGroup /> {BasicButtonGroup}
-          <TableExample /> {TableExample}
+          <div class="adjustclass">
+            <div>
+              <ChapterSelect/> {ChapterSelect}
+            </div>
+            <div>
+              <LessonSelect/> {LessonSelect}
+            </div>
+            <div>
+              <ActivitySelect/> {ActivitySelect}
+            </div>
+            <div id="button22">
+              <BasicButtonGroup /> {BasicButtonGroup}
+            </div>
+          </div>
+          <div class="completionTime" ><TableExample /> {TableExample}</div>
         </div>
-      </Container>
+      </div>
     </>
   )
 }

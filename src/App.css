@@ -6,6 +6,22 @@ body, html {
   margin: 0;
   padding: 0;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 56px 56px 330px;
+  gap: 10px;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+.adjustclass {
+  /* grid-column: span 3; */
+  background-color: #ffffff;
+  display: flex;
+  gap: 20px;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -105,4 +121,8 @@ body, html {
 }
 .MuiDataGrid-columnHeaders{
   background-color: #E4F5B8;
+}
+.completionTime {
+  grid-column: span 1;
+  padding: 12px;
 }
