@@ -8,7 +8,7 @@ body, html {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 56px 56px 330px;
   gap: 10px;
   width: 100vw;
@@ -17,7 +17,7 @@ body, html {
   margin: 0;
 }
 .adjustclass {
-  /* grid-column: span 3; */
+  grid-column: span 2;
   background-color: #ffffff;
   display: flex;
   gap: 20px;
@@ -58,7 +58,7 @@ body, html {
   color: #888;
 }
 .navbar {
-  grid-column: span 3;
+  grid-column: span 2;
   background-color: #CCE882;
   overflow: hidden;
   padding: 0;
@@ -125,4 +125,14 @@ body, html {
 .completionTime {
   grid-column: span 1;
   padding: 12px;
+  overflow: hidden;
+}
+.dayrange {
+  background-color: #CCE882;
+  height: 35px;
+  padding: 10px;
+  border-radius: 15px;
+}
+#button22{
+  width: 1px;
 }

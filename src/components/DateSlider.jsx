@@ -51,7 +51,7 @@ function ValueLabelComponent(props) {
   const { children, value } = props;
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column-reverse' }}>
+    <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column-reverse' }}>
       {children}
       <Typography variant="caption" component="div" color="textSecondary">
         Completed: {getLabelForValue(value)}
@@ -62,7 +62,7 @@ function ValueLabelComponent(props) {
 
 export default function DateSlider() {
   return (
-    <Box sx={{ width: 300, marginTop: 4 }}>
+    <Box sx={{ width: 300, marginTop: 1}}>
       <Slider
         aria-label="Restricted values"
         defaultValue={0}
