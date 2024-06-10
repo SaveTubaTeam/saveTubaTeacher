@@ -19,13 +19,13 @@ const columns = [
   {
     field: 'activity',
     headerName: 'Activity',
-    width: 150,
+    width: 120,
     editable: false,
   },
   {
     field: 'studentsCompleted',
     headerName: 'Number of Students Completed',
-    width: 250,
+    width: 200,
     editable: false,
   },
   {
