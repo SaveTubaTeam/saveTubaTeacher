@@ -1,8 +1,7 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 import viteLogo from '/vite.svg'
 import TableExample from './components/TableExample'
 import './App.css'
-import { Container } from '@mui/material'
 import BasicButtonGroup from './components/ButtonGroupExample'
 import ChapterSelect from './components/ChapterSelect'
 import LessonSelect from './components/LessonSelect'
@@ -17,9 +16,9 @@ function App() {
 
   return (
     <>
-    <div class="grid-container">
+    <div className="grid-container">
       <NavigationBar/> {NavigationBar}
-        <div class="adjustclass">
+        <div className="adjustclass">
           <div>
             <ChapterSelect onChange={(chapter) => setSelectedChapter(chapter)} />
           </div>
@@ -29,14 +28,14 @@ function App() {
           <div>
             <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} />
           </div>
-          <div class="dayrange">
-            <DateSlider/>
+          <div className="dayrange">
+            <DateSlider/> {DateSlider}
           </div>
           <div id="button22">
             <BasicButtonGroup /> {BasicButtonGroup}
           </div>
         </div>
-        <div class="completionTime" >
+        <div className="completionTime" >
           <TableExample /> {TableExample}
         </div>
     </div>
