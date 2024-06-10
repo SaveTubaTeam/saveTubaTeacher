@@ -11,7 +11,8 @@ import NavigationBar from './components/NavigationBar'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedChapter, setSelectedChapter] = useState('');
+  const [selectedLesson, setSelectedLesson] = useState('');
 
   return (
     <>
@@ -39,4 +40,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
