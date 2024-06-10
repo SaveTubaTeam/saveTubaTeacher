@@ -7,6 +7,9 @@ import LessonSelect from './components/LessonSelect';
 import ActivitySelect from './components/ActivitySelect';
 import DateSlider from './components/DateSlider';
 import './App.css';
+import ClassButton from './components/ClassButton';
+import Stack from '@mui/material/Stack';
+
 
 function App() {
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -16,6 +19,10 @@ function App() {
     <Container>
       <div>
         <h1 style={{ fontWeight: 'bold' }}>Interface Elements</h1>
+        <Stack direction="row" spacing={2}>
+          <ClassButton title = "Class 4 - A"/>
+          <ClassButton title = "Class 4 - B"/>
+        </Stack>
         <DateSlider/>
         <ChapterSelect onChange={(chapter) => setSelectedChapter(chapter)} />
         <LessonSelect chapter={selectedChapter} onChange={(lesson) => setSelectedLesson(lesson)} />

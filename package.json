@@ -17,6 +17,7 @@
     "@mui/x-data-grid": "^7.6.1",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.2",
+    "chart.js": "^4.4.3",
     "firebase": "^10.12.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
