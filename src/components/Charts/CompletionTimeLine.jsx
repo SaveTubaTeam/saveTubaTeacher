@@ -112,7 +112,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-function CompletionTimeLine() {
+export default function CompletionTimeLine() {
   return (
     <>
       <h1 className="text-heading">Assignment Completion Rate Over Time</h1>
@@ -130,4 +130,4 @@ function CompletionTimeLine() {
   );
 }
 
-export default CompletionTimeLine;
+

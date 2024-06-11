@@ -1,8 +1,6 @@
 import { db, storage } from "../../firebase";
 import { async } from 'react';
 
-import en_grade5_FIELDWORK from "../en_grade5_FIELDWORK.json";
-
 //***all documentation falls under web-namespaced api
 //documentation for set() https://firebase.google.com/docs/firestore/manage-data/add-data#web-namespaced-api_1
 //documentation for get() https://firebase.google.com/docs/firestore/query-data/get-data#web-namespaced-api_2
