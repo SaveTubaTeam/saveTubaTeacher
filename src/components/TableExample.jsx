@@ -1,63 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { getGradeData, getLessonsData } from '../data/dataFunctions';
+import { DataGrid } from '@mui/x-data-grid';
+import { getLessonsData } from '../data/dataFunctions';
 
 const columns = [
   { field: 'chapter', headerName: 'Chapter', width: 90 },
   { field: 'lesson', headerName: 'Lesson', width: 90, editable: false },
   { field: 'activity', headerName: 'Activity', width: 150, editable: false },
   { field: 'studentsCompleted', headerName: 'Number of Students Completed', width: 250, editable: false },
-  { field: 'dateCompleted', headerName: 'Date Completed', description: 'The Data the Student Completed the Activity', sortable: false, width: 160 },
+  { field: 'dateCompleted', headerName: 'Date Completed', description: 'This column has a value getter and is not sortable.', sortable: false, width: 160 },
 ];
 
 export default function TableExample({ chapter, lesson, activity }) {
   const [rows, setRows] = useState([]);
-  const [allData, setAllData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!chapter) return;
+
       try {
-        const grade = 'Grade5';
-        const chapters = await getGradeData(grade);
-        let allLessons = [];
+        const lessons = await getLessonsData('Grade5', chapter, 'en');
+        
+        const chapterNumber = parseInt(chapter.replace(/\D/g, ''), 10) || 0; // Extract chapter number
 
-        for (const chap of chapters) {
-          const lessons = await getLessonsData(grade, chap.navigation, 'en');
-          allLessons.push(...lessons);
-        }
+        const filteredLessons = lessons
+          .filter(l => !lesson || l.navigation === lesson)
+          .flatMap(l => {
+            const lessonNumber = parseInt(l.title.replace(/\D/g, ''), 10) || 0; // Extract lesson number
+            return l.masteryAndMinigames.map((activity, index) => ({
+              id: `${l.navigation}-${activity.navigation}`,
+              chapter: chapterNumber,
+              lesson: lessonNumber,
+              activity: activity.navigation,
+              studentsCompleted: 0, // Replace with actual data if available
+              dateCompleted: '', // Replace with actual data if available
+            }));
+          })
+          .filter(a => !activity || a.activity === activity);
 
-        const allData = allLessons.flatMap((lesson, lessonIndex) => {
-          const lessonNumber = parseInt(lesson.title.replace(/\D/g, ''), 10) || lessonIndex + 1;
-          return lesson.masteryAndMinigames.map((activity, activityIndex) => ({
-            id: `${lesson.navigation}-${activity.navigation}`,
-            chapter: parseInt(lesson.navigation.replace(/\D/g, ''), 10) || lessonIndex + 1,
-            lesson: lessonNumber,
-            activity: activity.navigation,
-            studentsCompleted: 0,
-            dateCompleted: '',
-          }));
-        });
-
-        setAllData(allData);
-        setRows(allData);
+        setRows(filteredLessons);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const filteredRows = allData.filter(row =>
-      (!chapter || row.chapter === parseInt(chapter.replace(/\D/g, ''), 10)) &&
-      (!lesson || row.lesson === parseInt(lesson.replace(/\D/g, ''), 10)) &&
-      (!activity || row.activity === activity)
-    );
-
-    setRows(filteredRows);
-  }, [chapter, lesson, activity, allData]);
+  }, [chapter, lesson, activity]);
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
@@ -74,7 +62,6 @@ export default function TableExample({ chapter, lesson, activity }) {
         pageSizeOptions={[5]}
         checkboxSelection
         disableRowSelectionOnClick
-        //components={{ Toolbar: GridToolbar }}
       />
     </Box>
   );
