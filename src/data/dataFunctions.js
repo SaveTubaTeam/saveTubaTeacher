@@ -33,7 +33,7 @@ async function getLessonsData(grade, chpt, languageCode) {
       if (!lessonSnapshot.exists) { break; }
       
       let lessonObject = {
-        id: lessonSnapshot.id, // Use Firestore document ID as a unique identifier
+        id: lessonSnapshot.id, 
         backgroundColor: "",
         navigation: "",
         thumbnail: "",

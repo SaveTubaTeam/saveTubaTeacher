@@ -40,6 +40,7 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
     fetchData();
   }, [chapter, lesson, languageCode]);
 
+  
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
