@@ -8,8 +8,7 @@ import ActivitySelect from './components/ActivitySelect';
 import './App.css';
 import DateSlider from './components/DateSlider';
 import ResetGridButton from './components/ResetGridButton';
-import CompletionTimeLine from './components/Charts/CompletionTimeLine';
-import ActivityCompletionBar from './components/Charts/ActivityCompletionBar';
+import NavigationBar from './components/NavigationBar'
 
 function App() {
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -46,3 +45,4 @@ function App() {
 }
 
 export default App;
+
