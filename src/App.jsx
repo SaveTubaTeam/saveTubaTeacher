@@ -8,6 +8,7 @@ import ActivitySelect from './components/ActivitySelect';
 import './App.css';
 import DateSlider from './components/DateSlider';
 import ResetGridButton from './components/ResetGridButton';
+import CompletionTimeLine from './components/Charts/CompletionTimeLine';
 
 function App() {
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -21,10 +22,11 @@ function App() {
         <ChapterSelect onChange={(chapter) => setSelectedChapter(chapter)} />
         <LessonSelect chapter={selectedChapter} onChange={(lesson) => setSelectedLesson(lesson)} />
         <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} onChange={(activity) => setSelectedActivity(activity)} />
-        <DateSlider />
+        <DateSlider /> 
         <BasicButtonGroup />
-        <TableExample chapter={selectedChapter} lesson={selectedLesson} activity={selectedActivity} />
-        <ResetGridButton/>
+        <TableExample chapter={selectedChapter} lesson={selectedLesson} activity={selectedActivity} /> {/* Pass selected values as props */}
+        <ResetGridButton />
+        <CompletionTimeLine />
       </div>
     </Container>
   );
