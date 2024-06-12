@@ -43,7 +43,6 @@ export default function ChapterSelect({ onChange }) {
           value={chapter}
           label="Chapter"
           onChange={handleChange}
-          ß
         >
           <MenuItem value="" style ={{fontFamily: "Montserrat, sans-serif"}}>No Option</MenuItem>
           {chapters.map((chapter, index) => (

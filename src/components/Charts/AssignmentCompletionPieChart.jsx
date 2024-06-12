@@ -1,7 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-const data = [
+const defaultData = [
   { name: "Completed", value: 80 },
   { name: "Not Completed", value: 20 }
 ];
@@ -46,7 +46,7 @@ const renderCustomizedLabel = ({
   );
 };
 
-const AssignmentCompletionPieChart = () => (
+const AssignmentCompletionPieChart = ({ data = defaultData }) => (
   <div className="chart-container">
     <h1 className="text-heading">Total Activity Completion</h1>
     <ResponsiveContainer>
