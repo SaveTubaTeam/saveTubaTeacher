@@ -6,9 +6,9 @@ import { getGradeData, getLessonsData } from '../data/dataFunctions';
 const columns = [
   { field: 'chapter', headerName: 'Chapter', width: 90 },
   { field: 'lesson', headerName: 'Lesson', width: 90, editable: false },
-  { field: 'activity', headerName: 'Activity', width: 150, editable: false },
+  { field: 'activity', headerName: 'Activity', width: 120, editable: false },
   { field: 'studentsCompleted', headerName: 'Number of Students Completed', width: 250, editable: false },
-  { field: 'dateCompleted', headerName: 'Date Completed', description: 'This column has a value getter and is not sortable.', sortable: false, width: 160 },
+  { field: 'dateCompleted', headerName: 'Date Completed', description: 'This column has a value getter and is not sortable.', sortable: false, width: 120 },
 ];
 
 export default function TableExample({ chapter, lesson, activity }) {
@@ -60,7 +60,7 @@ export default function TableExample({ chapter, lesson, activity }) {
   }, [chapter, lesson, activity, allData]);
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: '100%', backgroundColor:'#ffffff' }}>
       <DataGrid
         rows={rows}
         columns={columns}
