@@ -36,17 +36,25 @@ export default function LessonSelect({ chapter, onChange }) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="lesson-select-label">Lesson</InputLabel>
+        <InputLabel
+          id="chapter-select-label"
+          style={{ fontFamily: "Montserrat, sans-serif" }}
+        >
+          Lesson
+        </InputLabel>
         <Select
+          sx={{
+            fontFamily: "Montserrat, sans-serif",
+          }}
           labelId="lesson-select-label"
           id="lesson-select"
           value={lesson}
           label="Lesson"
           onChange={handleChange}
         >
-          <MenuItem value="">No Option</MenuItem>
+          <MenuItem value="" style ={{fontFamily: "Montserrat, sans-serif"}}>No Option</MenuItem>
           {lessons.map((lesson, index) => (
-            <MenuItem key={index} value={lesson.navigation}>
+            <MenuItem key={index} value={lesson.navigation} style ={{fontFamily: "Montserrat, sans-serif"}}>
               {lesson.title}
             </MenuItem>
           ))}

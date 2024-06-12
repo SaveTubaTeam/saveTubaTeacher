@@ -45,17 +45,25 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="activity-select-label">Activity</InputLabel>
+        <InputLabel
+          id="chapter-select-label"
+          style={{ fontFamily: "Montserrat, sans-serif" }}
+        >
+          Activity
+        </InputLabel>
         <Select
+          sx={{
+            fontFamily: "Montserrat, sans-serif",
+          }}
           labelId="activity-select-label"
           id="activity-select"
           value={activity}
           label="Activity"
           onChange={handleChange}
         >
-          <MenuItem value="">No Option</MenuItem>
+          <MenuItem value="" style ={{fontFamily: "Montserrat, sans-serif"}}>No Option</MenuItem>
           {activities.map((activity, index) => (
-            <MenuItem key={index} value={activity.navigation}>
+            <MenuItem key={index} value={activity.navigation} style ={{fontFamily: "Montserrat, sans-serif"}}>
               {activity.navigation}
             </MenuItem>
           ))}

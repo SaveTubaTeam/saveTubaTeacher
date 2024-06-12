@@ -33,17 +33,21 @@ export default function ChapterSelect({ onChange }) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="chapter-select-label">Chapter</InputLabel>
+        <InputLabel id="chapter-select-label" style = {{fontFamily: "Montserrat, sans-serif"}}>Chapter</InputLabel>
         <Select
+          sx={{
+            fontFamily: "Montserrat, sans-serif",
+          }}
           labelId="chapter-select-label"
           id="chapter-select"
           value={chapter}
           label="Chapter"
-          onChange={handleChange}ß
+          onChange={handleChange}
+          ß
         >
-          <MenuItem value="">No Option</MenuItem>
+          <MenuItem value="" style ={{fontFamily: "Montserrat, sans-serif"}}>No Option</MenuItem>
           {chapters.map((chapter, index) => (
-            <MenuItem key={index} value={chapter.navigation}>
+            <MenuItem key={index} value={chapter.navigation} style ={{fontFamily: "Montserrat, sans-serif"}}>
               {chapter.navigation}
             </MenuItem>
           ))}
