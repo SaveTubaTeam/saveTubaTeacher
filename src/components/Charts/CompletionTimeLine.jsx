@@ -102,8 +102,10 @@ const CustomTooltip = ({ active, payload, label }) => {
           opacity: "0.8",
           fontSize: "12px",
           fontFamily: "Montserrat, sans-serif",
+          fontFamily: "Montserrat, sans-serif",
         }}
       >
+        <p className="label" style={{ fontWeight: "bold" }}>{`${label}`}</p>
         <p className="label" style={{ fontWeight: "bold" }}>{`${label}`}</p>
         <p className="intro">{`Completion Rate: ${payload[0].value}%`}</p>
         <p className="desc">{`Number of Students: ${payload[0].payload.numStudents}`}</p>
@@ -122,9 +124,35 @@ export default function CompletionTimeLine() {
       >
         Assignment Completion Rate Over Time
       </h1>
+      <h1
+        className="text-heading"
+        style={{ fontFamily: "Montserrat, sans-serif" }}
+      >
+        Assignment Completion Rate Over Time
+      </h1>
       <ResponsiveContainer width="125%" aspect={3}>
         <LineChart data={pdata} margin={{ right: 200 }}>
           <CartesianGrid strokeDasharray="3 3" />
+          <XAxis
+            dataKey="name"
+            interval={"preserveStartEnd"}
+            tick={{ fontSize: "14px", fontFamily: "Montserrat, sans-serif" }}
+          />
+          <YAxis
+            tick={{ fontSize: "14px", fontFamily: "Montserrat, sans-serif" }}
+          />
+          <Legend
+            payload={[
+              {
+                value: "Completion Rate",
+                type: "line",
+                id: "ID01",
+                color: "green",
+                valueStyle: { fontFamily: "Montserrat, sans-serif" },
+              },
+            ]}
+            wrapperStyle={{ fontFamily: "Montserrat, sans-serif" }}
+          />
           <XAxis
             dataKey="name"
             interval={"preserveStartEnd"}

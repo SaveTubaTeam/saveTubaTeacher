@@ -70,6 +70,7 @@ export default function DateSlider() {
         step={null}
         valueLabelDisplay="on"
         marks={marks}
+        fontFamily="Montserrat, sans-serif"
         components={{ ValueLabel: ValueLabelComponent }} // Custom value label component
       />
     </Box>

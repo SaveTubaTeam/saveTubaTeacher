@@ -36,6 +36,7 @@ const ActivityCompletionBar = () => {
           }}
         >
           <p className="label" style = {{fontWeight: "bold"}}>{`${label}`}</p>
+          <p className="label" style = {{fontWeight: "bold"}}>{`${label}`}</p>
           <p className="intro">{`Completion Rate: ${payload[0].value}%`}</p>
         </div>
       );
@@ -55,7 +56,9 @@ const ActivityCompletionBar = () => {
             dataKey= "name"
             interval={"preserveStartEnd"}
             tick={{ fontSize: "14px", fontFamily: "Montserrat, sans-serif" }}
+            tick={{ fontSize: "14px", fontFamily: "Montserrat, sans-serif" }}
           />
+          <YAxis tick={{ fontSize: '14px', fontFamily: 'Montserrat, sans-serif' }} label={{ value: 'Completion Rate (%)', angle: -90, position: 'insideLeft', offset: 10, fill: '#666', fontFamily: "Montserrat, sans-serif" }} />
           <YAxis tick={{ fontSize: '14px', fontFamily: 'Montserrat, sans-serif' }} label={{ value: 'Completion Rate (%)', angle: -90, position: 'insideLeft', offset: 10, fill: '#666', fontFamily: "Montserrat, sans-serif" }} />
         </BarChart>
       </ResponsiveContainer>
