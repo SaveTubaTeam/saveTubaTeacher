@@ -9,7 +9,8 @@ import DateSlider from './components/DateSlider';
 import ResetGridButton from './components/ResetGridButton';
 import CompletionTimeLine from './components/Charts/CompletionTimeLine';
 import ActivityCompletionBar from './components/Charts/ActivityCompletionBar';
-import NavigationBar from './components/NavigationBar'
+import NavigationBar from './components/NavigationBar';
+import AssignmentCompletionPieChart from './components/Charts/AssignmentCompletionPieChart'; // Import the new Pie Chart
 
 function App() {
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -18,8 +19,8 @@ function App() {
 
   return (
     <>
-    <div className="grid-container">
-      <NavigationBar/>
+      <div className="grid-container">
+        <NavigationBar />
         <div className="adjustclass">
           <div id='asa'>
             <ChapterSelect onChange={(chapter) => setSelectedChapter(chapter)} />
@@ -28,23 +29,32 @@ function App() {
             <LessonSelect chapter={selectedChapter} onChange={(lesson) => setSelectedLesson(lesson)} />
           </div>
           <div>
-          <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} onChange={(activity) => setSelectedActivity(activity)} />
+            <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} onChange={(activity) => setSelectedActivity(activity)} />
           </div>
           <div className="dayrange">
-            <DateSlider/>
+            <DateSlider />
           </div>
           <div id="button22">
             <span>
-            <BasicButtonGroup/>
-            </span> 
+              <BasicButtonGroup />
+            </span>
           </div>
         </div>
-        <div className="completionTime" >
+        <div className="completionTime">
           <TableExample chapter={selectedChapter} lesson={selectedLesson} activity={selectedActivity} />
         </div>
-    </div>
+        <div id="activitycomp">
+          <ActivityCompletionBar />
+        </div>
+        <div>
+          <CompletionTimeLine />
+        </div>
+        <div>
+          <AssignmentCompletionPieChart />
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
 export default App;

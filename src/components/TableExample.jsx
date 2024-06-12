@@ -8,7 +8,7 @@ const columns = [
   { field: 'lesson', headerName: 'Lesson', width: 90, editable: false },
   { field: 'activity', headerName: 'Activity', width: 120, editable: false },
   { field: 'studentsCompleted', headerName: 'Number of Students Completed', width: 250, editable: false },
-  { field: 'dateCompleted', headerName: 'Date Completed', description: 'This column has a value getter and is not sortable.', sortable: false, width: 160 },
+  { field: 'dateCompleted', headerName: 'Date Completed', description: 'This column has a value getter and is not sortable.', sortable: false, width: 120 },
 ];
 
 export default function TableExample({ chapter, lesson, activity }) {

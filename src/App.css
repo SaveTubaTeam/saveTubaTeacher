@@ -9,7 +9,7 @@ body, html {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 56px 56px 425px;
+  grid-template-rows: 56px 56px 426px;
   gap: 10px;
   width: 100vw;
   height: 100vh;
@@ -58,7 +58,15 @@ body, html {
   padding: 12px;
   overflow: hidden;
   background-color: #CCE882;
+  height: 100%;
 }
+#activitycomp {
+  grid-column: span 1;
+  height: 100%;
+  padding: 12px;
+  overflow: hidden;
+}
+
 .dayrange {
   background-color: #CCE882;
   height: 35px;
@@ -69,3 +77,20 @@ body, html {
   margin-left:10px;
 }
 
+.recharts-responsive-container {
+  width: 100%;
+  height: 100%;
+}
+.chart-container {
+  width: 100%;
+  height: 400px;
+}
+
+.custom-tooltip {
+  background-color: #CCE882;
+  padding: 5px;
+  border-radius: 5px;
+  color: black;
+  opacity: 0.8;
+  font-size: 12px;
+}
