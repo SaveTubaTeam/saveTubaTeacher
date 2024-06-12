@@ -10,7 +10,6 @@ import {
 } from "recharts";
 
 const ActivityCompletionBar = () => {
-  // Sample data
   const data = [
     { name: "Mastery", students: 70 },
     { name: "Image Boom", students: 10 },
@@ -33,9 +32,10 @@ const ActivityCompletionBar = () => {
             color: "black",
             opacity: "0.8",
             fontSize: "12px",
+            fontFamily: "Montserrat, sans-serif",
           }}
         >
-          <p className="label">{`${label}`}</p>
+          <p className="label" style = {{fontWeight: "bold"}}>{`${label}`}</p>
           <p className="intro">{`Completion Rate: ${payload[0].value}%`}</p>
         </div>
       );
@@ -45,7 +45,7 @@ const ActivityCompletionBar = () => {
 
   return (
     <>
-      <h1 className="text-heading">Completion Rate By Activity</h1>
+      <h1 className="text-heading" style={{fontFamily: 'Montserrat, sans-serif'}}>Completion Rate By Activity</h1>
       <ResponsiveContainer width="100%" aspect={3}>
         <BarChart width={600} height={600} data={data}>
           <Bar dataKey="students" fill="#74B72E" barSize = {70} radius={[10, 10, 0, 0]}/>
@@ -54,9 +54,9 @@ const ActivityCompletionBar = () => {
           <XAxis
             dataKey= "name"
             interval={"preserveStartEnd"}
-            tick={{ fontSize: "14px", fontFamily: "Arial" }}
+            tick={{ fontSize: "14px", fontFamily: "Montserrat, sans-serif" }}
           />
-          <YAxis tick={{ fontSize: "14px", fontFamily: "Arial" }} label={{ value: 'Completion Rate (%)', angle: -90, position: 'insideLeft', offset: 10, fill: '#666' }} />
+          <YAxis tick={{ fontSize: '14px', fontFamily: 'Montserrat, sans-serif' }} label={{ value: 'Completion Rate (%)', angle: -90, position: 'insideLeft', offset: 10, fill: '#666', fontFamily: "Montserrat, sans-serif" }} />
         </BarChart>
       </ResponsiveContainer>
     </>

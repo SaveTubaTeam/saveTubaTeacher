@@ -10,6 +10,7 @@ import DateSlider from './components/DateSlider';
 import ResetGridButton from './components/ResetGridButton';
 import CompletionTimeLine from './components/Charts/CompletionTimeLine';
 import ActivityCompletionBar from './components/Charts/ActivityCompletionBar';
+import TotalActivityCompletionPie from './components/Charts/TotalActivityCompletionPie';
 
 function App() {
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -29,6 +30,7 @@ function App() {
         <ResetGridButton />
         <CompletionTimeLine />
         <ActivityCompletionBar/>
+        <TotalActivityCompletionPie/>
       </div>
     </Container>
   );

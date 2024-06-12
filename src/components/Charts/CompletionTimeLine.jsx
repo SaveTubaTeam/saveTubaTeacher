@@ -101,9 +101,10 @@ const CustomTooltip = ({ active, payload, label }) => {
           color: "black",
           opacity: "0.8",
           fontSize: "12px",
+          fontFamily: "Montserrat, sans-serif",
         }}
       >
-        <p className="label">{`${label}`}</p>
+        <p className="label" style = {{fontWeight: "bold"}}>{`${label}`}</p>
         <p className="intro">{`Completion Rate: ${payload[0].value}%`}</p>
         <p className="desc">{`Number of Students: ${payload[0].payload.numStudents}`}</p>
       </div>
@@ -115,12 +116,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 export default function CompletionTimeLine() {
   return (
     <>
-      <h1 className="text-heading">Assignment Completion Rate Over Time</h1>
+      <h1 className="text-heading" style={{fontFamily: 'Montserrat, sans-serif'}}>Assignment Completion Rate Over Time</h1>
       <ResponsiveContainer width="125%" aspect={3}>
         <LineChart data={pdata} margin={{ right: 300 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" interval={"preserveStartEnd"} tick={{ fontSize: '14px', fontFamily: 'Arial' }} />
-          <YAxis tick={{ fontSize: '14px', fontFamily: 'Arial' }} />
+          <XAxis dataKey="name" interval={"preserveStartEnd"} tick={{ fontSize: '14px', fontFamily: 'Montserrat, sans-serif' }} />
+          <YAxis tick={{ fontSize: '14px', fontFamily: 'Montserrat, sans-serif' }} />
           <Legend />
           <Tooltip content={<CustomTooltip />} />
           <Line dataKey="completionRate" stroke="green" activeDot={{ r: 8 }} />

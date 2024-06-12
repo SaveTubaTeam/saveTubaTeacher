@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { getLessonsData } from '../data/dataFunctions';
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { getLessonsData } from "../data/dataFunctions";
 
 export default function ActivitySelect({ chapter, lesson, onChange }) {
-  const grade = 'Grade5'; // Static grade value
-  const languageCode = 'en'; // Static language code
-  const [activity, setActivity] = useState('');
+  const grade = "Grade5"; // Static grade value
+  const languageCode = "en"; // Static language code
+  const [activity, setActivity] = useState("");
   const [activities, setActivities] = useState([]); // State to store the activities
 
   const handleChange = (event) => {
@@ -26,21 +26,22 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
         const lessons = await getLessonsData(grade, chapter, languageCode);
         const selectedLesson = lessons.find((l) => l.navigation === lesson);
         if (selectedLesson) {
-          const activities = selectedLesson.masteryAndMinigames.map((activity) => ({
-            ...activity,
-            lessonTitle: selectedLesson.title, // Optionally include the lesson title
-          }));
+          const activities = selectedLesson.masteryAndMinigames.map(
+            (activity) => ({
+              ...activity,
+              lessonTitle: selectedLesson.title, // Optionally include the lesson title
+            })
+          );
           setActivities(activities);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, [chapter, lesson, languageCode]);
 
-  
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -52,6 +53,7 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
           label="Activity"
           onChange={handleChange}
         >
+          <MenuItem value="">No Option</MenuItem>
           {activities.map((activity, index) => (
             <MenuItem key={index} value={activity.navigation}>
               {activity.navigation}

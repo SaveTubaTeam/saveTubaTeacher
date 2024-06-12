@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { getGradeData } from '../data/dataFunctions';
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { getGradeData } from "../data/dataFunctions";
 
 export default function ChapterSelect({ onChange }) {
-  const grade = 'Grade5'; // Static grade value
-  const [chapter, setChapter] = useState('');
+  const grade = "Grade5"; // Static grade value
+  const [chapter, setChapter] = useState("");
   const [chapters, setChapters] = useState([]); // State to store the chapters
 
   const handleChange = (event) => {
@@ -23,13 +23,12 @@ export default function ChapterSelect({ onChange }) {
         const chapters = await getGradeData(grade);
         setChapters(chapters);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, []);
-  
 
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -40,8 +39,9 @@ export default function ChapterSelect({ onChange }) {
           id="chapter-select"
           value={chapter}
           label="Chapter"
-          onChange={handleChange}
+          onChange={handleChange}ß
         >
+          <MenuItem value="">No Option</MenuItem>
           {chapters.map((chapter, index) => (
             <MenuItem key={index} value={chapter.navigation}>
               {chapter.navigation}
