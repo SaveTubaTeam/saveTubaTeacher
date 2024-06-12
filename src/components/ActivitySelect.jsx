@@ -11,6 +11,7 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
   const languageCode = "en"; // Static language code
   const [activity, setActivity] = useState("");
   const [activities, setActivities] = useState([]); // State to store the activities
+  const defaultActivites = ["Mastery", "Image Boom", "Memory", "Snapshot", "Sorting", "Quiz", "Reorder"];
 
   const handleChange = (event) => {
     const selectedActivity = event.target.value;
@@ -42,6 +43,22 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
     fetchData();
   }, [chapter, lesson, languageCode]);
 
+  function checkActivites() {
+    if (activities.length === 0) {
+      return defaultActivites.map((activity, index) => (
+        <MenuItem key={index} value={activity} style={{ fontFamily: "Montserrat, sans-serif" }}>
+          {activity}
+        </MenuItem>
+      ));
+    } else {
+      return activities.map((activity, index) => (
+        <MenuItem key={index} value={activity.navigation} style={{ fontFamily: "Montserrat, sans-serif" }}>
+          {activity.navigation}
+        </MenuItem>
+      ));
+    }
+  }
+
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -62,11 +79,12 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
           onChange={handleChange}
         >
           <MenuItem value="" style ={{fontFamily: "Montserrat, sans-serif"}}>No Option</MenuItem>
-          {activities.map((activity, index) => (
+          {/* {activities.map((activity, index) => (
             <MenuItem key={index} value={activity.navigation} style ={{fontFamily: "Montserrat, sans-serif"}}>
               {activity.navigation}
             </MenuItem>
-          ))}
+          ))} */}
+          {checkActivites()}
         </Select>
       </FormControl>
     </Box>
