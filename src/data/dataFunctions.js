@@ -158,9 +158,9 @@ async function getAssignmentData(grade, chpt, lesson, email) {
         assignment.numActivities = allAssignments[i].numActivities;
         break;
       }
-      else{
-        console.log("Assignment not found");
-      }
+      // else{
+      //   console.log("Assignment not found");
+      // }
     }
     console.log("Assignment: ", assignment);
   } catch (error) {
@@ -171,5 +171,78 @@ async function getAssignmentData(grade, chpt, lesson, email) {
   
 }
 
+async function getCompletionsData(email){
+  console.log(
+    `\n\tgetCompletionsData() called. Now in ${email} Completions\n\t\tEMAIL:`,
+    email
+  );
+  let completionsList = [];
+  try {
+    await db
+      .collection("users")
+      .doc(email)
+      .collection("Completions")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          completionsList.push(doc.data());
+        });
+      });
+  } catch (error) {
+    console.log("Error in getCompletionsData():", error);
+  }
 
-export { getGradeData, getLessonsData, getAssignmentsData, getAssignmentData };
+  console.log("Completions: ", completionsList);
+  return completionsList;
+}
+async function getCompletionData(grade,chpt,lesson,activity,email){
+  console.log(
+    `\n\tgetCompletionData() called. Now in ${grade} ${chpt} ${lesson} ${activity} Completions\n\t\tEMAIL:`,
+    email
+  );
+  const completion = {
+    submissionTime: "",
+  };
+  let allCompletions = [];
+  let allCompletionNames = [];
+  try {
+    await db
+      .collection("users")
+      .doc(email)
+      .collection("Completions")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          allCompletions.push(doc.data());
+          allCompletionNames.push(doc.id);
+        });
+      });
+  } catch (error) {
+    console.log("Error in Getting All Completion Information", error);
+  }
+
+  const gradeNum = "G" + grade.substring(5);
+  const chapterNum = "C" + chpt.substring(7);
+  const lessonNum = "L" + lesson.substring(6);
+  const completionName = gradeNum + chapterNum + lessonNum + "_" + activity;
+  console.log("Completion Name: ", completionName);
+
+  try {
+    for(let i = 0; i < allCompletionNames.length; i++) {
+      if(completionName === allCompletionNames[i]) {
+        completion.submissionTime = allCompletions[i].submissionTime;
+        break;
+      }
+      // else{
+      //   console.log("Completion not found");
+      // }
+    }
+    console.log("Completion: ", completion);
+  } catch (error) {
+    console.log("Error in getCompletionData():", error);
+  }
+  return completion;
+
+}
+
+export { getGradeData, getLessonsData, getAssignmentsData, getAssignmentData, getCompletionData, getCompletionsData };
