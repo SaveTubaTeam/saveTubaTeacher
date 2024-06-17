@@ -1,12 +1,22 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
+import React from 'react';
 import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 
+const HighlightedButton = styled(Button)(({ theme, isHighlighted }) => ({
+  backgroundColor: isHighlighted ? theme.palette.success.light : theme.palette.success.main,
+  '&:hover': {
+    backgroundColor: isHighlighted ? theme.palette.success.light : theme.palette.success.dark,
+  },
+}));
 
-export default function ClassButton(props) {
+export default function ClassButton({ title, isHighlighted, onClick }) {
   return (
-      <Button variant="contained" color="success">
-        {props.title}
-      </Button>
+    <HighlightedButton
+      variant="contained"
+      onClick={onClick}
+      isHighlighted={isHighlighted}
+    >
+      {title}
+    </HighlightedButton>
   );
 }

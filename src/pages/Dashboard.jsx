@@ -20,6 +20,7 @@ import {
   getCompletedPerAssignment,
 } from "../data/dataFunctions";
 import AssignmentCheckbox from "../components/AssignmentCheckbox";
+import ClassButton from "../components/ClassButton";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -28,6 +29,7 @@ function Dashboard() {
   const [selectedChapter, setSelectedChapter] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
   const [selectedActivity, setSelectedActivity] = useState("");
+  const [highlightedButton, setHighlightedButton] = useState("");
 
   function FetchStudents() {
     const students = getStudents(classCode);
@@ -42,13 +44,24 @@ function Dashboard() {
   return (
     <Container>
       <div>
-        {/* <FetchAssignmentsData />
-        <FetchAssignmentData />
-        <FetchCompletionsData />
-        <FetchCompletionData /> */}
         <FetchStudents />
         <FetchAssignmentCompletion />
         <h1 style={{ fontWeight: "bold" }}>Interface Elements</h1>
+        <ClassButton
+          title="Grade 1"
+          isHighlighted={highlightedButton === "Grade 1"}
+          onClick={() => setHighlightedButton("Grade 1")}
+        />
+        <ClassButton
+          title="Grade 2"
+          isHighlighted={highlightedButton === "Grade 2"}
+          onClick={() => setHighlightedButton("Grade 2")}
+        />
+        <ClassButton
+          title="Grade 3"
+          isHighlighted={highlightedButton === "Grade 3"}
+          onClick={() => setHighlightedButton("Grade 3")}
+        />
         <DateSlider />
         <TimeButtonGroup />
         <ChapterSelect
