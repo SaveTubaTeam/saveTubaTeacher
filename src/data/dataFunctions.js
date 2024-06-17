@@ -112,7 +112,7 @@ async function getAssignmentsData(email) {
     console.log("Error in getAssignmentsData():", error);
   }
 
-  console.log("Assignments: ", assignmentsList);
+  //console.log("Assignments: ", assignmentsList);
   return assignmentsList;
 }
 
@@ -124,7 +124,7 @@ async function getAssignmentData(grade, chpt, lesson, email) {
   const assignment = {
     dateAssigned: "",
     dateDue: "",
-    numActivities: "",
+    numActivities: 0,
   };
   let allAssignments = [];
   let allAssignmentNames = [];
@@ -151,8 +151,8 @@ async function getAssignmentData(grade, chpt, lesson, email) {
   console.log("Assignment Name: ", assignmentName);
 
   try {
-    for(let i = 0; i < allAssignmentNames.length; i++) {
-      if(assignmentName === allAssignmentNames[i]) {
+    for (let i = 0; i < allAssignmentNames.length; i++) {
+      if (assignmentName === allAssignmentNames[i]) {
         assignment.dateAssigned = allAssignments[i].dateAssigned;
         assignment.dateDue = allAssignments[i].dateDue;
         assignment.numActivities = allAssignments[i].numActivities;
@@ -162,16 +162,15 @@ async function getAssignmentData(grade, chpt, lesson, email) {
       //   console.log("Assignment not found");
       // }
     }
-    console.log("Assignment: ", assignment);
+    //console.log("Assignment: ", assignment);
   } catch (error) {
     console.log("Error in getAssignmentData():", error);
   }
 
   return assignment;
-  
 }
 
-async function getCompletionsData(email){
+async function getCompletionsData(email) {
   console.log(
     `\n\tgetCompletionsData() called. Now in ${email} Completions\n\t\tEMAIL:`,
     email
@@ -192,10 +191,10 @@ async function getCompletionsData(email){
     console.log("Error in getCompletionsData():", error);
   }
 
-  console.log("Completions: ", completionsList);
+  //console.log("Completions: ", completionsList);
   return completionsList;
 }
-async function getCompletionData(grade,chpt,lesson,activity,email){
+async function getCompletionData(grade, chpt, lesson, activity, email) {
   console.log(
     `\n\tgetCompletionData() called. Now in ${grade} ${chpt} ${lesson} ${activity} Completions\n\t\tEMAIL:`,
     email
@@ -228,8 +227,8 @@ async function getCompletionData(grade,chpt,lesson,activity,email){
   console.log("Completion Name: ", completionName);
 
   try {
-    for(let i = 0; i < allCompletionNames.length; i++) {
-      if(completionName === allCompletionNames[i]) {
+    for (let i = 0; i < allCompletionNames.length; i++) {
+      if (completionName === allCompletionNames[i]) {
         completion.submissionTime = allCompletions[i].submissionTime;
         break;
       }
@@ -237,12 +236,82 @@ async function getCompletionData(grade,chpt,lesson,activity,email){
       //   console.log("Completion not found");
       // }
     }
-    console.log("Completion: ", completion);
+    //console.log("Completion: ", completion);
   } catch (error) {
     console.log("Error in getCompletionData():", error);
   }
   return completion;
-
 }
 
-export { getGradeData, getLessonsData, getAssignmentsData, getAssignmentData, getCompletionData, getCompletionsData };
+async function getStudents(classCode) {
+  // const docSnapshot = await db.collection("teachers").doc(email).get();
+  // const codeArray = docSnapshot.data().classes;
+  let adminCode = classCode;
+  // for (let i = 0; i < codeArray.length; i++) {
+  //   if (codeArray[i] === classCode) {
+  //     adminCode = codeArray[i];
+  //     break; // Exit loop once the admin code is found
+  //   }
+  // }
+  //console.log("Admin Code: ", adminCode);
+  let students = [];
+  let users = [];
+  let userClassCodes = [];
+  try {
+    await db
+      .collection("users")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          users.push(doc.data());
+          userClassCodes.push(doc.data().classCode);
+        });
+      });
+  } catch (error) {
+    console.log("Error in getting users collection");
+  }
+
+  //console.log("Users: ", users, userClassCodes);
+  for (let i = 0; i < userClassCodes.length; i++) {
+    if (userClassCodes[i] === adminCode) {
+      students.push(users[i]);
+    }
+  }
+  //console.log("Students: ", students);
+  return students;
+}
+
+async function getCompletedPerAssignment(assignment, classCode) {
+  let completed = 0;
+  const students = await getStudents(classCode);
+  const total = students.length;
+
+  for (const student of students) {
+    const userCompletionsSnapshot = await db
+      .collection("users")
+      .doc(student.email)
+      .collection("Completions")
+      .get();
+
+    userCompletionsSnapshot.forEach((doc) => {
+      //let completion = doc.data();
+      let id = doc.id;
+      if (id === assignment) {
+        completed++;
+      }
+    });
+  }
+  //console.log("Completed: ", completed);
+  return completed + "/" + total;
+}
+
+export {
+  getGradeData,
+  getLessonsData,
+  getAssignmentsData,
+  getAssignmentData,
+  getCompletionData,
+  getCompletionsData,
+  getStudents,
+  getCompletedPerAssignment,
+};

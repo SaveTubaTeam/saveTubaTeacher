@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { getLessonsData } from "../data/dataFunctions";
+import {
+  getLessonsData,
+  getCompletionsData,
+  getCompletedPerAssignment,
+} from "../data/dataFunctions";
 
 const columns = [
   { field: "chapter", headerName: "Chapter", width: 90 },
@@ -16,47 +20,76 @@ const columns = [
   {
     field: "dateCompleted",
     headerName: "Date Completed",
-    description: "This column has a value getter and is not sortable.",
+    description: "Time and date the activity was completed",
     sortable: false,
     width: 160,
   },
 ];
 
-export default function TableExample({ chapter, lesson, activity }) {
+const language = "en";
+
+export default function TableExample({
+  grade,
+  chapter,
+  lesson,
+  activity,
+  email,
+  classCode,
+}) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!chapter) return;
+      if (!chapter || !email || !classCode) return;
 
       try {
-        const lessons = await getLessonsData("Grade5", chapter, "en");
+        const lessons = await getLessonsData(grade, chapter, language);
 
         const chapterNumber = parseInt(chapter.replace(/\D/g, ""), 10) || 0;
 
-        const filteredLessons = lessons
-          .filter((l) => !lesson || l.navigation === lesson)
-          .flatMap((l) => {
-            const lessonNumber = parseInt(l.title.replace(/\D/g, ""), 10) || 0;
-            return l.masteryAndMinigames.map((activity, index) => ({
-              id: `${l.navigation}-${activity.navigation}`,
-              chapter: chapterNumber,
-              lesson: lessonNumber,
-              activity: activity.navigation,
-              studentsCompleted: 0,
-              dateCompleted: "",
-            }));
-          })
-          .filter((a) => !activity || a.activity === activity);
+        const filteredLessons = await Promise.all(
+          lessons
+            .filter((l) => !lesson || l.navigation === lesson)
+            .flatMap((l) => {
+              const lessonNumber =
+                parseInt(l.title.replace(/\D/g, ""), 10) || 0;
+              const lessonPath =
+                "G" +
+                grade.substring(5) +
+                "C" +
+                chapterNumber +
+                "L" +
+                lessonNumber;
+              return l.masteryAndMinigames.map(async (activity) => {
+                const activityId = `${lessonPath}_${activity.navigation}`;
+                const completedCount = await getCompletedPerAssignment(
+                  activityId,
+                  classCode
+                );
+                return {
+                  id: activityId,
+                  chapter: chapterNumber,
+                  lesson: lessonNumber,
+                  activity: activity.navigation,
+                  studentsCompleted: completedCount,
+                  dateCompleted: "...",
+                };
+              });
+            })
+        );
 
-        setRows(filteredLessons);
+        const activitiesFiltered = (await Promise.all(filteredLessons)).filter(
+          (a) => !activity || a.activity === activity
+        );
+
+        setRows(activitiesFiltered);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [chapter, lesson, activity]);
+  }, [chapter, lesson, activity, email, classCode]);
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
