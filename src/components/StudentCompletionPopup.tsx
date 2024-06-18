@@ -23,13 +23,17 @@ interface StudentCompletionPopupProps {
 }
 
 function checkDateCompleted(rowData: StudentCompletionPopupProps["rowData"]) {
-  if(rowData.dateCompleted.length === 0) {
-    return <Typography variant="body1">No students have completed this activity yet.</Typography>
-  }
-  else{
+  if (rowData.dateCompleted.length === 0) {
+    return (
+      <Typography variant="body1">
+        No students have completed this activity yet.
+      </Typography>
+    );
+  } else {
     return rowData.dateCompleted.map((date, index) => (
       <Typography key={index} variant="body1">
-        <strong>Name:</strong> {date.firstName} {date.lastName}{" "}
+        <strong>Name:</strong> {date.firstName} {date.lastName}
+        <span> </span>
         <strong>Date Completed:</strong> {date.dateCompleted}
       </Typography>
     ));
@@ -41,26 +45,16 @@ const StudentCompletionPopup: React.FC<StudentCompletionPopupProps> = ({
   onClose,
   rowData,
 }) => {
+  const popupStyle = {
+    fontFamily: "Montserrat, sans-serif",
+  };
+
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} style={popupStyle}>
       <DialogTitle>Student Completion Dates</DialogTitle>
-      <DialogContent>
-        {/* <Typography variant="body1">
-          <strong>Chapter:</strong> {rowData.chapter}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Lesson:</strong> {rowData.lesson}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Activity:</strong> {rowData.activity}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Students Completed:</strong> {rowData.studentsCompleted}
-        </Typography> */}
-        {checkDateCompleted(rowData)}
-      </DialogContent>
+      <DialogContent>{checkDateCompleted(rowData)}</DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose} color="success">
           Close
         </Button>
       </DialogActions>

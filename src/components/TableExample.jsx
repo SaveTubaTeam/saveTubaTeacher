@@ -49,12 +49,15 @@ export default function TableExample({
       headerName: "Date Completed",
       description: "Time and date the activity was completed",
       sortable: false,
-      width: 160,
+      width: 145,
       renderCell: (params) => (
         <Container>
           <Button
             variant="contained"
-            color="primary"
+            color="success"
+            sx = {{
+              fontFamily: "Montserrat, sans-serif",
+            }}
             onClick={() => handleOpenPopup(params.row)}
           >
             View
