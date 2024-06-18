@@ -36,16 +36,15 @@ function Dashboard() {
     return console.log(students);
   }
 
-  function FetchAssignmentCompletion() {
-    const assignment = "G2C1L1_Mastery";
-    return console.log(getCompletedPerAssignment(assignment, classCode));
-  }
+  // function FetchAssignmentCompletion() {
+  //   const assignment = "G2C1L1_Mastery";
+  //   return console.log(getCompletedPerAssignment(assignment, classCode));
+  // }
 
   return (
     <Container>
       <div>
         <FetchStudents />
-        <FetchAssignmentCompletion />
         <h1 style={{ fontWeight: "bold" }}>Interface Elements</h1>
         <ClassButton
           title="Grade 1"

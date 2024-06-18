@@ -277,14 +277,15 @@ async function getStudents(classCode) {
       students.push(users[i]);
     }
   }
-  //console.log("Students: ", students);
+  console.log("Students: ", students);
   return students;
 }
 
 async function getCompletedPerAssignment(assignment, classCode) {
   let completed = 0;
   const students = await getStudents(classCode);
-  const total = students.length;
+  const studentCompletions = [];
+  console.log("Assignment: ", assignment);
 
   for (const student of students) {
     const userCompletionsSnapshot = await db
@@ -294,16 +295,27 @@ async function getCompletedPerAssignment(assignment, classCode) {
       .get();
 
     userCompletionsSnapshot.forEach((doc) => {
-      //let completion = doc.data();
       let id = doc.id;
       if (id === assignment) {
-        completed++;
+        studentCompletions.push({ id, ...doc.data(), firstName: student.firstName, lastName: student.lastName});
       }
     });
   }
-  //console.log("Completed: ", completed);
-  return completed + "/" + total;
+
+  console.log("Student Completions: ", studentCompletions);
+  return studentCompletions;
 }
+
+
+async function getCompletionDates(assignment, classCode) {
+  const students = await getStudents(classCode);
+  const studentCompletionDate = {
+    email: "",
+    completionDate: "",
+  };
+}
+// for ()
+// }
 
 export {
   getGradeData,

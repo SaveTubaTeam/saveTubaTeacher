@@ -1,30 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
 import {
   getLessonsData,
-  getCompletionsData,
   getCompletedPerAssignment,
+  getStudents,
 } from "../data/dataFunctions";
-
-const columns = [
-  { field: "chapter", headerName: "Chapter", width: 90 },
-  { field: "lesson", headerName: "Lesson", width: 90, editable: false },
-  { field: "activity", headerName: "Activity", width: 150, editable: false },
-  {
-    field: "studentsCompleted",
-    headerName: "Number of Students Completed",
-    width: 250,
-    editable: false,
-  },
-  {
-    field: "dateCompleted",
-    headerName: "Date Completed",
-    description: "Time and date the activity was completed",
-    sortable: false,
-    width: 160,
-  },
-];
+import StudentCompletionPopup from "../components/StudentCompletionPopup";
+import { Container } from "@mui/material";
 
 const language = "en";
 
@@ -37,6 +21,48 @@ export default function TableExample({
   classCode,
 }) {
   const [rows, setRows] = useState([]);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleOpenPopup = (rowData) => {
+    setSelectedRow(rowData);
+    setPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+    setSelectedRow(null);
+  };
+
+  const columns = [
+    { field: "chapter", headerName: "Chapter", width: 90 },
+    { field: "lesson", headerName: "Lesson", width: 90, editable: false },
+    { field: "activity", headerName: "Activity", width: 150, editable: false },
+    {
+      field: "studentsCompleted",
+      headerName: "Number of Students Completed",
+      width: 250,
+      editable: false,
+    },
+    {
+      field: "dateCompleted",
+      headerName: "Date Completed",
+      description: "Time and date the activity was completed",
+      sortable: false,
+      width: 160,
+      renderCell: (params) => (
+        <Container>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleOpenPopup(params.row)}
+          >
+            View
+          </Button>
+        </Container>
+      ),
+    },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,17 +88,34 @@ export default function TableExample({
                 lessonNumber;
               return l.masteryAndMinigames.map(async (activity) => {
                 const activityId = `${lessonPath}_${activity.navigation}`;
-                const completedCount = await getCompletedPerAssignment(
-                  activityId,
-                  classCode
+                const completedAssignmentsArray =
+                  await getCompletedPerAssignment(activityId, classCode);
+
+                let students = await getStudents(classCode);
+                let total = students.length;
+                let completedCount =
+                  completedAssignmentsArray.length + "/" + total;
+
+                let dateCompleted = completedAssignmentsArray.map(
+                  (completion) => {
+                    // const student = students.find(
+                    //   (student) => student.email === completion.email
+                    // );
+                    return {
+                      firstName: completion.firstName,
+                      lastName: completion.lastName,
+                      dateCompleted: completion.submissionTime,
+                    };
+                  }
                 );
+
                 return {
                   id: activityId,
                   chapter: chapterNumber,
                   lesson: lessonNumber,
                   activity: activity.navigation,
                   studentsCompleted: completedCount,
-                  dateCompleted: "...",
+                  dateCompleted: dateCompleted,
                 };
               });
             })
@@ -110,6 +153,13 @@ export default function TableExample({
         checkboxSelection
         disableRowSelectionOnClick
       />
+      {selectedRow && (
+        <StudentCompletionPopup
+          open={popupOpen}
+          onClose={handleClosePopup}
+          rowData={selectedRow}
+        />
+      )}
     </Box>
   );
 }
