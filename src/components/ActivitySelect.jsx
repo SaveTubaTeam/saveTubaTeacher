@@ -6,11 +6,11 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getLessonsData } from "../data/dataFunctions";
 
-export default function ActivitySelect({ chapter, lesson, onChange }) {
-  const grade = "Grade5"; // Static grade value
-  const languageCode = "en"; // Static language code
+export default function ActivitySelect({ grade, chapter, lesson, onChange }) { 
+  const languageCode = "en";
   const [activity, setActivity] = useState("");
-  const [activities, setActivities] = useState([]); // State to store the activities
+  const [activities, setActivities] = useState([]);
+  const defaultActivites = ["Mastery", "Image Boom", "Memory", "Snapshot", "Sorting", "Quiz", "Reorder"];
 
   const handleChange = (event) => {
     const selectedActivity = event.target.value;
@@ -42,6 +42,22 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
     fetchData();
   }, [chapter, lesson, languageCode]);
 
+  function checkActivites() {
+    if (activities.length === 0) {
+      return defaultActivites.map((activity, index) => (
+        <MenuItem key={index} value={activity} style={{ fontFamily: "Montserrat, sans-serif" }}>
+          {activity}
+        </MenuItem>
+      ));
+    } else {
+      return activities.map((activity, index) => (
+        <MenuItem key={index} value={activity.navigation} style={{ fontFamily: "Montserrat, sans-serif" }}>
+          {activity.navigation}
+        </MenuItem>
+      ));
+    }
+  }
+
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -62,11 +78,12 @@ export default function ActivitySelect({ chapter, lesson, onChange }) {
           onChange={handleChange}
         >
           <MenuItem value="" style ={{fontFamily: "Montserrat, sans-serif"}}>No Option</MenuItem>
-          {activities.map((activity, index) => (
+          {/* {activities.map((activity, index) => (
             <MenuItem key={index} value={activity.navigation} style ={{fontFamily: "Montserrat, sans-serif"}}>
               {activity.navigation}
             </MenuItem>
-          ))}
+          ))} */}
+          {checkActivites()}
         </Select>
       </FormControl>
     </Box>

@@ -92,18 +92,7 @@ const pdata = [
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div
-        className="custom-tooltip"
-        style={{
-          backgroundColor: "#CCE882",
-          padding: "5px",
-          borderRadius: "5px",
-          color: "black",
-          opacity: "0.8",
-          fontSize: "12px",
-          fontFamily: "Montserrat, sans-serif",
-        }}
-      >
+      <div>
         <p className="label" style={{ fontWeight: "bold" }}>{`${label}`}</p>
         <p className="intro">{`Completion Rate: ${payload[0].value}%`}</p>
         <p className="desc">{`Number of Students: ${payload[0].payload.numStudents}`}</p>
@@ -116,14 +105,15 @@ const CustomTooltip = ({ active, payload, label }) => {
 export default function CompletionTimeLine() {
   return (
     <>
+    <div className="chart-container">
       <h1
         className="text-heading"
         style={{ fontFamily: "Montserrat, sans-serif" }}
       >
         Assignment Completion Rate Over Time
       </h1>
-      <ResponsiveContainer width="125%" aspect={3}>
-        <LineChart data={pdata} margin={{ right: 250 }}>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={pdata}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="name"
@@ -149,6 +139,7 @@ export default function CompletionTimeLine() {
           <Line dataKey="completionRate" stroke="green" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
+    </div>
     </>
   );
 }

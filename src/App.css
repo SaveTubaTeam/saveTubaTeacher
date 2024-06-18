@@ -5,16 +5,20 @@
 body, html {
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  height: 100%; /* Ensure the body takes full height */
 }
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 56px 56px 426px;
+  grid-template-rows: 56px 56px auto auto;
   gap: 10px;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh; /* Ensure grid container takes at least full viewport height */
   padding: 0;
   margin: 0;
+  overflow: hidden; /* Prevent content from overflowing horizontally */
 }
 .adjustclass {
   grid-column: span 2;
@@ -34,13 +38,11 @@ body, html {
   display: flex;
   gap: 20px;
 }
-
-/* Add a color to the active/current link */
 .navbar a.imgs {
   padding: 0px;
 }
 .navbar img {
-  height: 56px; /* adjust the height as needed */
+  height: 56px;
   vertical-align: middle;
 }
 .sss {
@@ -50,96 +52,52 @@ body, html {
   margin-top: 10px;
 }
 
-.MuiDataGrid-columnHeaders{
-  background-color: #E4F5B8;
-}
 .completionTime {
-  grid-column: span 1;
-  padding: 12px;
-  overflow: hidden;
+  grid-column: span 2;
+  background-color: #ffffff;
+  display: flex;
+  gap: 10px;
+}
+.completionTime2{
   background-color: #CCE882;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-#activitycomp {
-  grid-column: span 1;
-  height: 100%;
-  padding: 12px;
-  overflow: hidden;
+.Buttonsss {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
 }
-
+.select-container {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  flex: 1;
+  margin: 0 5px;
+}
 .dayrange {
   background-color: #CCE882;
   height: 35px;
   padding: 10px;
   border-radius: 15px;
 }
-#asa{
-  margin-left:10px;
+.chart-full {
+  flex: 1;
+  display: flex;
 }
-
-.recharts-responsive-container {
+.chart-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 }
-.chart-container {
-  width: 100%;
-  height: 400px;
-}
-
-.custom-tooltip {
-  background-color: #CCE882;
-  padding: 5px;
-  border-radius: 5px;
-  color: black;
-  opacity: 0.8;
-  font-size: 12px;
-}
-.profile{
-  float:le ft;
-}
-
-.profile-page {
+.additional-charts {
+  grid-column: span 2;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #e7e7e7;
+  gap: 10px;
+  overflow: hidden; /* Prevent overflow horizontally */
 }
-
-.profile-card {
-  background-color: #CCE882;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  text-align: center;
-  width: 300px;
-}
-
-.profile-img {
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  margin-bottom: 20px;
-}
-
-h2 {
-  margin: 10px 0;
-}
-
-h3 {
-  margin: 20px 0 10px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  background-color: #f5f5f5;
-  border-radius: 5px;
-  margin: 5px 0;
-  padding: 10px;
-}
-

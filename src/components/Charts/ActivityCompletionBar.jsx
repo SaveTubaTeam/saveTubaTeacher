@@ -4,17 +4,7 @@ import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContaine
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div
-        className="custom-tooltip"
-        style={{
-          backgroundColor: "#CCE882",
-          padding: "5px",
-          borderRadius: "5px",
-          color: "black",
-          opacity: "0.8",
-          fontSize: "12px",
-        }}
-      >
+      <div>
         <p className="label">{`${label}`}</p>
         <p className="intro">{`Completion Rate: ${payload[0].value}%`}</p>
       </div>
@@ -35,16 +25,18 @@ const ActivityCompletionBar = ({
   ]
 }) => (
   <>
-    <h1 className="text-heading">Completion Rate By Activity</h1>
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data}>
-        <Bar dataKey="students" fill="#74B72E" barSize={70} radius={[10, 10, 0, 0]} />
-        <Tooltip content={<CustomTooltip />} />
-        <CartesianGrid stroke="#ccc" strokeDasharray="3 3" vertical={false} />
-        <XAxis dataKey="name" interval={"preserveStartEnd"} tick={{ fontSize: "14px", fontFamily: "Arial" }} />
-        <YAxis tick={{ fontSize: "14px", fontFamily: "Arial" }} label={{ value: 'Completion Rate (%)', angle: -90, position: 'insideLeft', offset: 10, fill: '#666' }} />
-      </BarChart>
-    </ResponsiveContainer>
+    <div className="chart-container">
+      <h1 className="text-heading">Completion Rate By Activity</h1>
+      <ResponsiveContainer>
+        <BarChart data={data}>
+          <Bar dataKey="students" fill="#74B72E"/>
+          <Tooltip content={<CustomTooltip />} />
+          <CartesianGrid stroke="#ccc" strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="name" interval={"preserveStartEnd"} tick={{ fontSize: "14px", fontFamily: "Arial" }} />
+          <YAxis tick={{ fontSize: "14px", fontFamily: "Arial" }} label={{ value: 'Completion Rate (%)', angle: -90, position: 'insideLeft', offset: 10, fill: '#666' }} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   </>
 );
 
