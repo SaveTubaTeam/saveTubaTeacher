@@ -10,15 +10,6 @@ import ResetGridButton from "../components/ResetGridButton";
 import CompletionTimeLine from "../components/Charts/CompletionTimeLine";
 import ActivityCompletionBar from "../components/Charts/ActivityCompletionBar";
 import TotalActivityCompletionPie from "../components/Charts/TotalActivityCompletionPie";
-import TimeButtonGroup from "../components/TimeButtonGroup";
-import {
-  getAssignmentsData,
-  getAssignmentData,
-  getCompletionData,
-  getCompletionsData,
-  getStudents,
-  getCompletedPerAssignment,
-} from "../data/dataFunctions";
 import AssignmentCheckbox from "../components/AssignmentCheckbox";
 import ClassButton from "../components/ClassButton";
 
@@ -31,11 +22,6 @@ function Dashboard() {
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
 
-  function FetchStudents() {
-    const students = getStudents(classCode);
-    return console.log(students);
-  }
-
   // function FetchAssignmentCompletion() {
   //   const assignment = "G2C1L1_Mastery";
   //   return console.log(getCompletedPerAssignment(assignment, classCode));
@@ -44,7 +30,6 @@ function Dashboard() {
   return (
     <Container>
       <div>
-        <FetchStudents />
         <h1 style={{ fontWeight: "bold" }}>Interface Elements</h1>
         <ClassButton
           title="Grade 1"
@@ -62,7 +47,6 @@ function Dashboard() {
           onClick={() => setHighlightedButton("Grade 3")}
         />
         <DateSlider />
-        <TimeButtonGroup />
         <ChapterSelect
           grade={grade}
           onChange={(chapter) => setSelectedChapter(chapter)}

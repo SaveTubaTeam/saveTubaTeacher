@@ -5,6 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
+import { styled } from "@mui/system";
 
 interface StudentCompletionPopupProps {
   open: boolean;
@@ -22,20 +23,37 @@ interface StudentCompletionPopupProps {
   };
 }
 
+const StyledDialogTitle = styled(DialogTitle)({
+  fontFamily: "Montserrat, sans-serif",
+});
+
+const StyledDialogContent = styled(DialogContent)({
+  fontFamily: "Montserrat, sans-serif",
+});
+
+const StyledTypography = styled(Typography)({
+  fontFamily: "Montserrat, sans-serif",
+  marginBottom: "8px",
+});
+
+const StyledButton = styled(Button)({
+  fontFamily: "Montserrat, sans-serif",
+});
+
 function checkDateCompleted(rowData: StudentCompletionPopupProps["rowData"]) {
   if (rowData.dateCompleted.length === 0) {
     return (
-      <Typography variant="body1">
+      <StyledTypography variant="body1">
         No students have completed this activity yet.
-      </Typography>
+      </StyledTypography>
     );
   } else {
     return rowData.dateCompleted.map((date, index) => (
-      <Typography key={index} variant="body1">
+      <StyledTypography key={index} variant="body1">
         <strong>Name:</strong> {date.firstName} {date.lastName}
         <span> </span>
         <strong>Date Completed:</strong> {date.dateCompleted}
-      </Typography>
+      </StyledTypography>
     ));
   }
 }
@@ -44,19 +62,15 @@ const StudentCompletionPopup: React.FC<StudentCompletionPopupProps> = ({
   open,
   onClose,
   rowData,
-}) => {
-  const popupStyle = {
-    fontFamily: "Montserrat, sans-serif",
-  };
-
+}) => { 
   return (
-    <Dialog open={open} onClose={onClose} style={popupStyle}>
-      <DialogTitle>Student Completion Dates</DialogTitle>
-      <DialogContent>{checkDateCompleted(rowData)}</DialogContent>
+    <Dialog open={open} onClose={onClose}>
+      <StyledDialogTitle><strong>Student Completion Dates</strong></StyledDialogTitle>
+      <StyledDialogContent>{checkDateCompleted(rowData)}</StyledDialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="success">
+        <StyledButton onClick={onClose} color="success">
           Close
-        </Button>
+        </StyledButton>
       </DialogActions>
     </Dialog>
   );
