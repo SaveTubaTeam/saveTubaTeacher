@@ -13,6 +13,9 @@ import NavigationBar from "../components/NavigationBar";
 import ResetGridButton from "../components/ResetGridButton";
 import AssignmentCheckbox from "../components/AssignmentCheckbox";
 import ClassButton from "../components/ClassButton";
+import ViewStudentPopup from "../components/ViewStudentsPopup";
+import Button from "@mui/material/Button";
+import { Container } from "@mui/material";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -20,13 +23,17 @@ function Dashboard() {
   const grade = "Grade2";
   const [selectedChapter, setSelectedChapter] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
+  const [popupOpen, setPopupOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
-
-  // function FetchAssignmentCompletion() {
-  //   const assignment = "G2C1L1_Mastery";
-  //   return console.log(getCompletedPerAssignment(assignment, classCode));
-  // }
+  
+  const handleOpenPopup = () => {
+    setPopupOpen(true);
+  };
+  
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
 
   return (
     <>
@@ -75,7 +82,22 @@ function Dashboard() {
                 classCode={classCode}
               />
             </div>
+            <Container sx={{ textAlign: "center", marginTop: 2 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleOpenPopup}
+                sx={{ fontFamily: "Montserrat, sans-serif" }}
+              >
+                View Students
+              </Button>
+            </Container>
             <ResetGridButton />
+            <ViewStudentPopup
+              open={popupOpen}
+              onClose={handleClosePopup}
+              classCode={classCode}
+            />
           </div>
           <div className="chart-full">
             <ActivityCompletionBar />
