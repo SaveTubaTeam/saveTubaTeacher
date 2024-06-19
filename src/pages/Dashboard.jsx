@@ -82,8 +82,17 @@ function Dashboard() {
                 classCode={classCode}
               />
             </div>
-            <Container sx={{ textAlign: "center", marginTop: 2 }}>
-              <Button
+              {/* <Button
+                variant="contained"
+                color="primary"
+                onClick={handleOpenPopup}
+                sx={{ fontFamily: "Montserrat, sans-serif" }}
+              >
+                View Students
+              </Button> */}
+            <div className="se">
+            <ResetGridButton />
+            <Button
                 variant="contained"
                 color="primary"
                 onClick={handleOpenPopup}
@@ -91,13 +100,12 @@ function Dashboard() {
               >
                 View Students
               </Button>
-            </Container>
-            <ResetGridButton />
-            <ViewStudentPopup
+              <ViewStudentPopup
               open={popupOpen}
               onClose={handleClosePopup}
               classCode={classCode}
             />
+            </div>
           </div>
           <div className="chart-full">
             <ActivityCompletionBar />

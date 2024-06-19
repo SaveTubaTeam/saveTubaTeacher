@@ -102,3 +102,12 @@ body, html {
   font-family: "Monsterrat", sans-serif;
   overflow: hidden; /* Prevent overflow horizontally */
 }
+.se{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+
