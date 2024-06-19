@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { db } from './firebaseConfig';
 import './TeacherProfile.css';
+import '../App.css';
+import NavigationBar from '../components/NavigationBar';
 
 const Profile = () => {
   const [teachers, setTeachers] = useState([]);
@@ -23,6 +25,7 @@ const Profile = () => {
 
   return (
     <div className="profiles-container">
+      <NavigationBar />
       {teachers.map((teacher, index) => (
         <div key={index} className="profile-container">
           <h1>Teacher Profile</h1>

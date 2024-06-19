@@ -2,9 +2,9 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 
 
-export default function ClassButton(props) {
+export default function PlusButton(props) {
   return (
-      <Button variant="contained" color="success">
+      <Button variant="contained" color="info">
         {props.title}
       </Button>
   );
