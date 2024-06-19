@@ -6,8 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getGradeData } from "../data/dataFunctions";
 
-export default function ChapterSelect({ onChange }) {
-  const grade = "Grade5"; // Static grade value
+export default function ChapterSelect({grade, onChange }) {
   const [chapter, setChapter] = useState("");
   const [chapters, setChapters] = useState([]); // State to store the chapters
 

@@ -6,8 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getLessonsData } from "../data/dataFunctions";
 
-export default function LessonSelect({ chapter, onChange }) {
-  const grade = "Grade5"; // Static grade value
+export default function LessonSelect({ grade, chapter, onChange }) {
   const languageCode = "en"; // Static language code
   const [lesson, setLesson] = useState("");
   const [lessons, setLessons] = useState([]); // State to store the lessons

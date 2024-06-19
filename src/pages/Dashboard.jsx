@@ -10,11 +10,25 @@ import ActivityCompletionBar from '../components/Charts/ActivityCompletionBar';
 import AssignmentCompletionPieChart from '../components/Charts/AssignmentCompletionPieChart';
 import TimeButtonGroup from '../components/TimeButtonGroup';
 import NavigationBar from '../components/NavigationBar';
+import ResetGridButton from "../components/ResetGridButton";
+import CompletionTimeLine from "../components/Charts/CompletionTimeLine";
+import ActivityCompletionBar from "../components/Charts/ActivityCompletionBar";
+import AssignmentCheckbox from "../components/AssignmentCheckbox";
+import ClassButton from "../components/ClassButton";
 
 function Dashboard() {
-  const [selectedChapter, setSelectedChapter] = useState('');
-  const [selectedLesson, setSelectedLesson] = useState('');
-  const [selectedActivity, setSelectedActivity] = useState('');
+  const email = "testteacher1@gmail.com";
+  const classCode = "000000";
+  const grade = "Grade2";
+  const [selectedChapter, setSelectedChapter] = useState("");
+  const [selectedLesson, setSelectedLesson] = useState("");
+  const [selectedActivity, setSelectedActivity] = useState("");
+  const [highlightedButton, setHighlightedButton] = useState("");
+
+  // function FetchAssignmentCompletion() {
+  //   const assignment = "G2C1L1_Mastery";
+  //   return console.log(getCompletedPerAssignment(assignment, classCode));
+  // }
 
   return (
     <>
@@ -59,3 +73,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
