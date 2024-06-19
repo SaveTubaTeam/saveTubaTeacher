@@ -22,12 +22,6 @@ function Dashboard() {
   const [selectedLesson, setSelectedLesson] = useState("");
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
-
-  // function FetchAssignmentCompletion() {
-  //   const assignment = "G2C1L1_Mastery";
-  //   return console.log(getCompletedPerAssignment(assignment, classCode));
-  // }
-
   return (
     <>
       <div className="grid-container">
