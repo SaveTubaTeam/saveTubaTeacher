@@ -306,17 +306,22 @@ async function getCompletedPerAssignment(assignment, classCode) {
   return studentCompletions;
 }
 
-
-async function getCompletionDates(assignment, classCode) {
-  const students = await getStudents(classCode);
-  const studentCompletionDate = {
-    email: "",
-    completionDate: "",
-  };
+async function getClassroomStudents(classCode) {
+  let students = [];
+  try{
+    await db.collection("classrooms").get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if(doc.id === classCode){
+          students = doc.data().students;
+        }
+      });
+    });
+  
+  } catch (error) {
+    console.log("Error in getting classroom students", error);
+  }
+  return students;
 }
-// for ()
-// }
-
 export {
   getGradeData,
   getLessonsData,
@@ -326,4 +331,5 @@ export {
   getCompletionsData,
   getStudents,
   getCompletedPerAssignment,
+  getClassroomStudents,
 };
