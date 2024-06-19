@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import TableExample from '../components/TableExample';
-import ChapterSelect from '../components/ChapterSelect';
-import LessonSelect from '../components/LessonSelect';
-import ActivitySelect from '../components/ActivitySelect';
-import '../App.css';
-import DateSlider from '../components/DateSlider';
-import CompletionTimeLine from '../components/Charts/CompletionTimeLine';
-import ActivityCompletionBar from '../components/Charts/ActivityCompletionBar';
-import AssignmentCompletionPieChart from '../components/Charts/AssignmentCompletionPieChart';
-import TimeButtonGroup from '../components/TimeButtonGroup';
-import NavigationBar from '../components/NavigationBar';
-import ResetGridButton from "../components/ResetGridButton";
+import React, { useState } from "react";
+import TableExample from "../components/TableExample";
+import ChapterSelect from "../components/ChapterSelect";
+import LessonSelect from "../components/LessonSelect";
+import ActivitySelect from "../components/ActivitySelect";
+import "../App.css";
+import DateSlider from "../components/DateSlider";
 import CompletionTimeLine from "../components/Charts/CompletionTimeLine";
 import ActivityCompletionBar from "../components/Charts/ActivityCompletionBar";
+import AssignmentCompletionPieChart from "../components/Charts/AssignmentCompletionPieChart";
+import TimeButtonGroup from "../components/TimeButtonGroup";
+import NavigationBar from "../components/NavigationBar";
+import ResetGridButton from "../components/ResetGridButton";
 import AssignmentCheckbox from "../components/AssignmentCheckbox";
 import ClassButton from "../components/ClassButton";
 
@@ -46,18 +44,38 @@ function Dashboard() {
           <div className="completionTime2">
             <div className="Buttonsss">
               <div className="select-container">
-                <ChapterSelect onChange={(chapter) => setSelectedChapter(chapter)} />
+                <ChapterSelect
+                  grade={grade}
+                  onChange={(chapter) => setSelectedChapter(chapter)}
+                />
               </div>
               <div className="select-container">
-                <LessonSelect chapter={selectedChapter} onChange={(lesson) => setSelectedLesson(lesson)} />
+                <LessonSelect
+                  grade={grade}
+                  chapter={selectedChapter}
+                  onChange={(lesson) => setSelectedLesson(lesson)}
+                />
               </div>
               <div className="select-container">
-                <ActivitySelect chapter={selectedChapter} lesson={selectedLesson} onChange={(activity) => setSelectedActivity(activity)} />
+                <ActivitySelect
+                  grade={grade}
+                  chapter={selectedChapter}
+                  lesson={selectedLesson}
+                  onChange={(activity) => setSelectedActivity(activity)}
+                />
               </div>
             </div>
             <div className="table-container">
-              <TableExample chapter={selectedChapter} lesson={selectedLesson} activity={selectedActivity} />
+              <TableExample
+                grade={grade}
+                chapter={selectedChapter}
+                lesson={selectedLesson}
+                activity={selectedActivity}
+                email={email}
+                classCode={classCode}
+              />
             </div>
+            <ResetGridButton />
           </div>
           <div className="chart-full">
             <ActivityCompletionBar />
@@ -73,4 +91,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
