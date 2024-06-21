@@ -91,7 +91,7 @@ async function getLessonsData(grade, chpt, languageCode) {
   return lessonsList;
 }
 
-async function getAssignmentsData(email) {
+async function getAssignmentsData(email, classCode) {
   console.log(
     `\n\tgetAssignmentsData() called. Now in ${email} Assignments\n\t\tEMAIL:`,
     email
@@ -101,7 +101,7 @@ async function getAssignmentsData(email) {
     await db
       .collection("teachers")
       .doc(email)
-      .collection("Assignments")
+      .collection("Assignments" + "_" + classCode)
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
