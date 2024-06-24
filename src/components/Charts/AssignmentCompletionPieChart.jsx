@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { getAssignmentsData, getCompletionsData, getStudents } from "../../data/dataFunctions";
-import { set } from "firebase/database";
 
 const COLORS = ["#8BC34A", "#4CAF50"];
 
