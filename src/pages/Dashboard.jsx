@@ -26,14 +26,20 @@ function Dashboard() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
-  
+
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
-  
+
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
+
+  // function Data(){
+  //   let data = getAssignmentsData(email, classCode);
+  //   console.log(data);
+  // }
+
 
   return (
     <>
@@ -100,12 +106,12 @@ function Dashboard() {
             />
           </div>
           <div className="chart-full">
-            <ActivityCompletionBar />
+           <ActivityCompletionBar email={email} classCode={classCode} />
           </div>
         </div>
         <div className="additional-charts">
           <CompletionTimeLine />
-          <AssignmentCompletionPieChart />
+          <AssignmentCompletionPieChart email={email} classCode={classCode} />
         </div>
       </div>
     </>

@@ -1,10 +1,6 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-
-const defaultData = [
-  { name: "Completed", value: 80 },
-  { name: "Not Completed", value: 20 }
-];
+import { getAssignmentsData, getCompletionsData, getStudents } from "../../data/dataFunctions";
 
 const COLORS = ["#8BC34A", "#4CAF50"];
 
@@ -46,29 +42,66 @@ const renderCustomizedLabel = ({
   );
 };
 
-const AssignmentCompletionPieChart = ({ data = defaultData }) => (
-  <div className="chart-container">
-    <h1 className="text-heading">Total Activity Completion</h1>
-    <ResponsiveContainer>
-      <PieChart>
-        <Pie
-          data={data}
-          cx="50%"
-          cy="50%"
-          outerRadius={150}
-          fill="#8884d8"
-          dataKey="value"
-          label={renderCustomizedLabel}
-          labelLine={false}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip content={<CustomTooltip />} />
-      </PieChart>
-    </ResponsiveContainer>
-  </div>
-);
+const AssignmentCompletionPieChart = ({ email, classCode }) => {
+  const [assignments, setAssignments] = useState([]);
+  const [totalStudents, setTotalStudents] = useState([]);
+  const [totalCompleted, setTotalCompleted] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const assignmentsData = await getAssignmentsData(email, classCode);
+      const studentsData = await getStudents(classCode);
+      let totalCompleted = 0;
+      for (const student of studentsData) {
+        const completionData = await getCompletionsData(student.email);
+        totalCompleted += completionData.length;
+        // console.log("Total Completed:", totalCompleted);
+        setTotalCompleted(totalCompleted);
+      }
+    
+      setAssignments(assignmentsData);
+      setTotalStudents(studentsData);
+    };
+    fetchData();
+  }, [email, classCode]);
+
+
+  let totalAssignments = 0;
+  assignments.forEach(assignment => {
+    totalAssignments += assignment.numActivities;
+  });
+  totalAssignments *= totalStudents.length;
+  //console.log("Total Assignments:", totalAssignments);
+
+  const defaultData = [
+    { name: "Completed", value: totalCompleted },
+    { name: "Not Completed", value: totalAssignments - totalCompleted}
+  ];
+
+  return (
+    <div className="chart-container">
+      <h1 className="text-heading">Total Activity Completion</h1>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={defaultData}
+            cx="50%"
+            cy="50%"
+            outerRadius={150}
+            fill="#8884d8"
+            dataKey="value"
+            label={renderCustomizedLabel}
+            labelLine={false}
+          >
+            {defaultData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip content={<CustomTooltip />} />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
 
 export default AssignmentCompletionPieChart;

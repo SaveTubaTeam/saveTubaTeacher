@@ -91,30 +91,51 @@ async function getLessonsData(grade, chpt, languageCode) {
   return lessonsList;
 }
 
-async function getAssignmentsData(email) {
+async function getMasteryAndMinigamesData(grade, chpt, lesson, languageCode) {
+  console.log(`\n\tgetMasteryAndMinigames() called. Now in ${grade} ${chpt} ${lesson}\n\t\tLANGUAGE_CODE:`, languageCode);
+  console.log(`Pulling ${lesson} mastery and minigames from DB`);
+
+  let masteryAndMinigamesReference = db.collection(grade).doc(chpt).collection(lesson).doc(languageCode).collection("masteryAndMinigames");
+
+  // now getting masteryAndMinigames array
+  let masteryAndMinigamesList = []; 
+  await masteryAndMinigamesReference.get().then((snapshot) => {
+      snapshot.forEach((doc) => { // moving through the snapshot objects individually
+          masteryAndMinigamesList.push(doc.data());
+      });
+  }).catch((error) => {
+      console.log("Error in getLessonsData():", error);
+  });
+
+  console.log("masteryAndMinigames:", masteryAndMinigamesList);
+  return masteryAndMinigamesList;
+}
+
+
+async function getAssignmentsData(email, classCode) {
   console.log(
     `\n\tgetAssignmentsData() called. Now in ${email} Assignments\n\t\tEMAIL:`,
     email
   );
   let assignmentsList = [];
   try {
-    await db
+    const snapshot = await db
       .collection("teachers")
       .doc(email)
-      .collection("Assignments")
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          assignmentsList.push(doc.data());
-        });
-      });
+      .collection("Assignments" + "_" + classCode)
+      .get();
+    
+    snapshot.forEach((doc) => {
+      assignmentsList.push(doc.data());
+    });
   } catch (error) {
     console.log("Error in getAssignmentsData():", error);
   }
 
-  //console.log("Assignments: ", assignmentsList);
+  console.log("Assignments: ", assignmentsList);
   return assignmentsList;
 }
+
 
 async function getAssignmentData(grade, chpt, lesson, email) {
   console.log(
@@ -332,4 +353,5 @@ export {
   getStudents,
   getCompletedPerAssignment,
   getClassroomStudents,
+  getMasteryAndMinigamesData,
 };
