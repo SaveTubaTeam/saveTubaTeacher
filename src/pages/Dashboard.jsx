@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import TableExample from "../components/TableExample";
 import ChapterSelect from "../components/ChapterSelect";
 import LessonSelect from "../components/LessonSelect";
@@ -11,11 +12,8 @@ import AssignmentCompletionPieChart from "../components/Charts/AssignmentComplet
 import TimeButtonGroup from "../components/TimeButtonGroup";
 import NavigationBar from "../components/NavigationBar";
 import ResetGridButton from "../components/ResetGridButton";
-import AssignmentCheckbox from "../components/AssignmentCheckbox";
-import ClassButton from "../components/ClassButton";
 import ViewStudentPopup from "../components/ViewStudentsPopup";
 import Button from "@mui/material/Button";
-import { Container } from "@mui/material";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -26,6 +24,14 @@ function Dashboard() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      navigate('/login'); // Redirect to login page if not logged in
+    }
+  }, [navigate]);
 
   const handleOpenPopup = () => {
     setPopupOpen(true);
@@ -34,12 +40,6 @@ function Dashboard() {
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
-
-  // function Data(){
-  //   let data = getAssignmentsData(email, classCode);
-  //   console.log(data);
-  // }
-
 
   return (
     <>
@@ -52,6 +52,10 @@ function Dashboard() {
           <div id="button22">
             <TimeButtonGroup />
           </div>
+        </div>
+        <div className="additional-charts">
+          <CompletionTimeLine />
+          <AssignmentCompletionPieChart email={email} classCode={classCode} />
         </div>
         <div className="completionTime">
           <div className="completionTime2">
@@ -116,10 +120,6 @@ function Dashboard() {
           <div className="chart-full">
             <ActivityCompletionBar />
           </div>
-        </div>
-        <div className="additional-charts">
-          <CompletionTimeLine />
-          <AssignmentCompletionPieChart email={email} classCode={classCode} />
         </div>
       </div>
     </>

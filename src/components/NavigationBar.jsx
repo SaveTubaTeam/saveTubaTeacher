@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     signOut(auth).then(() => {
-      localStorage.removeItem('email');
+      localStorage.removeItem('user'); // Remove 'user' instead of 'email'
       navigate('/login');
     }).catch((error) => {
       console.log(error.message);

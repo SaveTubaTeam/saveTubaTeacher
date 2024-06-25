@@ -6,11 +6,20 @@ import '../App.css';
 import NavigationBar from '../components/NavigationBar';
 import { getStudents } from '../data/dataFunctions';
 import ClassStudentsPopup from '../components/ClassStudentsPopup';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      navigate('/login'); // Redirect to login page if not logged in
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchData = async () => {

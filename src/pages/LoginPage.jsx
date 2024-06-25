@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './LoginPage.css';
 import { auth, provider } from './firebaseConfig';
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
-import ClassButton from '../components/ClassButton';
 
 function LoginPage() {
   const [value, setValue] = useState('');
@@ -11,8 +10,10 @@ function LoginPage() {
 
   const handleClick = () => {
     signInWithPopup(auth, provider).then((result) => {
-      setValue(result.user.email);
-      localStorage.setItem('email', result.user.email);
+      const userEmail = result.user.email;
+      setValue(userEmail);
+      localStorage.setItem('user', JSON.stringify({ email: userEmail }));
+      navigate('/dashboard'); // Navigate to dashboard after successful login
     })
     .catch((error) => {
       console.log(error.message);
@@ -20,10 +21,10 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    if (email) {
-      setValue(email);
-      navigate('/dashboard'); // Navigate to dashboard after successful login
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setValue(user.email);
+      navigate('/dashboard'); // Navigate to dashboard if user session exists
     }
   }, [navigate]);
 
@@ -35,9 +36,9 @@ function LoginPage() {
           {value ? (
             navigate('/dashboard')
           ) : (
-          <button className="login-with-google-btn"  onClick={handleClick}>
-          Sign in with Google
-          </button>
+            <button className="login-with-google-btn" onClick={handleClick}>
+              Sign in with Google
+            </button>
           )}
         </div>
       </div>
