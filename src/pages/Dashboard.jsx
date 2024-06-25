@@ -12,10 +12,10 @@ import TimeButtonGroup from "../components/TimeButtonGroup";
 import NavigationBar from "../components/NavigationBar";
 import ResetGridButton from "../components/ResetGridButton";
 import AssignmentCheckbox from "../components/AssignmentCheckbox";
-import ClassButton from "../components/ClassButton";
 import ViewStudentPopup from "../components/ViewStudentsPopup";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
+import GradeSelect from "../components/GradeSelect";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";

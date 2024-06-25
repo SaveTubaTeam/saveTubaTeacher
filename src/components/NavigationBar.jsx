@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import iconic from '../assets/iconpic.png';
 import ClassButton from './ClassButton';
-import PlusButton from './PlusButton';
+import CreateClassButton from './CreateClassButton';
 
 
 const Navbar = () => {
@@ -31,7 +31,7 @@ const Navbar = () => {
       ) : (
         <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
       )}
-      <div className="sss"><PlusButton title="+" /></div>
+      <div className="sss"><CreateClassButton title="+" /></div>
     </div>
   );
 };
