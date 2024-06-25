@@ -3,6 +3,7 @@ import './LoginPage.css';
 import { auth, provider } from './firebaseConfig';
 import { signInWithPopup, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import ClassButton from '../components/ClassButton';
 
 function LoginPage() {
   const [value, setValue] = useState('');
@@ -34,9 +35,9 @@ function LoginPage() {
           {value ? (
             navigate('/dashboard')
           ) : (
-            <button className="loginButton" onClick={handleClick}>
-              Login with Google
-            </button>
+          <button className="login-with-google-btn"  onClick={handleClick}>
+          Sign in with Google
+          </button>
           )}
         </div>
       </div>
