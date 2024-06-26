@@ -7,7 +7,7 @@ import {
   getCompletedPerAssignment,
   getStudents,
 } from "../data/dataFunctions";
-import StudentCompletionPopup from "../components/StudentCompletionPopup";
+import StudentCompletionPopup from "./Popups/StudentCompletionPopup";
 import { Container } from "@mui/material";
 
 const language = "en";

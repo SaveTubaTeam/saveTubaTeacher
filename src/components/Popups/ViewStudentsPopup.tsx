@@ -4,18 +4,15 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import { getClassroomStudents } from "../data/dataFunctions";
-import { GradeSelect } from "../components/GradeSelect";
+import { getClassroomStudents } from "../../data/dataFunctions";
 
-interface CreateClassPopupProps {
+interface ViewStudentsPopupProps {
   open: boolean;
   onClose: () => void;
   classCode: string;
 }
-
-
 
 const StyledDialogTitle = styled(DialogTitle)({
   fontFamily: "Montserrat, sans-serif",
@@ -34,7 +31,7 @@ const StyledButton = styled(Button)({
   fontFamily: "Montserrat, sans-serif",
 });
 
-const CreateClassPopup: React.FC<CreateClassPopupProps> = ({
+const ViewStudentPopup: React.FC<ViewStudentsPopupProps> = ({
   open,
   onClose,
   classCode,
@@ -79,4 +76,4 @@ const CreateClassPopup: React.FC<CreateClassPopupProps> = ({
   );
 };
 
-export default CreateClassPopup;
+export default ViewStudentPopup;

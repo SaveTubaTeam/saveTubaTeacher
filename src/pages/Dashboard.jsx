@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import TableExample from "../components/TableExample";
-import ChapterSelect from "../components/ChapterSelect";
-import LessonSelect from "../components/LessonSelect";
-import ActivitySelect from "../components/ActivitySelect";
+import ChapterSelect from "../components/SelectComponents/ChapterSelect";
+import LessonSelect from "../components/SelectComponents/LessonSelect";
+import ActivitySelect from "../components/SelectComponents/ActivitySelect";
 import "../App.css";
 import DateSlider from "../components/DateSlider";
 import CompletionTimeLine from "../components/Charts/CompletionTimeLine";
@@ -12,10 +12,10 @@ import TimeButtonGroup from "../components/TimeButtonGroup";
 import NavigationBar from "../components/NavigationBar";
 import ResetGridButton from "../components/ResetGridButton";
 import AssignmentCheckbox from "../components/AssignmentCheckbox";
-import ViewStudentPopup from "../components/ViewStudentsPopup";
+import ViewStudentPopup from "../components/Popups/ViewStudentsPopup";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
-import GradeSelect from "../components/GradeSelect";
+import GradeSelect from "../components/SelectComponents/GradeSelect";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -44,7 +44,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar />
+        <NavigationBar email={email} />
         <div className="adjustclass">
           <div className="dayrange">
             <DateSlider />
@@ -112,6 +112,7 @@ function Dashboard() {
         <div className="additional-charts">
           <CompletionTimeLine />
           <AssignmentCompletionPieChart email={email} classCode={classCode} />
+          
         </div>
       </div>
     </>

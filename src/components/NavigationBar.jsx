@@ -7,7 +7,7 @@ import ClassButton from './ClassButton';
 import CreateClassButton from './CreateClassButton';
 
 
-const Navbar = () => {
+const Navbar = ( {email} ) => {
   const location = useLocation();
   const [highlightedButton, setHighlightedButton] = useState("");
 
@@ -31,7 +31,7 @@ const Navbar = () => {
       ) : (
         <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
       )}
-      <div className="sss"><CreateClassButton title="+" /></div>
+      <div className="sss"><CreateClassButton title="+" email={email}/></div>
     </div>
   );
 };

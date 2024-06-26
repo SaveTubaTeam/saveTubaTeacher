@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,12 +7,13 @@ import Select from "@mui/material/Select";
 
 const gradeCollections = ["Grade2", "Grade3", "Grade4", "Grade5"];
 
-const GradeSelect = () => {
+const GradeSelect = ({ handleChange }) => {
   const [selectedGrade, setSelectedGrade] = useState("");
 
-  const handleChange = (event) => {
+  const handleGradeChange = (event) => {
     const selectedGrade = event.target.value;
     setSelectedGrade(selectedGrade);
+    handleChange(selectedGrade); // Pass the selected grade to the parent component
   };
 
   return (
@@ -26,7 +27,7 @@ const GradeSelect = () => {
           labelId="grade-select-label"
           id="grade-select"
           value={selectedGrade}
-          onChange={handleChange}
+          onChange={handleGradeChange}
           label="Grade"
         >
           <MenuItem value="" style={{ fontFamily: "Montserrat, sans-serif" }}>

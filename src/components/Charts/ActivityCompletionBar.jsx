@@ -91,10 +91,13 @@ const ActivityCompletionBar = ({ email, classCode }) => {
     fetchData();
   }, [email, classCode]);
 
+  
   const data = activityNames.map(activity => ({
     name: activity,
     students: 0
   }));
+
+
   return (
     <>
       <div className="chart-container">

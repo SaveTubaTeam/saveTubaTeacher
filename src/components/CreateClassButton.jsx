@@ -1,11 +1,26 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import CreateClassPopup from './Popups/CreateClassPopup';
 
+const CreateClassButton = ({ email }) => {
+  const [open, setOpen] = useState(false);
 
-export default function CreateClassButton(props) {
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-      <Button variant="contained" color="info">
-        {props.title}
+    <div>
+      <Button variant="contained" color="success" onClick={handleOpen}>
+        +
       </Button>
+      <CreateClassPopup open={open} onClose={handleClose} email={email}/>
+    </div>
   );
-}
+};
+
+export default CreateClassButton;
