@@ -1,4 +1,3 @@
-// index.js or main.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -8,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import CreateAssignment from './pages/CreateAssignment';
 import ErrorPage from './pages/ErrorPage';
+import LoginPage from './pages/LoginPage';
 
 const router = createBrowserRouter([
   {
@@ -17,16 +17,24 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <LoginPage />,
+      },
+      {
+        path: 'dashboard',
         element: <Dashboard />,
       },
       {
         path: 'profile',
-        element: <Profile />,
+        element: <Profile />,  // Correctly specify the path and element for the profile
       },
       {
         path: 'createassignment',
         element: <CreateAssignment />,
-      }
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
     ]
   }
 ]);

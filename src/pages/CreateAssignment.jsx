@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const CreateAssignment = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-
+    
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     };
@@ -15,7 +17,14 @@ const CreateAssignment = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
     };
+    const navigate = useNavigate();
 
+    useEffect(() => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        navigate('/login'); // Redirect to login page if not logged in
+      }
+    }, [navigate]);
     return (
         <div>
             <h1>Create Assignment</h1>

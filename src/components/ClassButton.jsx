@@ -14,7 +14,7 @@ export default function ClassButton({ title, isHighlighted, onClick }) {
     <HighlightedButton
       variant="contained"
       onClick={onClick}
-      isHighlighted={isHighlighted}
+      ishighlighted={isHighlighted}
     >
       {title}
     </HighlightedButton>

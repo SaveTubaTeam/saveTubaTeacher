@@ -1,15 +1,28 @@
-// Navbar.js
-import * as React from 'react';
+import React from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
 import iconic from '../assets/iconpic.png';
 import ClassButton from './ClassButton';
 import CreateClassButton from './CreateClassButton';
 
+import { signOut } from "firebase/auth";
+import { auth } from '../pages/firebaseConfig';
 
 const Navbar = ( {email} ) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [highlightedButton, setHighlightedButton] = useState("");
+
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      localStorage.removeItem('user'); // Remove 'user' instead of 'email'
+      navigate('/login');
+    }).catch((error) => {
+      console.log(error.message);
+    });
+  };
+
 
 
   return (
@@ -25,12 +38,13 @@ const Navbar = ( {email} ) => {
           isHighlighted={highlightedButton === "Grade 2"}
           onClick={() => setHighlightedButton("Grade 2")}
         /></div>
-    
-      {location.pathname === '/' ? (
-        <div className="sss"><Link to="/profile"><ClassButton title="Profile" /></Link></div>
-      ) : (
+      {location.pathname === '/profile' ? (
         <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
+      ) : (
+        <div className="sss"><Link to="/profile"><ClassButton title="Profile" /></Link></div>
       )}
+      <div className="sss"><PlusButton title="+" /></div>
+      <div className="sss"><ClassButton title="Logout" onClick={handleLogout} /></div>
       <div className="sss"><CreateClassButton title="+" email={email}/></div>
     </div>
   );

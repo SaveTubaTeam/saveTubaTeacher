@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import TableExample from "../components/TableExample";
 import ChapterSelect from "../components/SelectComponents/ChapterSelect";
 import LessonSelect from "../components/SelectComponents/LessonSelect";
@@ -26,6 +27,14 @@ function Dashboard() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      navigate('/login'); // Redirect to login page if not logged in
+    }
+  }, [navigate]);
 
   const handleOpenPopup = () => {
     setPopupOpen(true);
@@ -34,12 +43,6 @@ function Dashboard() {
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
-
-  // function Data(){
-  //   let data = getAssignmentsData(email, classCode);
-  //   console.log(data);
-  // }
-
 
   return (
     <>
@@ -52,6 +55,10 @@ function Dashboard() {
           <div id="button22">
             <TimeButtonGroup />
           </div>
+        </div>
+        <div className="additional-charts">
+          <CompletionTimeLine />
+          <AssignmentCompletionPieChart email={email} classCode={classCode} />
         </div>
         <div className="completionTime">
           <div className="completionTime2">
@@ -88,8 +95,17 @@ function Dashboard() {
                 classCode={classCode}
               />
             </div>
-            <Container sx={{ textAlign: "center", marginTop: 2 }}>
-              <Button
+              {/* <Button
+                variant="contained"
+                color="primary"
+                onClick={handleOpenPopup}
+                sx={{ fontFamily: "Montserrat, sans-serif" }}
+              >
+                View Students
+              </Button> */}
+            <div className="se">
+            <ResetGridButton />
+            <Button
                 variant="contained"
                 color="primary"
                 onClick={handleOpenPopup}
@@ -97,13 +113,12 @@ function Dashboard() {
               >
                 View Students
               </Button>
-            </Container>
-            <ResetGridButton />
-            <ViewStudentPopup
+              <ViewStudentPopup
               open={popupOpen}
               onClose={handleClosePopup}
               classCode={classCode}
             />
+            </div>
           </div>
           <div className="chart-full">
            <ActivityCompletionBar email={email} classCode={classCode} />

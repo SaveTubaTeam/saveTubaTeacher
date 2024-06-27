@@ -1,12 +1,25 @@
-// TeacherProfile.js
+// Profile.jsx
 import React, { useEffect, useState } from 'react';
 import { db } from './firebaseConfig';
 import './TeacherProfile.css';
 import '../App.css';
 import NavigationBar from '../components/NavigationBar';
+import { getStudents } from '../data/dataFunctions';
+import ClassStudentsPopup from '../components/ClassStudentsPopup';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [teachers, setTeachers] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      navigate('/login'); // Redirect to login page if not logged in
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,8 +32,15 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  const showAlert = (classCode) => {
-    alert(`Students: ${classCode}`);
+  const handleShowStudents = async (classCode) => {
+    const studentsList = await getStudents(classCode);
+    setStudents(studentsList);
+    setPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+    setStudents([]);
   };
 
   return (
@@ -37,7 +57,7 @@ const Profile = () => {
           <ul className="class-list">
             {teacher.classes && teacher.classes.map((classItem, classIndex) => (
               <li key={classIndex} className="class-item">
-                <p><strong>Class Code:</strong> <a href="#" onClick={() => showAlert(classItem.classCode)}>{classItem.classCode}</a></p>
+                <p><strong>Class Code:</strong> <a href="#" onClick={() => handleShowStudents(classItem.classCode)}>{classItem.classCode}</a></p>
                 <p><strong>Class Name:</strong> {classItem.className}</p>
                 <p><strong>Grade Level:</strong> {classItem.gradeLevel}</p>
               </li>
@@ -45,6 +65,7 @@ const Profile = () => {
           </ul>
         </div>
       ))}
+      <ClassStudentsPopup open={popupOpen} onClose={handleClosePopup} students={students} />
     </div>
   );
 };
