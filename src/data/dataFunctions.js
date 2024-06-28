@@ -119,23 +119,23 @@ async function getAssignmentsData(email, classCode) {
   );
   let assignmentsList = [];
   try {
-    await db
+    const snapshot = await db
       .collection("teachers")
       .doc(email)
       .collection("Assignments" + "_" + classCode)
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          assignmentsList.push(doc.data());
-        });
-      });
+      .get();
+    
+    snapshot.forEach((doc) => {
+      assignmentsList.push(doc.data());
+    });
   } catch (error) {
     console.log("Error in getAssignmentsData():", error);
   }
 
-  //console.log("Assignments: ", assignmentsList);
+  console.log("Assignments: ", assignmentsList);
   return assignmentsList;
 }
+
 
 async function getAssignmentData(grade, chpt, lesson, email) {
   console.log(

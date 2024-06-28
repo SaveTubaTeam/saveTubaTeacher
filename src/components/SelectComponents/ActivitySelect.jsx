@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { getLessonsData } from "../data/dataFunctions";
+import { getLessonsData } from "../../data/dataFunctions";
 
 export default function ActivitySelect({ grade, chapter, lesson, onChange }) { 
   const languageCode = "en";

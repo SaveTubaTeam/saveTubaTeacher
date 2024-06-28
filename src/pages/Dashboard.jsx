@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import TableExample from "../components/TableExample";
-import ChapterSelect from "../components/ChapterSelect";
-import LessonSelect from "../components/LessonSelect";
-import ActivitySelect from "../components/ActivitySelect";
+import ChapterSelect from "../components/SelectComponents/ChapterSelect";
+import LessonSelect from "../components/SelectComponents/LessonSelect";
+import ActivitySelect from "../components/SelectComponents/ActivitySelect";
 import "../App.css";
 import DateSlider from "../components/DateSlider";
 import CompletionTimeLine from "../components/Charts/CompletionTimeLine";
@@ -12,8 +12,11 @@ import AssignmentCompletionPieChart from "../components/Charts/AssignmentComplet
 import TimeButtonGroup from "../components/TimeButtonGroup";
 import NavigationBar from "../components/NavigationBar";
 import ResetGridButton from "../components/ResetGridButton";
-import ViewStudentPopup from "../components/ViewStudentsPopup";
+import AssignmentCheckbox from "../components/AssignmentCheckbox";
+import ViewStudentPopup from "../components/Popups/ViewStudentsPopup";
 import Button from "@mui/material/Button";
+import { Container } from "@mui/material";
+import GradeSelect from "../components/SelectComponents/GradeSelect";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -44,7 +47,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar />
+        <NavigationBar email={email} />
         <div className="adjustclass">
           <div className="dayrange">
             <DateSlider />
@@ -118,8 +121,13 @@ function Dashboard() {
             </div>
           </div>
           <div className="chart-full">
-            <ActivityCompletionBar />
+           <ActivityCompletionBar email={email} classCode={classCode} />
           </div>
+        </div>
+        <div className="additional-charts">
+          <CompletionTimeLine />
+          <AssignmentCompletionPieChart email={email} classCode={classCode} />
+          
         </div>
       </div>
     </>

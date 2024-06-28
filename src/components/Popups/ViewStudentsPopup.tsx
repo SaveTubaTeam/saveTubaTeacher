@@ -6,7 +6,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import { getClassroomStudents } from "../data/dataFunctions";
+import { getClassroomStudents } from "../../data/dataFunctions";
 
 interface ViewStudentsPopupProps {
   open: boolean;

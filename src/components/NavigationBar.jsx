@@ -3,10 +3,12 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import iconic from '../assets/iconpic.png';
 import ClassButton from './ClassButton';
-import PlusButton from './PlusButton';
+import CreateClassButton from './CreateClassButton';
+
 import { signOut } from "firebase/auth";
 import { auth } from '../pages/firebaseConfig';
 
+const Navbar = ( {email} ) => {
 const Navbar = ( {email} ) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,6 +23,8 @@ const Navbar = ( {email} ) => {
       console.log(error.message);
     });
   };
+
+
 
   return (
     <div className="navbar">

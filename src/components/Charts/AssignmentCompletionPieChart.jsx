@@ -55,7 +55,7 @@ const AssignmentCompletionPieChart = ({ email, classCode }) => {
       for (const student of studentsData) {
         const completionData = await getCompletionsData(student.email);
         totalCompleted += completionData.length;
-        console.log("Total Completed:", totalCompleted);
+        // console.log("Total Completed:", totalCompleted);
         setTotalCompleted(totalCompleted);
       }
     
