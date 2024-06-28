@@ -124,11 +124,6 @@ function Dashboard() {
            <ActivityCompletionBar email={email} classCode={classCode} />
           </div>
         </div>
-        <div className="additional-charts">
-          <CompletionTimeLine />
-          <AssignmentCompletionPieChart email={email} classCode={classCode} />
-          
-        </div>
       </div>
     </>
   );
