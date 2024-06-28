@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './LoginPage.css';
-import { auth, provider } from './firebaseConfig';
+import { auth, provider } from '../../firebase';
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 
