@@ -7,7 +7,7 @@ import PlusButton from './PlusButton';
 import { signOut } from "firebase/auth";
 import { auth } from '../pages/firebaseConfig';
 
-const Navbar = () => {
+const Navbar = ( {email} ) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [highlightedButton, setHighlightedButton] = useState("");
@@ -35,13 +35,16 @@ const Navbar = () => {
           isHighlighted={highlightedButton === "Grade 2"}
           onClick={() => setHighlightedButton("Grade 2")}
         /></div>
+      <div className="sss"><PlusButton title="+" /></div>
       {location.pathname === '/profile' ? (
         <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
       ) : (
         <div className="sss"><Link to="/profile"><ClassButton title="Profile" /></Link></div>
       )}
-      <div className="sss"><PlusButton title="+" /></div>
       <div className="sss"><ClassButton title="Logout" onClick={handleLogout} /></div>
+      {location.pathname=='/createassignment' ?(
+        <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
+        ):(<div className="sss"><Link to="/createassignment"><ClassButton title="Create Assignment"/></Link></div>)}
     </div>
   );
 };
