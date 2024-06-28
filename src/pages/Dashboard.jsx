@@ -12,11 +12,8 @@ import AssignmentCompletionPieChart from "../components/Charts/AssignmentComplet
 import TimeButtonGroup from "../components/TimeButtonGroup";
 import NavigationBar from "../components/NavigationBar";
 import ResetGridButton from "../components/ResetGridButton";
-import AssignmentCheckbox from "../components/AssignmentCheckbox";
 import ViewStudentPopup from "../components/Popups/ViewStudentsPopup";
 import Button from "@mui/material/Button";
-import { Container } from "@mui/material";
-import GradeSelect from "../components/SelectComponents/GradeSelect";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -47,7 +44,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar email={email} />
+        <NavigationBar />
         <div className="adjustclass">
           <div className="dayrange">
             <DateSlider />
@@ -121,7 +118,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="chart-full">
-           <ActivityCompletionBar email={email} classCode={classCode} />
+            <ActivityCompletionBar />
           </div>
         </div>
       </div>
