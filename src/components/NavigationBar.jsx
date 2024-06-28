@@ -3,7 +3,7 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import iconic from '../assets/iconpic.png';
 import ClassButton from './ClassButton';
-import PlusButton from './PlusButton';
+import PlusButton from './CreateClassButton';
 import { signOut } from "firebase/auth";
 import { auth } from '../pages/firebaseConfig';
 
