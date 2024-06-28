@@ -24,6 +24,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
     "firebase": "^10.12.2",
+    "googleauth": "^3.0.2",
     "mdb-react-ui-kit": "^8.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.3",
