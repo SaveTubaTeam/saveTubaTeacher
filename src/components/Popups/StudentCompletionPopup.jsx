@@ -7,22 +7,6 @@ import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
-interface StudentCompletionPopupProps {
-  open: boolean;
-  onClose: () => void;
-  rowData: {
-    chapter: number;
-    lesson: number;
-    activity: string;
-    studentsCompleted: string;
-    dateCompleted: {
-      firstName: string;
-      lastName: string;
-      dateCompleted: string;
-    }[];
-  };
-}
-
 const StyledDialogTitle = styled(DialogTitle)({
   fontFamily: "Montserrat, sans-serif",
 });
@@ -40,7 +24,7 @@ const StyledButton = styled(Button)({
   fontFamily: "Montserrat, sans-serif",
 });
 
-function checkDateCompleted(rowData: StudentCompletionPopupProps["rowData"]) {
+function checkDateCompleted(rowData) {
   if (rowData.dateCompleted.length === 0) {
     return (
       <StyledTypography variant="body1">
@@ -58,11 +42,7 @@ function checkDateCompleted(rowData: StudentCompletionPopupProps["rowData"]) {
   }
 }
 
-const StudentCompletionPopup: React.FC<StudentCompletionPopupProps> = ({
-  open,
-  onClose,
-  rowData,
-}) => { 
+const StudentCompletionPopup = ({ open, onClose, rowData }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <StyledDialogTitle><strong>Student Completion Dates</strong></StyledDialogTitle>
