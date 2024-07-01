@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import { db } from "../../firebase";
+import { db } from "../../../../firebase";
 
 async function submitClassData(email, classCode, className, gradeLevel) {
   try {

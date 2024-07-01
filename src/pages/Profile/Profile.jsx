@@ -1,11 +1,11 @@
 // Profile.jsx
 import React, { useEffect, useState } from 'react';
-import { db } from './firebaseConfig';
+import { db } from '../../../firebase';
 import './TeacherProfile.css';
 import '../App.css';
-import NavigationBar from '../components/NavigationBar';
-import { getStudents } from '../data/dataFunctions';
-import ClassStudentsPopup from '../components/ClassStudentsPopup';
+import NavigationBar from '../../components/NavbarComponents/NavigationBar';
+import { getStudents } from '../../data/dataFunctions';
+import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import { useNavigate } from 'react-router-dom';
 //The porpuse of this page is to display the teacher's profile and the classes they are teaching
 const Profile = () => {

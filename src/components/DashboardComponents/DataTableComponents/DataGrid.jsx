@@ -6,13 +6,13 @@ import {
   getLessonsData,
   getCompletedPerAssignment,
   getStudents,
-} from "../data/dataFunctions";
-import StudentCompletionPopup from "./Popups/StudentCompletionPopup";
+} from "../../../data/dataFunctions";
+import StudentCompletionPopup from "./StudentCompletionPopup";
 import { Container } from "@mui/material";
 
 const language = "en";
 
-export default function TableExample({
+export default function DataGrid({
   grade,
   chapter,
   lesson,

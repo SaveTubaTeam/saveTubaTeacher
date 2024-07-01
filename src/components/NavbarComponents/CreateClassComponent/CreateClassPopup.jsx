@@ -5,11 +5,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
-import GradeSelect from "../SelectComponents/GradeSelect";
+import GradeSelect from "./GradeSelect";
 import Box from "@mui/material/Box";
 import { TextField, Typography } from "@mui/material";
-import SubmitClassButton from "../SubmitClassButton";
-import { db } from "../../../firebase";
+import SubmitClassButton from "./SubmitClassButton";
+import { db } from "../../../../firebase";
 
 async function fetchClassCodes() {
   const classList = await db.collection("classrooms").get();

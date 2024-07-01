@@ -4,10 +4,10 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import CreateAssignment from './pages/CreateAssignment';
+import Profile from './pages/Profile/Profile';
+import CreateAssignment from './pages/CreateAssignment/CreateAssignment';
 import ErrorPage from './pages/ErrorPage';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/Login/LoginPage';
 
 const router = createBrowserRouter([
   {

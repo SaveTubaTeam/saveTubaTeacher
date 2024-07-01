@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import TableExample from "../components/TableExample";
-import ChapterSelect from "../components/SelectComponents/ChapterSelect";
-import LessonSelect from "../components/SelectComponents/LessonSelect";
+import DataGrid from "../components/DashboardComponents/DataTableComponents/Datagrid";
+import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
+import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
 import ActivitySelect from "../components/SelectComponents/ActivitySelect";
 import "../App.css";
 import DateSlider from "../components/DateSlider";
@@ -10,9 +10,9 @@ import CompletionTimeLine from "../components/Charts/CompletionTimeLine";
 import ActivityCompletionBar from "../components/Charts/ActivityCompletionBar";
 import AssignmentCompletionPieChart from "../components/Charts/AssignmentCompletionPieChart";
 import TimeButtonGroup from "../components/TimeButtonGroup";
-import NavigationBar from "../components/NavigationBar";
-import ResetGridButton from "../components/ResetGridButton";
-import ViewStudentPopup from "../components/Popups/ViewStudentsPopup";
+import NavigationBar from "../components/NavbarComponents/NavigationBar";
+import ResetGridButton from "../components/DashboardComponents/ResetGridButton";
+import ViewStudentPopup from "../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup";
 import Button from "@mui/material/Button";
 
 function Dashboard() {
@@ -83,7 +83,7 @@ function Dashboard() {
               </div>
             </div>
             <div className="table-container">
-              <TableExample
+              <DataGrid
                 grade={grade}
                 chapter={selectedChapter}
                 lesson={selectedLesson}
