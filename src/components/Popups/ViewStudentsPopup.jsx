@@ -8,12 +8,6 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { getClassroomStudents } from "../../data/dataFunctions";
 
-interface ViewStudentsPopupProps {
-  open: boolean;
-  onClose: () => void;
-  classCode: string;
-}
-
 const StyledDialogTitle = styled(DialogTitle)({
   fontFamily: "Montserrat, sans-serif",
 });
@@ -31,12 +25,8 @@ const StyledButton = styled(Button)({
   fontFamily: "Montserrat, sans-serif",
 });
 
-const ViewStudentPopup: React.FC<ViewStudentsPopupProps> = ({
-  open,
-  onClose,
-  classCode,
-}) => {
-  const [students, setStudents] = useState<any[]>([]);
+const ViewStudentPopup = ({ open, onClose, classCode }) => {
+  const [students, setStudents] = useState([]);
 
   useEffect(() => {
     const fetchStudents = async () => {

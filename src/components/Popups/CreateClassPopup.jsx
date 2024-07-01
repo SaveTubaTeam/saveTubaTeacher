@@ -11,12 +11,6 @@ import { TextField, Typography } from "@mui/material";
 import SubmitClassButton from "../SubmitClassButton";
 import { db } from "../../../firebase";
 
-interface CreateClassPopupProps {
-  open: boolean;
-  onClose: () => void;
-  email: string;
-}
-
 async function fetchClassCodes() {
   const classList = await db.collection("classrooms").get();
   return classList.docs.map((doc) => doc.data().classCode);
@@ -63,10 +57,10 @@ const StyledButton = styled(Button)({
   fontFamily: "Montserrat, sans-serif",
 });
 
-const CreateClassPopup: React.FC<CreateClassPopupProps> = ({ open, onClose, email }) => {
+const CreateClassPopup = ({ open, onClose, email }) => {
   const [className, setClassName] = useState('');
   const [grade, setGrade] = useState('');
-  const [existingCodes, setExistingCodes] = useState<string[]>([]);
+  const [existingCodes, setExistingCodes] = useState([]);
 
   useEffect(() => {
     fetchClassCodes().then(setExistingCodes);
