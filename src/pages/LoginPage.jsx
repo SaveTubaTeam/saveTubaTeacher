@@ -20,6 +20,19 @@ function LoginPage() {
     });
   };
 
+  /*
+  ASYNC VERSION OF THE FUNCTION ABOVE!
+  
+  async function handleClick() {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const userEmail = result.user.email;
+    } catch(error) {
+      console.log(error.message);
+    }
+    
+  }
+  */
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {

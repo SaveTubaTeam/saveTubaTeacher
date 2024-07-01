@@ -34,8 +34,8 @@ const CreateAssignment = () => {
         setNumActivities(e.target.value);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();// Prevent page from refreshing
 
         const assignmentID = `G${grade}C${chapter}L${lesson}`;
         const dateAssigned = new Date().toLocaleString('en-GB').replace(',', '');
@@ -52,17 +52,18 @@ const CreateAssignment = () => {
 
         // Create assignment object
         const assignmentData = {
-            assignmentID,
-            dateAssigned,
+            assignmentID: assignmentID,
+            dateAssigned: dateAssigned,
             dateDue: dateDueFormatted,
             numActivities: parseInt(numActivities, 10)
         };
+        const classCode = `000000`;
 
         try {
             // Save assignment to the teacher's class
             await db.collection('teachers')
                 .doc(email)
-                .collection('Assignments_000000')
+                .collection(`Assignments_${classCode}`)
                 .doc(assignmentID)
                 .set(assignmentData);
             
