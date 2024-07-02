@@ -53,6 +53,10 @@ const Profile = () => {
     setStudents([]);
   };
 
+ if (!teacher) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <div className="profiles-container">
       <NavigationBar />
