@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import CreateClassPopup from './Popups/CreateClassPopup';
+import CreateClassPopup from './CreateClassPopup';
 
 const CreateClassButton = ({ email }) => {
   const [open, setOpen] = useState(false);

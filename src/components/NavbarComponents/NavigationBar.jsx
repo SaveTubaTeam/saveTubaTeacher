@@ -1,11 +1,11 @@
 import React from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import iconic from '../assets/iconpic.png';
+import iconic from '../../assets/iconpic.png';
 import ClassButton from './ClassButton';
-import PlusButton from './CreateClassButton';
+import PlusButton from './CreateClassComponent/CreateClassButton';
 import { signOut } from "firebase/auth";
-import { auth } from '../pages/firebaseConfig';
+import { auth } from '../../../firebase';
 
 const Navbar = ( {email} ) => {
   const location = useLocation();

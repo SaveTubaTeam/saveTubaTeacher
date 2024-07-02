@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { db } from './firebaseConfig';
+import { db } from '../../../firebase';
 import './TeacherProfile.css';
-import '../App.css';
-import NavigationBar from '../components/NavigationBar';
-import ClassStudentsPopup from '../components/ClassStudentsPopup';
+import '../../App.css';
+import NavigationBar from '../../components/NavbarComponents/NavigationBar';
+import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import { useNavigate } from 'react-router-dom';
-import { getStudents } from '../data/dataFunctions';
-//The porpuse of this page is to display the teacher's profile and the classes they are teaching
+import { getStudents } from '../../data/dataFunctions';
+
+//The purpose of this page is to display the teacher's profile and the classes they are teaching
 const Profile = () => {
   const [teacher, setTeacher] = useState(null);
   const [students, setStudents] = useState([]);
@@ -52,11 +53,9 @@ const Profile = () => {
     setPopupOpen(false);
     setStudents([]);
   };
-
- if (!teacher) {
+  if (!teacher) {
     return <div>Loading...</div>;
   }
-  
   return (
     <div className="profiles-container">
       <NavigationBar />

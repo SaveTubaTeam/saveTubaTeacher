@@ -13,7 +13,7 @@ import {
   getCompletionsData,
   getStudents,
   getMasteryAndMinigamesData,
-} from "../../data/dataFunctions";
+} from "../../../data/dataFunctions";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {

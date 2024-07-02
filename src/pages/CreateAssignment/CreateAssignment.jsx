@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from './firebaseConfig';
+import { db } from '../../../firebase';
 import './CreateAssignmentCSS.css';
-import '../App.css';
-import NavigationBar from '../components/NavigationBar';
+import '../../App.css';
+import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 
 const CreateAssignment = () => {
     const [grade, setGrade] = useState('');
