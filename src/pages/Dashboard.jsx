@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import DataGrid from "../components/DashboardComponents/DataTableComponents/Datagrid";
 import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
 import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
-import ActivitySelect from "../components/SelectComponents/ActivitySelect";
+import ActivitySelect from "../components/DashboardComponents/DataTableComponents/ActivitySelect";
 import "../App.css";
 import DateSlider from "../components/DateSlider";
-import CompletionTimeLine from "../components/Charts/CompletionTimeLine";
-import ActivityCompletionBar from "../components/Charts/ActivityCompletionBar";
-import AssignmentCompletionPieChart from "../components/Charts/AssignmentCompletionPieChart";
+import CompletionTimeLine from "../components/DashboardComponents/Charts/CompletionTimeLine";
+import ActivityCompletionBar from "../components/DashboardComponents/Charts/ActivityCompletionBar";
+import AssignmentCompletionPieChart from "../components/DashboardComponents/Charts/AssignmentCompletionPieChart";
 import TimeButtonGroup from "../components/TimeButtonGroup";
 import NavigationBar from "../components/NavbarComponents/NavigationBar";
 import ResetGridButton from "../components/DashboardComponents/ResetGridButton";
 import ViewStudentPopup from "../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup";
 import Button from "@mui/material/Button";
+import StudentDataGrid from "../components/DashboardComponents/DataTableComponents/StudentDataGrid";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -83,7 +83,7 @@ function Dashboard() {
               </div>
             </div>
             <div className="table-container">
-              <DataGrid
+              <StudentDataGrid
                 grade={grade}
                 chapter={selectedChapter}
                 lesson={selectedLesson}
