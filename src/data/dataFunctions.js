@@ -1,25 +1,25 @@
-import { db } from "../../firebase";
+import { db } from '../../firebase'; // Adjust the path as necessary
 
 async function getGradeData(grade) {
   console.log(`\n\tgetGradeData() called. Now in ${grade} Chapters`);
 
-  let chapterList = [];
+  if (!grade) throw new Error("Grade is required");
 
-  await db
-    .collection(grade)
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        chapterList.push(doc.data());
-      });
-    })
-    .catch((error) => {
-      console.log("Error: ", error);
+  const chapterList = [];
+
+  try {
+    const snapshot = await db.collection(grade).get();
+    snapshot.forEach((doc) => {
+      chapterList.push(doc.data());
     });
+  } catch (error) {
+    console.error("Error fetching data: ", error);
+  }
 
   console.log("chapterList array:", chapterList);
   return chapterList;
-}
+};
+
 
 async function getLessonsData(grade, chpt, languageCode) {
   console.log(
@@ -343,6 +343,7 @@ async function getClassroomStudents(classCode) {
   }
   return students;
 }
+
 export {
   getGradeData,
   getLessonsData,
