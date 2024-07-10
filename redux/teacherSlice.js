@@ -4,7 +4,7 @@ const initialState = {
    teacher: {}
 }
 
-//slice boilerplate
+//slice boilerplate re: https://redux-toolkit.js.org/tutorials/quick-start
 const teacherSlice = createSlice({
    name: 'teacher',
    initialState: initialState,
@@ -22,4 +22,4 @@ const teacherSlice = createSlice({
 });
 
 export const { signInUser, signOutUser } = teacherSlice.actions;
-export default teacherSlice.reducer //exports all reducers from const usersSlice
+export default teacherSlice.reducer //exports all reducers

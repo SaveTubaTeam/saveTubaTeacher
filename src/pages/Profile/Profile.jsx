@@ -6,9 +6,12 @@ import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import { useNavigate } from 'react-router-dom';
 import { getStudents } from '../../data/dataFunctions';
+import { useDispatch } from 'react-redux';
+import { signInUser } from '../../../redux/teacherSlice';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
 const Profile = () => {
+  const dispatch = useDispatch();
   const [teacher, setTeacher] = useState(null);
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -31,6 +34,7 @@ const Profile = () => {
           const teacherRef = await db.collection('teachers').doc(email).get();
           if (teacherRef.exists) {
             setTeacher(teacherRef.data());
+            dispatch(signInUser({ teacher: teacherRef.data() })); //sending teacher data to redux
           } else {
             console.log('Teacher not found');
           }
