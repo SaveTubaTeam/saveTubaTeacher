@@ -2,20 +2,12 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
-import {
-  getLessonsData,
-  getCompletedPerAssignment,
-  getStudents,
-} from "../../../data/dataFunctions";
+import { getStudents, getAssignmentsData } from "../../../data/dataFunctions";
 import StudentCompletionPopup from "./StudentCompletionPopup";
 import { Container } from "@mui/material";
+import { db } from "../../../../firebase";
 
-const language = "en";
-
-export default function StudentDataGrid({
-  email,
-  classCode,
-}) {
+export default function StudentDataGrid({ email, classCode }) {
   const [rows, setRows] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -31,7 +23,12 @@ export default function StudentDataGrid({
   };
 
   const columns = [
-    { field: "firstName", headerName: "First Name", width: 110, editable: false},
+    {
+      field: "firstName",
+      headerName: "First Name",
+      width: 110,
+      editable: false,
+    },
     { field: "lastName", headerName: "Last Name", width: 110, editable: false },
     {
       field: "studentsCompleted",
@@ -50,7 +47,7 @@ export default function StudentDataGrid({
           <Button
             variant="contained"
             color="success"
-            sx = {{
+            sx={{
               fontFamily: "Montserrat, sans-serif",
             }}
             onClick={() => handleOpenPopup(params.row)}
@@ -67,75 +64,62 @@ export default function StudentDataGrid({
       if (!email || !classCode) return;
 
       try {
-        // const lessons = await getLessonsData(grade, chapter, language);
+        const assignments = await getAssignmentsData(email, classCode);
+        const students = await getStudents(classCode);
 
-        // const chapterNumber = parseInt(chapter.replace(/\D/g, ""), 10) || 0;
+        const totalAssignments = assignments.map(assignment => ({
+          assignmentID: assignment.assignmentID,
+          assignmentSize: assignment.numActivities,
+        }));
 
-        // const filteredLessons = await Promise.all(
-        //   lessons
-        //     .filter((l) => !lesson || l.navigation === lesson)
-        //     .flatMap((l) => {
-        //       const lessonNumber =
-        //         parseInt(l.title.replace(/\D/g, ""), 10) || 0;
-        //       const lessonPath =
-        //         "G" +
-        //         grade.substring(5) +
-        //         "C" +
-        //         chapterNumber +
-        //         "L" +
-        //         lessonNumber;
-        //       return l.masteryAndMinigames.map(async (activity) => {
-        //         const activityId = `${lessonPath}_${activity.navigation}`;
-        //         const completedAssignmentsArray =
-        //           await getCompletedPerAssignment(activityId, classCode);
+        let totalNumAssignments = totalAssignments.reduce((acc, assignment) => acc + assignment.assignmentSize, 0);
 
-        //         let students = await getStudents(classCode);
-        //         let total = students.length;
-        //         let completedCount =
-        //           completedAssignmentsArray.length + "/" + total;
+        const studentCompletions = await Promise.all(
+          students.map(async (student) => {
+            let totalCompletions = 0;
+            const completionsRef = db
+              .collection("users")
+              .doc(student.email)
+              .collection("Completions");
+            const snapshot = await completionsRef.get();
+            const completionsData = snapshot.docs.map((doc) => doc.data());
+            for (const completion of completionsData) {
+              if (completion.completionID) {
+                const [directory] = completion.completionID.split("_");
+                if (totalAssignments.some(assignment => assignment.assignmentID === directory)) {
+                  totalCompletions += 1;
+                }
+              }
+            }
+            return {
+              ...student,
+              completionsCount: totalCompletions + "/" + totalNumAssignments,
+              dateCompleted: completionsData.map((completion) => ({
+                ...completion,
+              })),
+            };
+          })
+        );
 
-        //         let dateCompleted = completedAssignmentsArray.map(
-        //           (completion) => {
-        //             // const student = students.find(
-        //             //   (student) => student.email === completion.email
-        //             // );
-        //             return {
-        //               firstName: completion.firstName,
-        //               lastName: completion.lastName,
-        //               dateCompleted: completion.submissionTime,
-        //             };
-        //           }
-        //         );
+        const rowsData = studentCompletions.map((student, index) => ({
+          id: index,
+          firstName: student.firstName,
+          lastName: student.lastName,
+          studentsCompleted: student.completionsCount,
+          dateCompleted: student.dateCompleted,
+        }));
 
-        //         return {
-        //           id: activityId,
-        //           firstName: completion.fistName,
-        //           lastName: completion.lastName,
-        //           studentsCompleted: completedCount,
-        //           dateCompleted: dateCompleted,
-        //         };
-        //       });
-        //     })
-        // );
-
-        // const activitiesFiltered = (await Promise.all(filteredLessons)).filter(
-        //   (a) => !activity || a.activity === activity
-        // );
-
-        // setRows(activitiesFiltered);
-
-        const students = getStudent(classCode);
-        
+        setRows(rowsData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [email, classCode]);
 
   return (
-    <Box sx={{ height: 400, width: '100%', backgroundColor:'#ffffff' }}>
+    <Box sx={{ height: 400, width: "100%", backgroundColor: "#ffffff" }}>
       <DataGrid
         sx={{
           fontFamily: "Montserrat, sans-serif",
