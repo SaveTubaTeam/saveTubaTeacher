@@ -24,19 +24,22 @@ const StyledButton = styled(Button)({
   fontFamily: "Montserrat, sans-serif",
 });
 
-function checkDateCompleted(rowData) {
-  if (rowData.dateCompleted.length === 0) {
+function checkDateCompleted(dateCompleted) {
+  if (!dateCompleted || dateCompleted.length === 0) {
     return (
       <StyledTypography variant="body1">
         No students have completed this activity yet.
       </StyledTypography>
     );
   } else {
-    return rowData.dateCompleted.map((date, index) => (
+  
+    //const assignmentName = placeholder.replace(/_/g,' ');
+
+    return dateCompleted.map((completion, index) => (
       <StyledTypography key={index} variant="body1">
-        <strong>Name:</strong> {date.firstName} {date.lastName}
+        <strong>Assignment Name:</strong> {completion.completionID.replace(/_/g,' ')}
         <span> </span>
-        <strong>Date Completed:</strong> {date.dateCompleted}
+        <strong>Date Completed:</strong> {completion.submissionTime}
       </StyledTypography>
     ));
   }
@@ -46,7 +49,7 @@ const StudentCompletionPopup = ({ open, onClose, rowData }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <StyledDialogTitle><strong>Student Completion Dates</strong></StyledDialogTitle>
-      <StyledDialogContent>{checkDateCompleted(rowData)}</StyledDialogContent>
+      <StyledDialogContent>{checkDateCompleted(rowData.dateCompleted)}</StyledDialogContent>
       <DialogActions>
         <StyledButton onClick={onClose} color="success">
           Close
