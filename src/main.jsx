@@ -8,6 +8,7 @@ import Profile from './pages/Profile/Profile';
 import CreateAssignment from './pages/CreateAssignment/CreateAssignment';
 import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/Login/LoginPage';
+import ClassSelection from './pages/ClassSelection/ClassSelection';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'classselection',
+        element: <ClassSelection />,
       },
     ]
   }
