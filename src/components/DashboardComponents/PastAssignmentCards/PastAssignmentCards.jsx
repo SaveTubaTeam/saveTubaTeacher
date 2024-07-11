@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { getAssignmentsData, convertIDToName } from "../../../data/dataFunctions";
 import moment from "moment";
+import { current } from "@reduxjs/toolkit";
 
 export default function PastAssignmentCards({ email, classCode }) {
   const [currentAssignments, setCurrentAssignments] = useState([]);
@@ -59,9 +60,18 @@ export default function PastAssignmentCards({ email, classCode }) {
           }))
         );
         
-        setAssignmentTitles(await convertIDToName(currentAssignments));
-        setPastAssignmentTitles(await convertIDToName(pastAssignments));
-
+        const titleArr = await convertIDToName(currentAssignments);
+        for (let i = 0; i < titleArr.length; i++) {
+          titleArr[i].replace(/[0-9]/g, '');
+          titleArr[i] = titleArr[i].substring(2);
+        }
+        setAssignmentTitles(titleArr);
+        const pastArr = await convertIDToName(pastAssignments);
+        for (let i = 0; i < pastArr.length; i++) {
+          pastArr[i].replace(/[0-9]/g, '');
+          pastArr[i] = pastArr[i].substring(2);
+        }
+        setPastAssignmentTitles(pastArr);
         console.log("Assignments titles:", assignmentTitles);
         console.log("Past Assignments titles:", pastAssignmentTitles);
       } catch (error) {
