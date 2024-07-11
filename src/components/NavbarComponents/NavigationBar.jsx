@@ -6,8 +6,11 @@ import ClassButton from './ClassButton';
 import PlusButton from './CreateClassComponent/CreateClassButton';
 import { signOut } from "firebase/auth";
 import { auth } from '../../../firebase';
+import { useDispatch } from 'react-redux';
+import { signOutUser } from '../../../redux/teacherSlice';
 
 const Navbar = ( {email} ) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [highlightedButton, setHighlightedButton] = useState("");
@@ -17,6 +20,7 @@ const Navbar = ( {email} ) => {
     signOut(auth).then(() => {
       localStorage.removeItem('user'); // Remove 'user' instead of 'email'
       navigate('/login');
+      dispatch(signOutUser()); //clearing redux store teacherSlice
     }).catch((error) => {
       console.log(error.message);
     });

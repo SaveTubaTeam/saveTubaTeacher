@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getGradeData } from "../../../data/dataFunctions";
 
-export default function ChapterSelect({grade, onChange }) {
+export default function ChapterSelect({ grade, onChange }) {
   const [chapter, setChapter] = useState("");
   const [chapters, setChapters] = useState([]); // State to store the chapters
 
@@ -18,21 +18,23 @@ export default function ChapterSelect({grade, onChange }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const chapters = await getGradeData(grade);
-        setChapters(chapters);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      if (grade) { // Ensure grade is defined and not empty
+        try {
+          const chapters = await getGradeData(grade);
+          setChapters(chapters);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       }
     };
 
     fetchData();
-  }, []);
+  }, [grade]); // Add grade as a dependency to rerun when grade changes
 
   return (
     <Box sx={{ minWidth: 100 }}>
       <FormControl fullWidth>
-        <InputLabel id="chapter-select-label" style = {{fontFamily: "Montserrat, sans-serif"}}>Chapter</InputLabel>
+        <InputLabel id="chapter-select-label" style={{ fontFamily: "Montserrat, sans-serif" }}>Chapter</InputLabel>
         <Select
           sx={{
             fontFamily: "Montserrat, sans-serif",
@@ -43,9 +45,9 @@ export default function ChapterSelect({grade, onChange }) {
           label="Chapter"
           onChange={handleChange}
         >
-          <MenuItem value="" style ={{fontFamily: "Montserrat, sans-serif"}}>No Option</MenuItem>
+          <MenuItem value="" style={{ fontFamily: "Montserrat, sans-serif" }}>No Option</MenuItem>
           {chapters.map((chapter, index) => (
-            <MenuItem key={index} value={chapter.navigation} style ={{fontFamily: "Montserrat, sans-serif"}}>
+            <MenuItem key={index} value={chapter.navigation} style={{ fontFamily: "Montserrat, sans-serif" }}>
               {chapter.navigation}
             </MenuItem>
           ))}
