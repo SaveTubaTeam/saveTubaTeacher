@@ -6,12 +6,16 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { getAssignmentsData, convertIDToName } from "../../../data/dataFunctions";
-import moment from 'moment';
+import moment from "moment";
 
 export default function PastAssignmentCards({ email, classCode }) {
-  const [Assignments, setAssignments] = useState([]);
+  const [currentAssignments, setCurrentAssignments] = useState([]);
+  const [pastAssignments, setPastAssignments] = useState([]);
   const [assignmentTitles, setAssignmentTitles] = useState([]);
-  const [currentTime, setCurrentTime] = useState(moment().format("DD/MM/YYYY h:mm:ss a"));
+  const [pastAssignmentTitles, setPastAssignmentTitles] = useState([]);
+  const [currentTime, setCurrentTime] = useState(
+    moment().format("DD/MM/YYYY h:mm:ss a")
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,25 +23,47 @@ export default function PastAssignmentCards({ email, classCode }) {
 
       try {
         const assignments = await getAssignmentsData(email, classCode);
-        const totalAssignments = assignments.map((assignment) => ({
-          assignmentID: assignment.assignmentID,
-          assignmentDateAssigned: assignment.dateAssigned,
-          assignmentDueDate: assignment.dueDate,
-          assignmentSize: assignment.numActivities,
-        }));
+        const currentAssignments = [];
+        const pastAssignments = [];
 
-        for (const assignment of totalAssignments) {
-          assignment.assignmentDateAssigned = moment(
-            assignment.assignmentDateAssigned
-          ).format("DD/MM/YYYY h:mm:ss a");
-          assignment.assignmentDueDate = moment(
-            assignment.assignmentDueDate
-          ).format("DD/MM/YYYY h:mm:ss a");
-        }
-        totalAssignments.sort((a, b) => moment(a.assignmentDateAssigned) - moment(b.assignmentDateAssigned));
-        setAssignments(totalAssignments);
-        setAssignmentTitles(await convertIDToName(totalAssignments));
+        assignments.forEach((assignment) => {
+          const assignmentObj = {
+            assignmentID: assignment.assignmentID,
+            assignmentDateAssigned: moment(assignment.dateAssigned),
+            assignmentDateDue: moment(assignment.dateDue),
+            assignmentSize: assignment.numActivities,
+          };
+
+          if (moment().isAfter(assignmentObj.assignmentDateDue)) {
+            pastAssignments.push(assignmentObj);
+          } else {
+            currentAssignments.push(assignmentObj);
+          }
+        });
+
+        currentAssignments.sort((a, b) => b.assignmentDateDue - a.assignmentDateDue);
+        pastAssignments.sort((a, b) => b.assignmentDateDue - a.assignmentDateDue);
+
+        setCurrentAssignments(
+          currentAssignments.map((assignment) => ({
+            ...assignment,
+            assignmentDateAssigned: assignment.assignmentDateAssigned.format("DD/MM/YYYY h:mm:ss a"),
+            assignmentDateDue: assignment.assignmentDateDue.format("DD/MM/YYYY h:mm:ss a"),
+          }))
+        );
+        setPastAssignments(
+          pastAssignments.map((assignment) => ({
+            ...assignment,
+            assignmentDateAssigned: assignment.assignmentDateAssigned.format("DD/MM/YYYY h:mm:ss a"),
+            assignmentDateDue: assignment.assignmentDateDue.format("DD/MM/YYYY h:mm:ss a"),
+          }))
+        );
+        
+        setAssignmentTitles(await convertIDToName(currentAssignments));
+        setPastAssignmentTitles(await convertIDToName(pastAssignments));
+
         console.log("Assignments titles:", assignmentTitles);
+        console.log("Past Assignments titles:", pastAssignmentTitles);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -47,22 +73,66 @@ export default function PastAssignmentCards({ email, classCode }) {
     setCurrentTime(moment().format("DD/MM/YYYY h:mm:ss a"));
   }, [email, classCode]);
 
-  
   return (
     <Box sx={{ minWidth: 275 }}>
-      {Assignments.map((assignment, index) => (
+      <Typography sx={{ mb: 2 }} variant="h6" component="div">
+        Current Time: {currentTime}
+      </Typography>
+      {currentAssignments.map((assignment, index) => (
         <Card key={assignment.assignmentID} variant="outlined" sx={{ mb: 2 }}>
-          <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Assignment Title: {assignmentTitles[index]}
-            </Typography>
+          <CardContent sx={{ textAlign: "left" }}>
             <Typography variant="h5" component="div">
+              {assignmentTitles[index]}
+            </Typography>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary">
+              Grade {assignment.assignmentID.substring(1, 2)} - Chapter{" "}
+              {assignment.assignmentID.substring(3, 4)} - Lesson{" "}
+              {assignment.assignmentID.substring(5, 6)}
+            </Typography>
+            <Typography sx={{}} color="text.secondary">
+              Due Date: {assignment.assignmentDateDue}
+            </Typography>
+            <Typography sx={{}} color="text.secondary">
               Date Assigned: {assignment.assignmentDateAssigned}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Due Date: {assignment.assignmentDueDate}
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Number of Activities: {assignment.assignmentSize}
             </Typography>
-            <Typography variant="body2">
+          </CardContent>
+          <CardActions>
+            <Button size="small">View</Button>
+          </CardActions>
+        </Card>
+      ))}
+      <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+        Past Assignments
+      </Typography>
+      {pastAssignments.map((assignment, index) => (
+        <Card key={assignment.assignmentID} variant="outlined" sx={{ mb: 2 }}>
+          <CardContent sx={{ textAlign: "left" }}>
+            <Typography variant="h5" component="div">
+              {pastAssignmentTitles[index]}
+            </Typography>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary">
+              Grade {assignment.assignmentID.substring(1, 2)} - Chapter{" "}
+              {assignment.assignmentID.substring(3, 4)} - Lesson{" "}
+              {assignment.assignmentID.substring(5, 6)}
+            </Typography>
+            <Typography sx={{}} color="text.secondary">
+              Due Date: {assignment.assignmentDateDue}
+            </Typography>
+            <Typography sx={{}} color="text.secondary">
+              Date Assigned: {assignment.assignmentDateAssigned}
+            </Typography>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
               Number of Activities: {assignment.assignmentSize}
             </Typography>
           </CardContent>
