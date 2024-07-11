@@ -14,6 +14,7 @@ import ResetGridButton from "../components/DashboardComponents/ResetGridButton";
 import ViewStudentPopup from "../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup";
 import Button from "@mui/material/Button";
 import StudentDataGrid from "../components/DashboardComponents/DataTableComponents/StudentDataGrid";
+import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
 
 function Dashboard() {
   const email = "testteacher1@gmail.com";
@@ -84,10 +85,6 @@ function Dashboard() {
             </div>
             <div className="table-container">
               <StudentDataGrid
-                grade={grade}
-                chapter={selectedChapter}
-                lesson={selectedLesson}
-                activity={selectedActivity}
                 email={email}
                 classCode={classCode}
               />
@@ -119,7 +116,12 @@ function Dashboard() {
           </div>
           <div className="chart-full">
             <ActivityCompletionBar />
+            
           </div>
+          <PastAssignmentCards
+          email={email}
+          classCode={classCode}
+          />
         </div>
       </div>
     </>

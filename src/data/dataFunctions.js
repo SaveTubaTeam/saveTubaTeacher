@@ -113,20 +113,21 @@ async function getMasteryAndMinigamesData(grade, chpt, lesson, languageCode) {
 
 
 async function getAssignmentsData(email, classCode) {
-  console.log(
-    `\n\tgetAssignmentsData() called. Now in ${email} Assignments\n\t\tEMAIL:`,
-    email
-  );
+  if (!email || !classCode) {
+    console.error("Invalid arguments passed to getAssignmentsData():", { email, classCode });
+    return [];
+  }
+
+  console.log(`\n\tgetAssignmentsData() called. Now in ${email} Assignments\n\t\tEMAIL:`, email);
   let assignmentsList = [];
   try {
-    const snapshot = await db
-      .collection("teachers")
-      .doc(email)
-      .collection("Assignments" + "_" + classCode)
-      .get();
     
+    const snapshot = await db
+      .collection("teachers").doc(email).collection(`Assignments_${classCode}`).get();
+
     snapshot.forEach((doc) => {
       assignmentsList.push(doc.data());
+      
     });
   } catch (error) {
     console.log("Error in getAssignmentsData():", error);
@@ -135,6 +136,7 @@ async function getAssignmentsData(email, classCode) {
   console.log("Assignments: ", assignmentsList);
   return assignmentsList;
 }
+
 
 
 async function getAssignmentData(grade, chpt, lesson, email) {
@@ -344,6 +346,25 @@ async function getClassroomStudents(classCode) {
   return students;
 }
 
+async function convertIDToName(idArray){
+  const regex = /G(\d+)C(\d+)L(\d+)/; 
+  let titleArray = []; 
+  let lessonTitle = "";
+  for(let i = 0; i < idArray.length; i++){
+      const matches = idArray[i].assignmentID.match(regex);
+      const grade = `Grade${matches[1]}`;
+      const chapter = `Chapter${matches[2]}`;
+      const lesson = `Lesson${matches[3]}`;
+      const lessonInfo = await db.collection(grade).doc(chapter).collection(lesson).doc("en").get();
+      lessonTitle = lessonInfo.data().title;
+      titleArray.push(lessonTitle);
+      lessonTitle = "";
+    }
+    return titleArray;
+  }
+  
+
+
 export {
   getGradeData,
   getLessonsData,
@@ -355,4 +376,5 @@ export {
   getCompletedPerAssignment,
   getClassroomStudents,
   getMasteryAndMinigamesData,
+  convertIDToName,
 };
