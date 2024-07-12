@@ -68,7 +68,6 @@ const ClassSelection = () => {
   
   return (
     <div className="App">
-      <NavigationBar />
       <WelcomeMessage teacherName={teacher.firstName}
                       teacherLastname={teacher.lastName}/>
       <h1>My Classes</h1>
