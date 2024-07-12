@@ -30,7 +30,7 @@ const Navbar = ( {email} ) => {
     <div className="navbar">
       <div><Link className="imgs" to="/"><img src={iconic} alt="picture of icon" /></Link></div>
       <div className="sss"><ClassButton
-          title="Grade 1"
+          title="Class 4-A"
           isHighlighted={highlightedButton === "Grade 1"}
           onClick={() => setHighlightedButton("Grade 1")}
         /></div>

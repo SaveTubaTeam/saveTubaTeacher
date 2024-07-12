@@ -85,9 +85,6 @@ export default function PastAssignmentCards({ email, classCode }) {
 
   return (
     <Box sx={{ minWidth: 275 }}>
-      <Typography sx={{ mb: 2 }} variant="h6" component="div">
-        Current Time: {currentTime}
-      </Typography>
       {currentAssignments.map((assignment, index) => (
         <Card key={assignment.assignmentID} variant="outlined" sx={{ mb: 2 }}>
           <CardContent sx={{ textAlign: "left" }}>
@@ -114,7 +111,7 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">View</Button>
+            <Button size="small">Select Assignment</Button>
           </CardActions>
         </Card>
       ))}
@@ -147,7 +144,7 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">View</Button>
+            <Button size="small">Select Assignment</Button>
           </CardActions>
         </Card>
       ))}
