@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../../firebase'; // Adjust the path as needed
-import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import '../../App.css';
 import './ClassSelection.css';
 import { getStudents } from '../../data/dataFunctions'; // Ensure this path is correct
 import CreateClassButton from './CreateClassButton2'; // Ensure this path is correct
+import getAssignmentsData from '../../data/dataFunctions'; // Ensure this path is correct
 
 const ClassSelection = () => {
   const [email, setEmail] = useState('');
