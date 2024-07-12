@@ -1,79 +1,130 @@
-import React from 'react';
-import './App.css';
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import ViewStudentPopup from '../../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup';
-import 
+import { db } from '../../../firebase'; // Adjust the path as needed
+import NavigationBar from '../../components/NavbarComponents/NavigationBar';
+import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
+import '../../App.css';
+import './ClassSelection.css';
+import { getStudents } from '../../data/dataFunctions'; // Ensure this path is correct
+import CreateClassButton from './CreateClassButton2'; // Ensure this path is correct
 
-
-function ClassSelection() {
+const ClassSelection = () => {
   const [email, setEmail] = useState('');
+  const [teacher, setTeacher] = useState(null);
+  const [students, setStudents] = useState([]);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedClassCode, setSelectedClassCode] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
       navigate('/login');
+    } else {
+      setEmail('testteacher1@gmail.com'); // Set the user's email from localStorage
     }
-    setEmail('testteacher1@gmail.com');
   }, [navigate]);
 
-  const classes = [
-    { name: "Class 4 - A", grade: "Grade 4", assignments: 14 },
-    { name: "Class 4 - B", grade: "Grade 4", assignments: 12 },
-    { name: "Class 2 - B", grade: "Grade 2", assignments: 20 },
-  ];
+  useEffect(() => {
+    const fetchTeacherData = async () => {
+      if (email) {
+        try {
+          const teacherRef = await db.collection('teachers').doc(email).get();
+          if (teacherRef.exists) {
+            setTeacher(teacherRef.data());
+          } else {
+            console.log('Teacher not found');
+          }
+        } catch (error) {
+          console.error('Error fetching teacher data:', error);
+        }
+      }
+    };
+
+    fetchTeacherData();
+  }, [email]);
+
+  const handleShowStudents = async (classCode) => {
+    const studentsList = await getStudents(classCode);
+    setStudents(studentsList);
+    setSelectedClassCode(classCode);
+    setPopupOpen(true);
+  };
 
   const handleClosePopup = () => {
     setPopupOpen(false);
+    setStudents([]);
   };
 
+  const handleClassNameClick = (classCode, grade) => {
+    localStorage.setItem('selectedClassCode', classCode);
+    localStorage.setItem('selectedClassGrade', grade);
+    navigate(`/dashboard/${classCode}`);
+  };
+
+  if (!teacher) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <div className="App">
+      <NavigationBar />
+      <WelcomeMessage teacherName={teacher.firstName}
+                      teacherLastname={teacher.lastName}/>
       <h1>My Classes</h1>
       <div className="year">2024-2025</div>
       <div className="class-list">
-        {classes.map((classItem, index) => (
-          <ClassCard key={index} classItem={classItem} />
+        {teacher.classes && teacher.classes.map((classItem, index) => (
+          <ClassCard 
+            key={index} 
+            classItem={classItem} 
+            onClassNameClick={handleClassNameClick} 
+            onShowStudents={handleShowStudents} 
+          />
         ))}
-        <AddClassCard />
+        <AddClassCard email={email} />
       </div>
       <div className="year">2025-2026</div>
       <div className="class-list">
-        <AddClassCard />
-        <AddClassCard />
-        <AddClassCard />
-        <AddClassCard />
+        <AddClassCard email={email} />
+        <AddClassCard email={email} />
+        <AddClassCard email={email} />
+        <AddClassCard email={email} />
       </div>
+      <ClassStudentsPopup
+        open={popupOpen}
+        onClose={handleClosePopup}
+        students={students}
+        classCode={selectedClassCode}
+      />
     </div>
   );
-}
+};
 
-const ClassCard = ({ classItem }) => (
-  <div className="class-card">
-    <h2>{classItem.name}</h2>
-    <p>{classItem.grade}</p>
-                <Button
-                variant="contained"
-                color="primary"
-                onClick={handleOpenPopup}
-                sx={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                View Students
-              </Button>
-              <ViewStudentPopup
-              open={popupOpen}
-              onClose={handleClosePopup}
-              classCode={classCode}
-            />
-    <button className="assignments-button">{classItem.assignments} Assignments</button>
+const WelcomeMessage = ({ teacherName, teacherLastname}) => (
+  <div>
+    <h1>Welcome, {teacherName} {teacherLastname}</h1>
   </div>
 );
 
-const AddClassCard = () => (
+const ClassCard = ({ classItem, onClassNameClick, onShowStudents }) => (
+  <div className="class-card">
+    <div className="yoyy">
+      <h2 
+        onClick={() => onClassNameClick(classItem.classCode, classItem.gradeLevel)} 
+        style={{ cursor: 'pointer' }}
+      >
+        {classItem.className}
+      </h2>
+      <button onClick={() => onShowStudents(classItem.classCode)}>View Students</button>
+    </div>
+    <p>{classItem.gradeLevel}</p>
+  </div>
+);
+
+const AddClassCard = ({ email }) => (
   <div className="class-card add-class-card">
-    <p>+ Add Class</p>
+    <CreateClassButton email={email} />
   </div>
 );
 

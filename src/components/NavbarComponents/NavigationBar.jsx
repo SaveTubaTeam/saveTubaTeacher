@@ -49,6 +49,9 @@ const Navbar = ( {email} ) => {
       {location.pathname=='/createassignment' ?(
         <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
         ):(<div className="sss"><Link to="/createassignment"><ClassButton title="Create Assignment"/></Link></div>)}
+      {location.pathname=='/classselection' ?(
+        <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
+        ):(<div className="sss"><Link to="/classselection"><ClassButton title="Class Selection" /></Link></div>)}
     </div>
   );
 };
