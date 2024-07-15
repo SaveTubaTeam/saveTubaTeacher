@@ -1,0 +1,59 @@
+h1 {
+  font-size: 24px;
+}
+
+.year {
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left:15px;
+}
+
+.class-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.class-card, .add-class-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  text-align:left;
+  padding: 15px;
+}
+
+.class-card h2 {
+  font-size: 18px;
+}
+
+.class-card p {
+  font-size: 14px;
+}
+
+button {
+  background-color: #5a9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-class-card p {
+  font-size: 18px;
+  color: #5a9;
+}
+
+.class-list{
+  padding: 0px 15px 15px 10px;
+}
+
+.yoyy{
+  display: flex;
+  flex-direction: row;
+}
+.right12{
+  align-items: right;
+}

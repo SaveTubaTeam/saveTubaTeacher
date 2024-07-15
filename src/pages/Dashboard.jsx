@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
 import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
 import ActivitySelect from "../components/DashboardComponents/DataTableComponents/ActivitySelect";
@@ -17,9 +17,10 @@ import StudentDataGrid from "../components/DashboardComponents/DataTableComponen
 import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
 
 function Dashboard() {
-  const email = "testteacher1@gmail.com";
-  const classCode = "000000";
-  const grade = "Grade2";
+  const [email, setEmail] = useState("");
+  const [classCode, setClassCode] = useState("");
+  const [grade, setGrade] = useState("");
+  const { classCode: urlClassCode } = useParams(); // Extract class code from URL
   const [selectedChapter, setSelectedChapter] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
   const [popupOpen, setPopupOpen] = useState(false);
@@ -29,10 +30,15 @@ function Dashboard() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
+    const savedClassGrade = localStorage.getItem('selectedClassGrade');
     if (!user) {
-      navigate('/login'); // Redirect to login page if not logged in
+      navigate('/login');
+    } else {
+      setEmail('testteacher1@gmail.com'); // Set the user's email from localStorage
+      setClassCode(urlClassCode || "");
+      setGrade(savedClassGrade || "");
     }
-  }, [navigate]);
+  }, [navigate, urlClassCode]);
 
   const handleOpenPopup = () => {
     setPopupOpen(true);
@@ -89,17 +95,9 @@ function Dashboard() {
                 classCode={classCode}
               />
             </div>
-              {/* <Button
-                variant="contained"
-                color="primary"
-                onClick={handleOpenPopup}
-                sx={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                View Students
-              </Button> */}
             <div className="se">
-            <ResetGridButton />
-            <Button
+              <ResetGridButton />
+              <Button
                 variant="contained"
                 color="primary"
                 onClick={handleOpenPopup}
@@ -108,10 +106,10 @@ function Dashboard() {
                 View Students
               </Button>
               <ViewStudentPopup
-              open={popupOpen}
-              onClose={handleClosePopup}
-              classCode={classCode}
-            />
+                open={popupOpen}
+                onClose={handleClosePopup}
+                classCode={classCode}
+              />
             </div>
           </div>
           <div className="chart-full">

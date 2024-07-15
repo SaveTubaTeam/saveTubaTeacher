@@ -85,16 +85,9 @@ const CreateAssignment = () => {
     const lastLessonChar = lesson.charAt(lesson.length - 1);
 
     const assignmentID = `G${lastGradeChar}C${lastChapterChar}L${lastLessonChar}`;
-    const dateAssigned = new Date().toLocaleString('en-GB').replace(',', '');
 
-    const dateDueFormatted = new Date(dateDue).toLocaleString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    }).replace(',', '');
+    const dateAssigned = formatDateTime(new Date());
+    const dateDueFormatted = formatDateTime(new Date(dateDue));
 
     const assignmentData = {
       assignmentID: assignmentID,
@@ -102,7 +95,7 @@ const CreateAssignment = () => {
       dateDue: dateDueFormatted,
       numActivities: numActivities,
     };
-    const asCode = `Assignment_${classCode}`
+    const asCode = `Assignments_${classCode}`
     try {
       await db.collection('teachers')
         .doc(email)
@@ -123,6 +116,17 @@ const CreateAssignment = () => {
     }
     setEmail('testteacher1@gmail.com');
   }, [navigate]);
+
+  const formatDateTime = (date) => {
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const seconds = ('0' + date.getSeconds()).slice(-2);
+
+    return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+  };
 
   const isFormValid = grade && chapter && lesson && dateDue;
 

@@ -10,6 +10,7 @@ import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/Login/LoginPage';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
+import ClassSelection from './pages/ClassSelection/ClassSelection';
 
 const router = createBrowserRouter([
   {
@@ -22,12 +23,12 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: 'dashboard',
+        path: 'dashboard/:classCode',
         element: <Dashboard />,
       },
       {
         path: 'profile',
-        element: <Profile />,  // Correctly specify the path and element for the profile
+        element: <Profile />,
       },
       {
         path: 'createassignment',
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         path: 'login',
         element: <LoginPage />,
       },
+      {
+        path: 'classselection',
+        element: <ClassSelection />,
+      }
     ]
   }
 ]);

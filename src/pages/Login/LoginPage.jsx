@@ -13,7 +13,7 @@ function LoginPage() {
       const userEmail = result.user.email;
       setValue(userEmail);
       localStorage.setItem('user', JSON.stringify({ email: userEmail }));
-      navigate('/dashboard'); // Navigate to dashboard after successful login
+      navigate('/classselection'); // Navigate to dashboard after successful login
     })
     .catch((error) => {
       console.log(error.message);
@@ -37,7 +37,7 @@ function LoginPage() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       setValue(user.email);
-      navigate('/dashboard'); // Navigate to dashboard if user session exists
+      navigate('/classselection'); // Navigate to dashboard if user session exists
     }
   }, [navigate]);
 
@@ -47,7 +47,7 @@ function LoginPage() {
         <div>Login</div>
         <div>
           {value ? (
-            navigate('/dashboard')
+            navigate('/classselection')
           ) : (
             <button className="login-with-google-btn" onClick={handleClick}>
               Sign in with Google
