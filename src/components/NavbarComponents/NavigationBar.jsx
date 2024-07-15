@@ -3,7 +3,7 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import iconic from '../../assets/iconpic.png';
 import ClassButton from './ClassButton';
-import PlusButton from './CreateClassComponent/CreateClassButton';
+import CreateClassButton from '../CreateClassComponent/CreateClassButton';
 import { signOut } from "firebase/auth";
 import { auth } from '../../../firebase';
 import { useDispatch } from 'react-redux';
@@ -39,7 +39,7 @@ const Navbar = ( {email} ) => {
           isHighlighted={highlightedButton === "Grade 2"}
           onClick={() => setHighlightedButton("Grade 2")}
         /></div>
-      <div className="sss"><PlusButton title="+" /></div>
+      <div className="sss"><CreateClassButton title="+" /></div>
       {location.pathname === '/profile' ? (
         <div className="sss"><Link to="/"><ClassButton title="Home" /></Link></div>
       ) : (

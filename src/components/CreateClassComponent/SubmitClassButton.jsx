@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import { db } from "../../../../firebase";
+import { db, firebase } from "../../../firebase";
+import moment from "moment";
 
 async function submitClassData(email, classCode, className, gradeLevel) {
   try {
@@ -8,6 +9,7 @@ async function submitClassData(email, classCode, className, gradeLevel) {
     const teacherData = teacherInfo.data();
 
     if (teacherData) {
+      // Create or update the class in the classrooms collection
       await db.collection("classrooms").doc(classCode).set({
         classCode: classCode,
         className: className,
@@ -21,19 +23,24 @@ async function submitClassData(email, classCode, className, gradeLevel) {
           },
         ],
       });
+
+      // Add the class to the teacher's classes array
+      await db.collection("teachers").doc(email).update({
+        classes: firebase.firestore.FieldValue.arrayUnion({
+          classCode: classCode,
+          className: className,
+          gradeLevel: gradeLevel,
+        }),
+      });
+
+      console.log("Class data submitted successfully");
     } else {
       console.error("Teacher data not found");
     }
   } catch (error) {
     console.error("Error submitting class data: ", error);
   }
-  console.log(classCode);
-console.log(className);
-console.log(gradeLevel);
-console.log(email);
 }
-
-
 
 const SubmitClassButton = ({ email, classCode, className, gradeLevel }) => {
   return (
