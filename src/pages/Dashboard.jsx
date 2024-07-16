@@ -15,6 +15,7 @@ import ResetGridButton from "../components/DashboardComponents/ResetGridButton";
 import ViewStudentPopup from "../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup";
 import Button from "@mui/material/Button";
 import StudentDataGrid from "../components/DashboardComponents/DataTableComponents/StudentDataGrid";
+import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
 
 function Dashboard() {
   const [email, setEmail] = useState('testteacher1@gmail.com');
@@ -28,6 +29,7 @@ function Dashboard() {
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
+  const [assignmentID, setAssignmentID] = useState("G2C1L1");
   const user = useSelector(state => state.teacher.teacher)
 
   useEffect(() => {
@@ -49,7 +51,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar />
+        <NavigationBar email={email}/>
         <div className="adjustclass">
           <div className="dayrange">
             <DateSlider />
@@ -89,12 +91,9 @@ function Dashboard() {
             </div>
             <div className="table-container">
               <StudentDataGrid
-                grade={grade}
-                chapter={selectedChapter}
-                lesson={selectedLesson}
-                activity={selectedActivity}
                 email={email}
                 classCode={classCode}
+                assignmentID={assignmentID}
               />
             </div>
             <div className="se">
@@ -116,7 +115,12 @@ function Dashboard() {
           </div>
           <div className="chart-full">
             <ActivityCompletionBar />
+            
           </div>
+          <PastAssignmentCards
+          email={email}
+          classCode={classCode}
+          />
         </div>
       </div>
     </>

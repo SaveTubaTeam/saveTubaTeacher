@@ -10,7 +10,6 @@ import {
 } from "recharts";
 import {
   getAssignmentsData,
-  getCompletionsData,
   getStudents,
   getMasteryAndMinigamesData,
 } from "../../../data/dataFunctions";
