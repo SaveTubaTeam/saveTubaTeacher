@@ -9,7 +9,7 @@ import GradeSelect from "./GradeSelect";
 import Box from "@mui/material/Box";
 import { TextField, Typography } from "@mui/material";
 import SubmitClassButton from "./SubmitClassButton";
-import { db } from "../../../../firebase";
+import { db } from "../../../firebase";
 
 async function fetchClassCodes() {
   const classList = await db.collection("classrooms").get();

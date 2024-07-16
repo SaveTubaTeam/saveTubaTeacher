@@ -29,4 +29,4 @@ const auth = getAuth(app);
 const storage = firebase.storage().ref(); //.ref() is a reference to the root of our bucket
 const provider = new GoogleAuthProvider();
 
-export { db, auth, app, storage, provider };
+export { db, auth, app, storage, provider, firebase };
