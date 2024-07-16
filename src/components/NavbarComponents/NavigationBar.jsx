@@ -4,10 +4,9 @@ import { useState } from 'react';
 import iconic from '../../assets/iconpic.png';
 import ClassButton from './ClassButton';
 import CreateClassButton from '../CreateClassComponent/CreateClassButton';
-import { signOut } from "firebase/auth";
 import { auth } from '../../../firebase';
 import { useDispatch } from 'react-redux';
-import { signOutUser } from '../../../redux/teacherSlice';
+import { signOutTeacher } from '../../../redux/teacherSlice';
 
 const Navbar = ( {email} ) => {
   const dispatch = useDispatch();
@@ -16,15 +15,17 @@ const Navbar = ( {email} ) => {
   const [highlightedButton, setHighlightedButton] = useState("");
 
 
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      localStorage.removeItem('user'); // Remove 'user' instead of 'email'
+  async function handleLogout() {
+    try {
+      await auth.signOut();
+      dispatch(signOutTeacher()); //clearing redux store teacherSlice
       navigate('/login');
-      dispatch(signOutUser()); //clearing redux store teacherSlice
-    }).catch((error) => {
-      console.log(error.message);
-    });
-  };
+    } catch(error) {
+      console.error(`ERROR LOGGING OUT`)
+      dispatch(signOutTeacher()); //clearing redux store teacherSlice
+      navigate('/login');
+    }
+  }
 
   return (
     <div className="navbar">

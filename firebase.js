@@ -3,7 +3,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCa8CJLDlxZav6LylYflDDQQbL_m8tTZGs", //This is the Google Cloud Console browser key inside of project savetuba-5e519
@@ -25,8 +24,8 @@ if (firebase.apps.length === 0) {
 
 //Please refer here for setup of new Firebase services: https://firebase.google.com/docs/web/setup
 const db = firebase.firestore();
-const auth = getAuth(app);
+const auth = firebase.auth();
 const storage = firebase.storage().ref(); //.ref() is a reference to the root of our bucket
-const provider = new GoogleAuthProvider();
+const provider = new firebase.auth.GoogleAuthProvider();
 
-export { db, auth, app, storage, provider, firebase };
+export { db, auth, storage, provider, firebase };

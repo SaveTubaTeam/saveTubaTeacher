@@ -10,17 +10,8 @@ import { useNavigate } from 'react-router-dom';
 const ClassSelect = ({ onChange }) => {
   const [selectedClass, setSelectedClass] = useState("");
   const [teacher, setTeacher] = useState(null);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('testteacher1@gmail.com');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/login');
-    } else {
-      setEmail('testteacher1@gmail.com');
-    }
-  }, [navigate]);
 
   useEffect(() => {
     const fetchTeacherData = async () => {

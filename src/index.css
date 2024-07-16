@@ -1,3 +1,79 @@
-/* This file is for global windows styling and color theme!!!!
+/* root applies globally, is overriden by the #root selector referenced in main.jsx */
+:root {
+   font-family: Lucida Grande, Monsterrat, Arial, system-ui;
+   line-height: 1.15; /* line-height is basically spacing */
+   font-weight: normal;
+   font-size: 14px;
+ 
+   /* some browser text optimization */
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+ 
+   /* CSS HEX THEME*/
+   --grey: #636B73;
+   --dark: #4E4E4E;
+   --accent: #79C2D6; /* sky-blue */
+   --primary: #4A629F; /* lapis-lazuli */
+   --secondary: #439EC1; /* blue-green */
+   --tertiary: #6D90B3; /* silver-lake-blue */
+   --quaternary: #4D4A9E; /* purplish */
+   --success: #81C244; 
+   --warning: #C28644;
+   --error: #C2445C;
+   --light: #F8F9F9;
+   --black: #1A1A1A;
+ 
+   /* global color scheme */
+   color-scheme: light;
+   color: var(--black);
+   background-color: var(--light);
+}
 
-*/
+html {
+   box-sizing: border-box;
+}
+
+body, html {
+   /* css page reset */
+   margin: 0 auto;
+   padding: 0;
+   /* enable scrolling */
+   overflow-x: auto; 
+   overflow-y: auto;
+   height: 100%;
+}
+
+textarea,
+input,
+button {
+  font-size: 1.1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 1.8rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: white;
+  line-height: 1.5;
+  margin: 0;
+}
+
+button {
+  background-color: #FFFFFF;
+  color: var(--dark);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+textarea:hover,
+input:hover,
+button:hover {
+  box-shadow: 0 0px 2px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+button:active {
+  background-color: var(--light);
+  color: var(--dark);
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
+  transform: translateY(1px);
+}
