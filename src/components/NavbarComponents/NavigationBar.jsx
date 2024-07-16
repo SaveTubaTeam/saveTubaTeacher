@@ -1,52 +1,23 @@
-<<<<<<< HEAD
 import React from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import iconic from "../../assets/iconpic.png";
 import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
-import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { useDispatch } from "react-redux";
-import { signOutUser } from "../../../redux/teacherSlice";
+import { signOutTeacher } from "../../../redux/teacherSlice";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { IoExitOutline } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
-=======
-import React from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import iconic from '../../assets/iconpic.png';
-import ClassButton from './ClassButton';
-import CreateClassButton from '../CreateClassComponent/CreateClassButton';
-import { auth } from '../../../firebase';
-import { useDispatch } from 'react-redux';
-import { signOutTeacher } from '../../../redux/teacherSlice';
->>>>>>> c606926e50174b540a3662545b96849a35722680
-
-
 
 const Navbar = ({ email }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [highlightedButton, setHighlightedButton] = useState("");
-
-<<<<<<< HEAD
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        localStorage.removeItem("user"); // Remove 'user' instead of 'email'
-        navigate("/login");
-        dispatch(signOutUser()); //clearing redux store teacherSlice
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-=======
 
   async function handleLogout() {
     try {
@@ -59,7 +30,6 @@ const Navbar = ({ email }) => {
       navigate('/login');
     }
   }
->>>>>>> c606926e50174b540a3662545b96849a35722680
 
   return (
     <div className="navbar">
