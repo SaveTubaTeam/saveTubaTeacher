@@ -27,6 +27,7 @@ function Dashboard() {
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
+  const [assignmentID, setAssignmentID] = useState("G2C1L1");
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -34,7 +35,7 @@ function Dashboard() {
     if (!user) {
       navigate('/login');
     } else {
-      setEmail('testteacher1@gmail.com'); // Set the user's email from localStorage
+      setEmail('testteacher1@gmail.com');
       setClassCode(urlClassCode || "");
       setGrade(savedClassGrade || "");
     }
@@ -51,7 +52,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar />
+        <NavigationBar email={email}/>
         <div className="adjustclass">
           <div className="dayrange">
             <DateSlider />
@@ -93,6 +94,7 @@ function Dashboard() {
               <StudentDataGrid
                 email={email}
                 classCode={classCode}
+                assignmentID={assignmentID}
               />
             </div>
             <div className="se">
