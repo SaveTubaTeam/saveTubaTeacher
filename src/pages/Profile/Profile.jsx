@@ -1,51 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../../../firebase';
 import './TeacherProfile.css';
 import '../../App.css';
 import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
-import { useNavigate } from 'react-router-dom';
 import { getStudents } from '../../data/dataFunctions';
-import { useDispatch } from 'react-redux';
-import { signInUser } from '../../../redux/teacherSlice';
+import { useSelector } from 'react-redux';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
 const Profile = () => {
-  const dispatch = useDispatch();
-  const [teacher, setTeacher] = useState(null);
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/login');
-    } else {
-      setEmail('testteacher1@gmail.com'); // change to user.email once we have teacher emails
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    const fetchTeacherData = async () => {
-      if (email) {
-        try {
-          const teacherRef = await db.collection('teachers').doc(email).get();
-          if (teacherRef.exists) {
-            setTeacher(teacherRef.data());
-            dispatch(signInUser({ teacher: teacherRef.data() })); //sending teacher data to redux
-          } else {
-            console.log('Teacher not found');
-          }
-        } catch (error) {
-          console.error('Error fetching teacher data:', error);
-        }
-      }
-    };
-
-    fetchTeacherData();
-  }, [email]);
+  const teacher = useSelector(state => state.teacher.teacher);
 
   const handleShowStudents = async (classCode) => {
     const studentsList = await getStudents(classCode);

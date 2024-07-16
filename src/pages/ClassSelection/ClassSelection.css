@@ -33,14 +33,6 @@ h1 {
   font-size: 14px;
 }
 
-button {
-  background-color: #5a9;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 .add-class-card p {
   font-size: 18px;
   color: #5a9;

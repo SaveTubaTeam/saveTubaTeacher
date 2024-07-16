@@ -14,7 +14,7 @@ const CreateAssignment = () => {
   const [lesson, setLesson] = useState('');
   const [dateDue, setDateDue] = useState('');
   const [numActivities, setNumActivities] = useState(0);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('testteacher1@gmail.com');
   const [classCode, setClassCode] = useState('');
   const navigate = useNavigate();
 
@@ -108,14 +108,6 @@ const CreateAssignment = () => {
       console.error('Error creating assignment:', error);
     }
   };
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/login');
-    }
-    setEmail('testteacher1@gmail.com');
-  }, [navigate]);
 
   const formatDateTime = (date) => {
     const day = ('0' + date.getDate()).slice(-2);

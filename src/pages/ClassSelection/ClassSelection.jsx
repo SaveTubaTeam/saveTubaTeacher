@@ -8,21 +8,12 @@ import { getStudents } from '../../data/dataFunctions'; // Ensure this path is c
 import CreateClassButton from './CreateClassButton2'; // Ensure this path is correct
 
 const ClassSelection = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('testteacher1@gmail.com');
   const [teacher, setTeacher] = useState(null);
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedClassCode, setSelectedClassCode] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/login');
-    } else {
-      setEmail('testteacher1@gmail.com'); // Set the user's email from localStorage
-    }
-  }, [navigate]);
 
   useEffect(() => {
     const fetchTeacherData = async () => {

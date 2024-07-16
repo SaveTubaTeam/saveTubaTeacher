@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
 import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
 import ActivitySelect from "../components/DashboardComponents/DataTableComponents/ActivitySelect";
@@ -17,9 +18,10 @@ import StudentDataGrid from "../components/DashboardComponents/DataTableComponen
 import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
 
 function Dashboard() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('testteacher1@gmail.com');
   const [classCode, setClassCode] = useState("");
   const [grade, setGrade] = useState("");
+  //react-router hook to pass dynamic classCode value into url route
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
   const [selectedChapter, setSelectedChapter] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
@@ -28,17 +30,14 @@ function Dashboard() {
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
   const [assignmentID, setAssignmentID] = useState("G2C1L1");
+  const user = useSelector(state => state.teacher.teacher)
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
     const savedClassGrade = localStorage.getItem('selectedClassGrade');
-    if (!user) {
-      navigate('/login');
-    } else {
-      setEmail('testteacher1@gmail.com');
-      setClassCode(urlClassCode || "");
-      setGrade(savedClassGrade || "");
-    }
+
+    setClassCode(urlClassCode || "");
+    setGrade(savedClassGrade || "");
+
   }, [navigate, urlClassCode]);
 
   const handleOpenPopup = () => {
