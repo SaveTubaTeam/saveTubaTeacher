@@ -7,7 +7,7 @@ import StudentCompletionPopup from "./StudentCompletionPopup";
 import { Container } from "@mui/material";
 import { db } from "../../../../firebase";
 
-export default function StudentDataGrid({ email, classCode }) {
+export default function StudentDataGrid({ email, classCode, assignmentID }) {
   const [rows, setRows] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);

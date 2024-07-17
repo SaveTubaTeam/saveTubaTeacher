@@ -6,13 +6,8 @@ export default function ErrorPage() {
   const error = useRouteError();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/login'); // Redirect to login page if not logged in
-    }
-  }, [navigate]);
   console.error(error);
+  
   return (
     <div id="error-page" style={{fontFamily:"Montserrat, sans-serif"}}>
       <h1>Oops!</h1>

@@ -1,19 +1,19 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { db, firebase } from "../../../firebase";
-import moment from "moment";
 
 async function submitClassData(email, classCode, className, gradeLevel) {
   try {
     const teacherInfo = await db.collection("teachers").doc(email).get();
     const teacherData = teacherInfo.data();
+    const date = moment().format("DD/MM/YYYY h:mm:ss a");
 
     if (teacherData) {
-      // Create or update the class in the classrooms collection
       await db.collection("classrooms").doc(classCode).set({
         classCode: classCode,
         className: className,
         gradeLevel: gradeLevel,
+        dateCreated: date,
         students: [],
         teacher: [
           {
@@ -24,12 +24,12 @@ async function submitClassData(email, classCode, className, gradeLevel) {
         ],
       });
 
-      // Add the class to the teacher's classes array
       await db.collection("teachers").doc(email).update({
         classes: firebase.firestore.FieldValue.arrayUnion({
           classCode: classCode,
           className: className,
           gradeLevel: gradeLevel,
+          dateCreated: date,
         }),
       });
 

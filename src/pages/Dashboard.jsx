@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
 import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
 import ActivitySelect from "../components/DashboardComponents/DataTableComponents/ActivitySelect";
@@ -14,11 +15,13 @@ import ResetGridButton from "../components/DashboardComponents/ResetGridButton";
 import ViewStudentPopup from "../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup";
 import Button from "@mui/material/Button";
 import StudentDataGrid from "../components/DashboardComponents/DataTableComponents/StudentDataGrid";
+import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
 
 function Dashboard() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('testteacher1@gmail.com');
   const [classCode, setClassCode] = useState("");
   const [grade, setGrade] = useState("");
+  //react-router hook to pass dynamic classCode value into url route
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
   const [selectedChapter, setSelectedChapter] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
@@ -26,17 +29,15 @@ function Dashboard() {
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
+  const [assignmentID, setAssignmentID] = useState("G2C1L1");
+  const user = useSelector(state => state.teacher.teacher);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
     const savedClassGrade = localStorage.getItem('selectedClassGrade');
-    if (!user) {
-      navigate('/login');
-    } else {
-      setEmail('testteacher1@gmail.com'); // Set the user's email from localStorage
-      setClassCode(urlClassCode || "");
-      setGrade(savedClassGrade || "");
-    }
+
+    setClassCode(urlClassCode || "");
+    setGrade(savedClassGrade || "");
+
   }, [navigate, urlClassCode]);
 
   const handleOpenPopup = () => {
@@ -50,7 +51,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar />
+        <NavigationBar email={email}/>
         <div className="adjustclass">
           <div className="dayrange">
             <DateSlider />
@@ -90,12 +91,9 @@ function Dashboard() {
             </div>
             <div className="table-container">
               <StudentDataGrid
-                grade={grade}
-                chapter={selectedChapter}
-                lesson={selectedLesson}
-                activity={selectedActivity}
                 email={email}
                 classCode={classCode}
+                assignmentID={assignmentID}
               />
             </div>
             <div className="se">
@@ -117,7 +115,12 @@ function Dashboard() {
           </div>
           <div className="chart-full">
             <ActivityCompletionBar />
+            
           </div>
+          <PastAssignmentCards
+          email={email}
+          classCode={classCode}
+          />
         </div>
       </div>
     </>
