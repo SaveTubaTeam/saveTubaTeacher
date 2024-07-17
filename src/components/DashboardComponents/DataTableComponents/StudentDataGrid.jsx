@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
-import { getStudents, getAssignmentsData } from "../../../data/dataFunctions";
+import { getStudents, getAssignmentsData, getAssignmentData } from "../../../data/dataFunctions";
 import StudentCompletionPopup from "./StudentCompletionPopup";
 import { Container } from "@mui/material";
 import { db } from "../../../../firebase";
@@ -64,15 +64,36 @@ export default function StudentDataGrid({ email, classCode, assignmentID }) {
       if (!email || !classCode) return;
 
       try {
-        const assignments = await getAssignmentsData(email, classCode);
         const students = await getStudents(classCode);
 
-        const totalAssignments = assignments.map(assignment => ({
-          assignmentID: assignment.assignmentID,
-          assignmentSize: assignment.numActivities,
-        }));
+        let totalAssignments = [];
+        let totalNumAssignments = 0;
 
-        let totalNumAssignments = totalAssignments.reduce((acc, assignment) => acc + assignment.assignmentSize, 0);
+        if (!assignmentID) {
+          const assignments = await getAssignmentsData(email, classCode);
+          totalAssignments = assignments.map((assignment) => ({
+            assignmentID: assignment.assignmentID,
+            assignmentSize: assignment.numActivities,
+          }));
+          totalNumAssignments = totalAssignments.reduce(
+            (acc, assignment) => acc + assignment.assignmentSize,
+            0
+          );
+        } else {
+          let grade = "Grade" + assignmentID.substring(1, 2);
+          let chapter = "Chapter" + assignmentID.substring(3, 4);
+          let lesson = "Lesson" + assignmentID.substring(5, 6);
+
+          const assignment = await getAssignmentData(
+            grade,
+            chapter,
+            lesson,
+            email,
+            classCode
+          );
+          totalAssignments.push(assignment);
+          totalNumAssignments = assignment.numActivities;
+        }
 
         const studentCompletions = await Promise.all(
           students.map(async (student) => {
@@ -86,7 +107,11 @@ export default function StudentDataGrid({ email, classCode, assignmentID }) {
             for (const completion of completionsData) {
               if (completion.completionID) {
                 const [directory] = completion.completionID.split("_");
-                if (totalAssignments.some(assignment => assignment.assignmentID === directory)) {
+                if (
+                  totalAssignments.some(
+                    (assignment) => assignment.assignmentID === directory
+                  )
+                ) {
                   totalCompletions += 1;
                 }
               }
@@ -116,7 +141,7 @@ export default function StudentDataGrid({ email, classCode, assignmentID }) {
     };
 
     fetchData();
-  }, [email, classCode]);
+  }, [email, classCode, assignmentID]);
 
   return (
     <Box sx={{ height: 400, width: "100%", backgroundColor: "#ffffff" }}>
