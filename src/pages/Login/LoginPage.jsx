@@ -4,6 +4,7 @@ import { auth, provider, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInTeacher } from '../../../redux/teacherSlice';
+import googleLogoButton from '../../assets/googleLogoButton.png'
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function LoginPage() {
   // retrieving assignments is done after entry.
   async function getTeacher(email) {
     try {
-      //TODO: replace w/ dynamic real
+      //TODO: replace w/ real user doc name
       const teacherDoc = await db.collection('teachers').doc('testteacher1@gmail.com').get();
 
       if(teacherDoc.exists) {
@@ -69,13 +70,19 @@ function LoginPage() {
 
   return (
     <div className='background'>
+
+      <div style={{ padding: '3.5rem' }}></div>
       <div className="loginContainer">
-        <text>Login</text>
+        <h1 style={{ color: 'var(--primary)' }}>Teacher Login</h1>
         
-        <button onClick={handleLogin}>
-          Sign in with Google
+        <button id="googleSignIn" onClick={handleLogin}>
+          <img src={googleLogoButton} alt="Google Logo" />
+          <span>Log in with Google</span>
         </button>
+
+        <button>Other</button>
       </div>
+
     </div>
   );
 }
@@ -83,7 +90,6 @@ function LoginPage() {
 //@returns {string[]} index 0 is first name, index 1 is last name or empty string if it doesnt exist
 //NOTE edge cases: 
 // - this function is error-prone to first names with more than one word
-// - function behaviour is unknown if entire displayName is " " or "" (is that even possible?)
 function parseDisplayName(displayName) {
   try {
     const result = [];

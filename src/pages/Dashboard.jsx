@@ -30,7 +30,7 @@ function Dashboard() {
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
   const [assignmentID, setAssignmentID] = useState("G2C1L1");
-  const user = useSelector(state => state.teacher.teacher)
+  const user = useSelector(state => state.teacher.teacher);
 
   useEffect(() => {
     const savedClassGrade = localStorage.getItem('selectedClassGrade');
