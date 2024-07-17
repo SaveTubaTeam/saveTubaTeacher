@@ -4,14 +4,18 @@ import { useState } from "react";
 import iconic from "../../assets/iconpic.png";
 import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
+import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { useDispatch } from "react-redux";
-import { signOutTeacher } from "../../../redux/teacherSlice";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
+ 
+
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { IoExitOutline } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
+
+
 
 const Navbar = ({ email }) => {
   const dispatch = useDispatch();
@@ -30,6 +34,7 @@ const Navbar = ({ email }) => {
       navigate('/login');
     }
   }
+
 
   return (
     <div className="navbar">
