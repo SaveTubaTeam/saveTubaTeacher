@@ -1,16 +1,46 @@
+/* roughly inspired by gradescope's login page and other mockups */
+
 .background {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
   background-color: var(--light);
   background-image: url('../../assets/loginBackground.png');
-  background-size: auto 100%;
+  background-size: 100% 100%;
+  min-height: 700px; /* this fixed height stops vertical resizing */
+  min-width: 1000px;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+#logoDark {
+  position: absolute;
+  right: 18%;
+  bottom: 70%;
+  aspect-ratio: auto;
+  transform: scale(0.25);
+}
+
+/* sorry for writing media queries - couldn't get relative positioning to work for this logo :( */
+@media (min-width: 1500px) {
+  #logoDark {
+    right: 25%
+  }
+}
+
+@media (max-width: 1300px) {
+  #logoDark {
+    right: 8%;
+  }
+}
+
+@media (max-width: 1100px) {
+  #logoDark {
+    right: -5%;
+  }
 }
 
 .loginContainer {
@@ -19,7 +49,7 @@
   align-items: stretch;
   justify-content: center;
   font-weight: bold;
-  height: 70%;
+  height: 490px; /* 70% of window height */
   width: 20%;
   min-width: 350px;
   background-color: var(--light);
@@ -34,11 +64,80 @@
   align-items: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  margin-top: 12rem;
+  margin-top: 10rem;
 }
 
 #googleSignIn img {
   width: 3rem;
   height: 3rem;
   margin-right: 0.7rem;
+}
+
+.altSignIn {
+  padding: 0.5rem;
+  align-self: center;
+  width: 45%;
+  color: var(--dark);
+}
+
+.smallText {
+  font-size: 0.9rem;
+  line-height: 2;
+  font-weight: 550;
+  font-style: italic;
+}
+
+#or {
+  font-size: 1.05rem;
+  color: var(--dark);
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+
+/* this ::before ::after thing was taken from gradescope's login page */
+#or::before {
+  content: "";
+  position: absolute;
+  width: 13%;
+  height: 2px;
+  margin: 0 5px;
+  margin-top: 13px;
+  background: var(--grey);
+  right: 51.5%;
+}
+
+
+#or::after {
+  content: "";
+  position: absolute;
+  width: 13%;
+  height: 2px;
+  margin: 0 5px;
+  margin-top: 13px;
+  background: var(--grey);
+  left: 51.5%;
+}
+
+#emailInput {
+  margin-top: 2rem;
+}
+
+#return {
+  margin-top: 3rem;
+}
+
+#forgotPassword {
+  text-decoration: underline;
+  color: var(--grey);
+}
+
+#forgotPassword:hover {
+  color: var(--primary);
+  cursor: pointer
+}
+
+#createAnAccount {
+  width: 65%;
+  margin: 0;
 }

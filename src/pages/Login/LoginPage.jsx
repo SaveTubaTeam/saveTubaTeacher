@@ -4,13 +4,14 @@ import { auth, provider, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInTeacher } from '../../../redux/teacherSlice';
-import googleLogoButton from '../../assets/googleLogoButton.png'
+import googleLogoButton from '../../assets/googleLogoButton.png';
+import logoDarkText from '../../assets/logoDarkText.png';
 
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  async function handleLogin() {
+  async function handleGooglePopupSignin() {
     try {
       //please see: https://firebase.google.com/docs/auth/web/google-signin
       const result = await auth.signInWithPopup(provider);
@@ -49,7 +50,7 @@ function LoginPage() {
   async function createNewTeacherAccount() {
     try {
       //re: https://firebase.google.com/docs/reference/js/v8/firebase.User
-      const user = auth.currentUser; // currentUser should be defined here - else the auth error was caught in handleLogin()
+      const user = auth.currentUser; // currentUser should be defined here - else the auth error was caught in handleGooglePopupSignin()
 
       const name = parseDisplayName(user.displayName); //an array is returned. [0] is firstName, [1] is lastName
 
@@ -70,19 +71,21 @@ function LoginPage() {
 
   return (
     <div className='background'>
+    <img src={logoDarkText} alt="Logo Dark" id="logoDark" />
 
-      <div style={{ padding: '3.5rem' }}></div>
+    <div style={{ padding: '3.5rem' }}></div>
       <div className="loginContainer">
         <h1 style={{ color: 'var(--primary)' }}>Teacher Login</h1>
         
-        <button id="googleSignIn" onClick={handleLogin}>
+        <button id="googleSignIn" onClick={handleGooglePopupSignin}>
           <img src={googleLogoButton} alt="Google Logo" />
           <span>Log in with Google</span>
         </button>
 
-        <button>Other</button>
+        <button onClick={() => navigate("/alt-login")}>
+          Other
+        </button>
       </div>
-
     </div>
   );
 }
