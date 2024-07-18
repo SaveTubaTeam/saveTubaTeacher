@@ -82,7 +82,7 @@ function LoginPage() {
           <span>Log in with Google</span>
         </button>
 
-        <button onClick={() => navigate("/alt-login")}>
+        <button id="other" onClick={() => navigate("/alt-login")}>
           Other
         </button>
       </div>
