@@ -1,3 +1,5 @@
+/* roughly inspired by gradescope's login page and other mockups */
+
 .background {
   position: relative;
   display: flex;
@@ -8,7 +10,7 @@
   background-color: var(--light);
   background-image: url('../../assets/loginBackground.png');
   background-size: 100% 100%;
-  height: 100vh;
+  min-height: 700px; /* this fixed height stops vertical resizing */
   min-width: 1000px;
   background-position: center;
   background-repeat: no-repeat;
@@ -47,7 +49,7 @@
   align-items: stretch;
   justify-content: center;
   font-weight: bold;
-  height: 70%;
+  height: 490px; /* 70% of window height */
   width: 20%;
   min-width: 350px;
   background-color: var(--light);
@@ -78,24 +80,64 @@
   color: var(--dark);
 }
 
-#emailInput {
-  margin-top: 3rem;
-}
-
-#return {
-  margin-top: 6rem;
-}
-
-#forgotPassword {
+.smallText {
   font-size: 0.9rem;
   line-height: 2;
   font-weight: 550;
-  color: var(--grey);
   font-style: italic;
+}
+
+#or {
+  font-size: 1.05rem;
+  color: var(--dark);
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+
+/* this ::before ::after thing was taken from gradescope's login page */
+#or::before {
+  content: "";
+  position: absolute;
+  width: 13%;
+  height: 2px;
+  margin: 0 5px;
+  margin-top: 13px;
+  background: var(--grey);
+  right: 51.5%;
+}
+
+
+#or::after {
+  content: "";
+  position: absolute;
+  width: 13%;
+  height: 2px;
+  margin: 0 5px;
+  margin-top: 13px;
+  background: var(--grey);
+  left: 51.5%;
+}
+
+#emailInput {
+  margin-top: 2rem;
+}
+
+#return {
+  margin-top: 3rem;
+}
+
+#forgotPassword {
   text-decoration: underline;
+  color: var(--grey);
 }
 
 #forgotPassword:hover {
   color: var(--primary);
   cursor: pointer
+}
+
+#createAnAccount {
+  width: 65%;
+  margin: 0;
 }

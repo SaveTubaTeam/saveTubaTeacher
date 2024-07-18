@@ -31,17 +31,17 @@
 }
 
 html {
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body, html {
-   /* css page reset */
-   margin: 0 auto;
-   padding: 0;
-   /* enable scrolling */
-   overflow-x: auto; 
-   overflow-y: auto;
-   height: 100%;
+  /* css page reset */
+  margin: 0 auto;
+  padding: 0;
+  /* enable scrolling */
+  overflow-x: auto; 
+  overflow-y: auto;
+  height: 100%;
 }
 
 h1 {
@@ -67,12 +67,12 @@ button {
   font-size: 1.2rem;
   font-family: inherit;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 0.9rem 1.8rem;
   box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
   background-color: white;
   line-height: 1.5;
-  margin: 0.5rem;
+  margin: 0.3rem;
   overflow: hidden;
 }
 

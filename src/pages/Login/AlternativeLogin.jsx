@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './LoginPage.css';
-import { auth, provider, db } from '../../../firebase';
+import { auth, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInTeacher } from '../../../redux/teacherSlice';
@@ -83,7 +83,6 @@ export default function AlternativeLogin() {
             <input 
                placeholder='Password' 
                type='password' 
-               id="passwordInput"
                onChange={(event) => setPassword(event.target.value)}
             />
 
@@ -91,7 +90,13 @@ export default function AlternativeLogin() {
                Sign in
             </button>
 
-            <a id="forgotPassword" onClick={sendPasswordReset}>Forgot Password</a>
+            <a className="smallText" id="forgotPassword" onClick={sendPasswordReset}>Forgot Password</a>
+
+            <span className="smallText" id="or">Or</span>
+
+            <button className="altSignIn" id="createAnAccount" onClick={() => navigate("/alt-registration")}>
+               Create an Account
+            </button>
 
             <button className="altSignIn" id="return" onClick={() => navigate("/")}>
                Return

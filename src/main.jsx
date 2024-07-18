@@ -9,6 +9,7 @@ import CreateAssignment from './pages/CreateAssignment/CreateAssignment';
 import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/Login/LoginPage';
 import AlternativeLogin from './pages/Login/AlternativeLogin';
+import AlternativeRegistration from './pages/Login/AlternativeRegistration';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
 import ClassSelection from './pages/ClassSelection/ClassSelection';
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: 'alt-login',
         element: <AlternativeLogin />
+      },
+      {
+        path: 'alt-registration',
+        element: <AlternativeRegistration />
       },
       {
         path: 'classselection',
