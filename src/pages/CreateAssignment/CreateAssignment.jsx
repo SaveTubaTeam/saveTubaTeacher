@@ -27,7 +27,7 @@ const CreateAssignment = () => {
       const userData = userDoc.data();
       const classes = userData.classes;
 
-      const matchedClass = classes.find(cls => cls.className === selectedClass.className);
+      const matchedClass = classes.find(cls => cls.className === selectedClass.className && cls.gradeLevel === selectedClass.grade);
       if (matchedClass) {
         setClassCode(matchedClass.classCode);
         console.log('Class Code:', matchedClass.classCode);
@@ -82,9 +82,15 @@ const CreateAssignment = () => {
 
     const lastGradeChar = grade.charAt(grade.length - 1);
     const lastChapterChar = chapter.charAt(chapter.length - 1);
-    const lastLessonChar = lesson.charAt(lesson.length - 1);
+    const trailingNumbers = lesson.match(/\d+$/);
 
-    const assignmentID = `G${lastGradeChar}C${lastChapterChar}L${lastLessonChar}`;
+    if (trailingNumbers) {
+      const lastLessonNumbers = trailingNumbers[0];
+      console.log("Trailing numbers:", lastLessonNumbers);
+    } else {
+      console.log("No trailing numbers found");
+    }
+    const assignmentID = `G${lastGradeChar}C${lastChapterChar}L${trailingNumbers}`;
 
     const dateAssigned = formatDateTime(new Date());
     const dateDueFormatted = formatDateTime(new Date(dateDue));
