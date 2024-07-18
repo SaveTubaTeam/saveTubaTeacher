@@ -49,7 +49,16 @@ h1 {
   font-weight: 600;
   margin: 0;
   line-height: 1.2;
-  color: var(--black)
+  color: var(--primary);
+  text-shadow: 1px 1px 1px var(--black); /* taken from @robertbasic: https://stackoverflow.com/questions/2618192/how-to-create-nice-text-depth-shadow-effect-html */
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 550;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--primary);
 }
 
 textarea,
@@ -63,7 +72,7 @@ button {
   box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
   background-color: white;
   line-height: 1.5;
-  margin: 0.7rem;
+  margin: 0.5rem;
   overflow: hidden;
 }
 

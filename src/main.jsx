@@ -8,6 +8,7 @@ import Profile from './pages/Profile/Profile';
 import CreateAssignment from './pages/CreateAssignment/CreateAssignment';
 import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/Login/LoginPage';
+import AlternativeLogin from './pages/Login/AlternativeLogin';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
 import ClassSelection from './pages/ClassSelection/ClassSelection';
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'alt-login',
+        element: <AlternativeLogin />
       },
       {
         path: 'classselection',
