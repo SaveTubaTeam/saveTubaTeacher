@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../../firebase'; // Adjust the path as needed
+import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import '../../App.css';
 import './ClassSelection.css';
-import { getStudents } from '../../data/dataFunctions'; // Ensure this path is correct
+import { getStudents, getAssignmentsData } from '../../data/dataFunctions'; // Ensure this path is correct
 import CreateClassButton from './CreateClassButton2'; // Ensure this path is correct
 
 const ClassSelection = () => {
@@ -13,6 +14,7 @@ const ClassSelection = () => {
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedClassCode, setSelectedClassCode] = useState('');
+  const [assignmentsCounts, setAssignmentsCounts] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +23,16 @@ const ClassSelection = () => {
         try {
           const teacherRef = await db.collection('teachers').doc(email).get();
           if (teacherRef.exists) {
-            setTeacher(teacherRef.data());
+            const teacherData = teacherRef.data();
+            setTeacher(teacherData);
+
+            // Fetch assignments count for each class
+            const assignmentsCounts = {};
+            for (const classItem of teacherData.classes) {
+              const assignments = await getAssignmentsData(email, classItem.classCode);
+              assignmentsCounts[classItem.classCode] = assignments.length;
+            }
+            setAssignmentsCounts(assignmentsCounts);
           } else {
             console.log('Teacher not found');
           }
@@ -58,8 +69,7 @@ const ClassSelection = () => {
   
   return (
     <div className="App">
-      <WelcomeMessage teacherName={teacher.firstName}
-                      teacherLastname={teacher.lastName}/>
+      <WelcomeMessage teacherName={teacher.firstName} teacherLastname={teacher.lastName} />
       <h1>My Classes</h1>
       <div className="year">2024-2025</div>
       <div className="class-list">
@@ -69,6 +79,7 @@ const ClassSelection = () => {
             classItem={classItem} 
             onClassNameClick={handleClassNameClick} 
             onShowStudents={handleShowStudents} 
+            assignmentsCount={assignmentsCounts[classItem.classCode] || 0}
           />
         ))}
         <AddClassCard email={email} />
@@ -90,13 +101,13 @@ const ClassSelection = () => {
   );
 };
 
-const WelcomeMessage = ({ teacherName, teacherLastname}) => (
+const WelcomeMessage = ({ teacherName, teacherLastname }) => (
   <div>
     <h1>Welcome, {teacherName} {teacherLastname}</h1>
   </div>
 );
 
-const ClassCard = ({ classItem, onClassNameClick, onShowStudents }) => (
+const ClassCard = ({ classItem, onClassNameClick, onShowStudents, assignmentsCount }) => (
   <div className="class-card">
     <div className="yoyy">
       <h2 
@@ -108,6 +119,7 @@ const ClassCard = ({ classItem, onClassNameClick, onShowStudents }) => (
       <button onClick={() => onShowStudents(classItem.classCode)}>View Students</button>
     </div>
     <p>{classItem.gradeLevel}</p>
+    <p>Assignments: {assignmentsCount}</p>
   </div>
 );
 
