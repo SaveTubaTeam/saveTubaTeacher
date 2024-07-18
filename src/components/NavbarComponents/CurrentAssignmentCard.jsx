@@ -12,11 +12,13 @@ export default function CurrentAssignmentCard({
 }) {
   const [currentAssignment, setCurrentAssignment] = useState(null);
   const [assignmentTitle, setAssignmentTitle] = useState("");
+  const [chapter, setChapter] = useState("");
+  const [lesson, setLesson] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!email || !classCode || !assignmentID) return;
-
+      if (!email || !classCode) return;
+        
       try {
         let grade = "Grade" + assignmentID.substring(1, 2);
         let chapter = "Chapter" + assignmentID.substring(3, 4);
@@ -34,6 +36,8 @@ export default function CurrentAssignmentCard({
         setCurrentAssignment(assignment);
         console.log(assignment);
 
+        setChapter(chapter);
+        setLesson(lesson);
         const assignmentTitleArray = await convertIDToName([assignment]);
         setAssignmentTitle(assignmentTitleArray[0]);
         console.log(assignmentTitle);
@@ -50,7 +54,10 @@ export default function CurrentAssignmentCard({
       <Card style={{height: '3vw'}} variant="outlined" sx={{ mb: 2 }}>
       <CardContent>
         <Typography variant="h10" component="div">
-          Current Assignment: {assignmentTitle}
+          {assignmentID ? assignmentTitle : "No Assignment selected"}
+        </Typography>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary">
+          {assignmentID ? {chapter} - {lesson} : ""}
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary"></Typography>
       </CardContent>

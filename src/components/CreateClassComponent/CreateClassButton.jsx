@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import CreateClassPopup from './CreateClassPopup';
-import { CiCirclePlus } from 'react-icons/ci';
+import { Button } from '@mui/material';
 
 const CreateClassButton = ({ email }) => {
   const [open, setOpen] = useState(false);
@@ -16,8 +15,9 @@ const CreateClassButton = ({ email }) => {
 
   return (
     <div>
-      <CiCirclePlus size="40px" color="Green"  onClick={handleOpen}>
-      </CiCirclePlus>
+      <Button onClick={handleOpen}>
+        Create Class
+      </Button>
       <CreateClassPopup open={open} onClose={handleClose} email={email}/>
     </div>
   );
