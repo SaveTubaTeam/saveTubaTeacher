@@ -9,11 +9,11 @@ export default function CurrentAssignmentCard({ email, classCode }) {
   const [currentAssignment, setCurrentAssignment] = useState(null);
   const [assignmentTitle, setAssignmentTitle] = useState("");
 
-  const fetchAssignmentData = async (email, classCode, assignmentId) => {
+  const fetchAssignmentData = async (email, classCode, assignmentID) => {
     try {
-      let grade = "Grade" + assignmentId.substring(1, 2);
-      let chapter = "Chapter" + assignmentId.substring(3, 4);
-      let lesson = "Lesson" + assignmentId.substring(5, 6);
+      let grade = "Grade" + assignmentID.substring(1, 2);
+      let chapter = "Chapter" + assignmentID.substring(3, 4);
+      let lesson = "Lesson" + assignmentID.substring(5, 6);
       console.log(grade, chapter, lesson);
 
       const assignment = await getAssignmentData(
@@ -39,7 +39,7 @@ export default function CurrentAssignmentCard({ email, classCode }) {
     const handleStorageChange = () => {
       const storedData = JSON.parse(localStorage.getItem('selectedAssignment'));
       if (storedData) {
-        fetchAssignmentData(storedData.email, storedData.classCode, storedData.assignmentId);
+        fetchAssignmentData(storedData.email, storedData.classCode, storedData.assignmentID);
       }
     };
 

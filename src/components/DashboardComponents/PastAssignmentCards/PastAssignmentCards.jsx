@@ -82,8 +82,8 @@ export default function PastAssignmentCards({ email, classCode }) {
     setCurrentTime(moment().format("DD/MM/YYYY h:mm:ss a"));
   }, [email, classCode]);
 
-  const handleSelectAssignment = (assignmentId) => {
-    localStorage.setItem('selectedAssignment', JSON.stringify({ email, classCode, assignmentId }));
+  const handleSelectAssignment = (assignmentID) => {
+    localStorage.setItem('selectedAssignment', JSON.stringify({ email, classCode, assignmentID }));
     window.dispatchEvent(new Event('assignmentSelected'));
   };
 
