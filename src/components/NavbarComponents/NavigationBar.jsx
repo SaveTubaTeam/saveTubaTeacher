@@ -6,6 +6,7 @@ import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
+import { signOutTeacher } from "../../../redux/teacherSlice";
 import { useDispatch } from "react-redux";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
 

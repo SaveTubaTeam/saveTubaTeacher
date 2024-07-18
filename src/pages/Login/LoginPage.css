@@ -64,13 +64,17 @@
   align-items: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  margin-top: 10rem;
+  margin-top: 8rem;
 }
 
 #googleSignIn img {
   width: 3rem;
   height: 3rem;
   margin-right: 0.7rem;
+}
+
+#other {
+  margin-bottom: 9rem;
 }
 
 .altSignIn {
