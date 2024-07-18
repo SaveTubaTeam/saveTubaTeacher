@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
 import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
@@ -18,7 +18,7 @@ import StudentDataGrid from "../components/DashboardComponents/DataTableComponen
 import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
 
 function Dashboard() {
-  const [email, setEmail] = useState('testteacher1@gmail.com');
+  const [email, setEmail] = useState("testteacher1@gmail.com");
   const [classCode, setClassCode] = useState("");
   const [grade, setGrade] = useState("");
   //react-router hook to pass dynamic classCode value into url route
@@ -30,14 +30,13 @@ function Dashboard() {
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
   const [assignmentID, setAssignmentID] = useState("G2C1L1");
-  const user = useSelector(state => state.teacher.teacher);
+  const user = useSelector((state) => state.teacher.teacher);
 
   useEffect(() => {
-    const savedClassGrade = localStorage.getItem('selectedClassGrade');
+    const savedClassGrade = localStorage.getItem("selectedClassGrade");
 
     setClassCode(urlClassCode || "");
     setGrade(savedClassGrade || "");
-
   }, [navigate, urlClassCode]);
 
   const handleOpenPopup = () => {
@@ -51,14 +50,14 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar email={email}/>
+        <NavigationBar email={email} classCode={classCode} />
         <div className="adjustclass">
-          <div className="dayrange">
+          {/* <div className="dayrange">
             <DateSlider />
-          </div>
-          <div id="button22">
+          </div> */}
+          {/* <div id="button22">
             <TimeButtonGroup />
-          </div>
+          </div> */}
         </div>
         <div className="additional-charts">
           <CompletionTimeLine />
@@ -115,12 +114,8 @@ function Dashboard() {
           </div>
           <div className="chart-full">
             <ActivityCompletionBar />
-            
           </div>
-          <PastAssignmentCards
-          email={email}
-          classCode={classCode}
-          />
+          <PastAssignmentCards email={email} classCode={classCode} />
         </div>
       </div>
     </>

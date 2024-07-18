@@ -8,8 +8,8 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { useDispatch } from "react-redux";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
- 
 
+import { CiCirclePlus } from "react-icons/ci";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { IoExitOutline } from "react-icons/io5";
@@ -17,11 +17,12 @@ import { FaHome } from "react-icons/fa";
 
 
 
-const Navbar = ({ email }) => {
+const Navbar = ({ email, classCode, assignmentID }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [highlightedButton, setHighlightedButton] = useState("");
+  const [currentAssignment, setCurrentAssignment] = useState("");
 
   async function handleLogout() {
     try {
@@ -34,6 +35,7 @@ const Navbar = ({ email }) => {
       navigate('/login');
     }
   }
+
 
 
   return (
@@ -51,12 +53,25 @@ const Navbar = ({ email }) => {
         />
       </div>
       <div className="sss">
-        <CurrentAssignmentCard
-          email={email}
-          classCode={"000000"}
-          assignmentID={"G2C1L1"}
-        />
+          <CurrentAssignmentCard
+          email = {email}
+          classCode = {classCode}
+          assignmentID = {assignmentID}
+          />
       </div>
+      {location.pathname == "/createassignment" ? (
+        <div className="sss">
+          <Link to="/">
+            <FaHome title="Home" size="40px" color="Green" />
+          </Link>
+        </div>
+      ) : (
+        <div className="sss">
+          <Link to="/createassignment">
+            <CiCirclePlus title="Create Assignment" size="40px" color="Green" />
+          </Link>
+        </div>
+      )}
       <div className="sss">
         <CreateClassButton title="+" />
       </div>
@@ -76,19 +91,6 @@ const Navbar = ({ email }) => {
       <div className="sss">
         <IoExitOutline title="Logout" size="40px" color="Green" onClick={handleLogout} />
       </div>
-      {location.pathname == "/createassignment" ? (
-        <div className="sss">
-          <Link to="/">
-            <FaHome title="Home" size="40px" color="Green" />
-          </Link>
-        </div>
-      ) : (
-        <div className="sss">
-          <Link to="/createassignment">
-            <ClassButton title="Create Assignment" />
-          </Link>
-        </div>
-      )}
       {location.pathname == "/classselection" ? (
         <div className="sss">
           <Link to="/">

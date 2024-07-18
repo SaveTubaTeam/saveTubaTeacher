@@ -8,6 +8,8 @@ import { convertIDToName, getAssignmentData, getAssignmentsData } from "../../da
 export default function CurrentAssignmentCard({ email, classCode }) {
   const [currentAssignment, setCurrentAssignment] = useState(null);
   const [assignmentTitle, setAssignmentTitle] = useState("");
+  const [chapter, setChapter] = useState("");
+  const [lesson, setLesson] = useState("");
 
   const fetchFirstAssignment = async () => {
     try {

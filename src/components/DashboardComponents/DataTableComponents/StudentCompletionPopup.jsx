@@ -45,7 +45,7 @@ function checkDateCompleted(dateCompleted) {
   }
 }
 
-const StudentCompletionPopup = ({ open, onClose, rowData }) => {
+const StudentCompletionPopup = ({ open, onClose, rowData}) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <StyledDialogTitle><strong>Student Completion Dates</strong></StyledDialogTitle>
