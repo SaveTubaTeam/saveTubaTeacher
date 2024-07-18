@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { getAssignmentsData, convertIDToName } from "../../../data/dataFunctions";
 import moment from "moment";
-import { current } from "@reduxjs/toolkit";
 
 export default function PastAssignmentCards({ email, classCode }) {
   const [currentAssignments, setCurrentAssignments] = useState([]);
@@ -83,6 +82,11 @@ export default function PastAssignmentCards({ email, classCode }) {
     setCurrentTime(moment().format("DD/MM/YYYY h:mm:ss a"));
   }, [email, classCode]);
 
+  const handleSelectAssignment = (assignmentId) => {
+    localStorage.setItem('selectedAssignment', JSON.stringify({ email, classCode, assignmentId }));
+    window.dispatchEvent(new Event('assignmentSelected'));
+  };
+
   return (
     <Box sx={{ minWidth: 275 }}>
       {currentAssignments.map((assignment, index) => (
@@ -111,7 +115,9 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Select Assignment</Button>
+            <Button size="small" onClick={() => handleSelectAssignment(assignment.assignmentID)}>
+              Select Assignment
+            </Button>
           </CardActions>
         </Card>
       ))}
@@ -144,7 +150,9 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Select Assignment</Button>
+            <Button size="small" onClick={() => handleSelectAssignment(assignment.assignmentID)}>
+              Select Assignment
+            </Button>
           </CardActions>
         </Card>
       ))}
