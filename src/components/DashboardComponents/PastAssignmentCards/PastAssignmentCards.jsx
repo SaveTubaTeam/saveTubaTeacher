@@ -5,7 +5,10 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { getAssignmentsData, convertIDToName } from "../../../data/dataFunctions";
+import {
+  getAssignmentsData,
+  convertIDToName,
+} from "../../../data/dataFunctions";
 import moment from "moment";
 import { current } from "@reduxjs/toolkit";
 
@@ -42,33 +45,45 @@ export default function PastAssignmentCards({ email, classCode }) {
           }
         });
 
-        currentAssignments.sort((a, b) => b.assignmentDateDue - a.assignmentDateDue);
-        pastAssignments.sort((a, b) => b.assignmentDateDue - a.assignmentDateDue);
+        currentAssignments.sort(
+          (a, b) => b.assignmentDateDue - a.assignmentDateDue
+        );
+        pastAssignments.sort(
+          (a, b) => b.assignmentDateDue - a.assignmentDateDue
+        );
 
         setCurrentAssignments(
           currentAssignments.map((assignment) => ({
             ...assignment,
-            assignmentDateAssigned: assignment.assignmentDateAssigned.format("DD/MM/YYYY h:mm:ss a"),
-            assignmentDateDue: assignment.assignmentDateDue.format("DD/MM/YYYY h:mm:ss a"),
+            assignmentDateAssigned: assignment.assignmentDateAssigned.format(
+              "DD/MM/YYYY h:mm:ss a"
+            ),
+            assignmentDateDue: assignment.assignmentDateDue.format(
+              "DD/MM/YYYY h:mm:ss a"
+            ),
           }))
         );
         setPastAssignments(
           pastAssignments.map((assignment) => ({
             ...assignment,
-            assignmentDateAssigned: assignment.assignmentDateAssigned.format("DD/MM/YYYY h:mm:ss a"),
-            assignmentDateDue: assignment.assignmentDateDue.format("DD/MM/YYYY h:mm:ss a"),
+            assignmentDateAssigned: assignment.assignmentDateAssigned.format(
+              "DD/MM/YYYY h:mm:ss a"
+            ),
+            assignmentDateDue: assignment.assignmentDateDue.format(
+              "DD/MM/YYYY h:mm:ss a"
+            ),
           }))
         );
-        
+
         const titleArr = await convertIDToName(currentAssignments);
         for (let i = 0; i < titleArr.length; i++) {
-          titleArr[i].replace(/[0-9]/g, '');
+          titleArr[i].replace(/[0-9]/g, "");
           titleArr[i] = titleArr[i].substring(2);
         }
         setAssignmentTitles(titleArr);
         const pastArr = await convertIDToName(pastAssignments);
         for (let i = 0; i < pastArr.length; i++) {
-          pastArr[i].replace(/[0-9]/g, '');
+          pastArr[i].replace(/[0-9]/g, "");
           pastArr[i] = pastArr[i].substring(2);
         }
         setPastAssignmentTitles(pastArr);
@@ -82,6 +97,14 @@ export default function PastAssignmentCards({ email, classCode }) {
     fetchData();
     setCurrentTime(moment().format("DD/MM/YYYY h:mm:ss a"));
   }, [email, classCode]);
+
+  const handleSelectAssignment = (assignmentId) => {
+    localStorage.setItem(
+      "selectedAssignment",
+      JSON.stringify({ email, classCode, assignmentId })
+    );
+    window.dispatchEvent(new Event("assignmentSelected"));
+  };
 
   return (
     <Box sx={{ minWidth: 275 }}>
@@ -111,7 +134,12 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Select Assignment</Button>
+            <Button
+              size="small"
+              onClick={() => handleSelectAssignment(assignment.assignmentID)}
+            >
+              Select Assignment
+            </Button>
           </CardActions>
         </Card>
       ))}
@@ -144,7 +172,12 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Select Assignment</Button>
+            <Button
+              size="small"
+              onClick={() => handleSelectAssignment(assignment.assignmentID)}
+            >
+              Select Assignment
+            </Button>
           </CardActions>
         </Card>
       ))}

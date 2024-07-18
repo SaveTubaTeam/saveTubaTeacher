@@ -43,6 +43,15 @@ function Dashboard() {
     setPopupOpen(true);
   };
 
+  useEffect(() => {
+    if(localStorage.getItem('selectedAssignment')){
+      setAssignmentID(localStorage.getItem('selectedAssignment').assignmentID);
+    }
+    else{ 
+      return;
+    }
+  }, [])
+
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
