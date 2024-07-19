@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../../firebase'; // Adjust the path as needed
-import NavigationBar from '../../components/NavbarComponents/NavigationBar';
+import { db } from '../../../firebase';
 import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
-import '../../App.css';
 import './ClassSelection.css';
-import { getStudents, getAssignmentsData } from '../../data/dataFunctions'; // Ensure this path is correct
-import CreateClassButton from './CreateClassButton2'; // Ensure this path is correct
+import { getStudents, getAssignmentsData } from '../../data/dataFunctions';
+import CreateClassButton from './CreateClassButton2';
+import { useSelector } from 'react-redux';
+import { selectTeacher } from '../../../redux/teacherSlice';
 
 const ClassSelection = () => {
-  const [email, setEmail] = useState('testteacher1@gmail.com');
-  const [teacher, setTeacher] = useState(null);
+  const teacher = useSelector(selectTeacher);
+  const email = teacher.email;
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedClassCode, setSelectedClassCode] = useState('');
@@ -18,31 +18,17 @@ const ClassSelection = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTeacherData = async () => {
-      if (email) {
-        try {
-          const teacherRef = await db.collection('teachers').doc(email).get();
-          if (teacherRef.exists) {
-            const teacherData = teacherRef.data();
-            setTeacher(teacherData);
-
-            // Fetch assignments count for each class
-            const assignmentsCounts = {};
-            for (const classItem of teacherData.classes) {
-              const assignments = await getAssignmentsData(email, classItem.classCode);
-              assignmentsCounts[classItem.classCode] = assignments.length;
-            }
-            setAssignmentsCounts(assignmentsCounts);
-          } else {
-            console.log('Teacher not found');
-          }
-        } catch (error) {
-          console.error('Error fetching teacher data:', error);
-        }
+    async function fetchAssignments() {
+      // Fetch assignments count for each class
+      const assignmentsCounts = {};
+      for (const classItem of teacher.classes) {
+        const assignments = await getAssignmentsData(email, classItem.classCode);
+        assignmentsCounts[classItem.classCode] = assignments.length;
       }
+      setAssignmentsCounts(assignmentsCounts);
     };
 
-    fetchTeacherData();
+    fetchAssignments();
   }, [email]);
 
   const handleShowStudents = async (classCode) => {

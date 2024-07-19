@@ -5,11 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { convertIDToName, getAssignmentData } from "../../data/dataFunctions";
 
-export default function CurrentAssignmentCard({ email, classCode }) {
+export default function CurrentAssignmentCard() {
   const [currentAssignment, setCurrentAssignment] = useState(null);
   const [assignmentTitle, setAssignmentTitle] = useState("");
 
   const fetchAssignmentData = async (email, classCode, assignmentID) => {
+    if (!email || !classCode) return;
+
     try {
       let grade = "Grade" + assignmentID.substring(1, 2);
       let chapter = "Chapter" + assignmentID.substring(3, 4);
@@ -27,6 +29,10 @@ export default function CurrentAssignmentCard({ email, classCode }) {
       setCurrentAssignment(assignment);
       console.log(assignment);
 
+      setChapter(chapter);
+      console.log(chapter);
+      setLesson(lesson);
+      console.log(lesson);
       const assignmentTitleArray = await convertIDToName([assignment]);
       setAssignmentTitle(assignmentTitleArray[0]);
       console.log(assignmentTitle);
@@ -36,19 +42,17 @@ export default function CurrentAssignmentCard({ email, classCode }) {
   };
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      const storedData = JSON.parse(localStorage.getItem('selectedAssignment'));
-      if (storedData) {
-        fetchAssignmentData(storedData.email, storedData.classCode, storedData.assignmentID);
+    const handleAssignmentSelected = () => {
+      const selectedAssignment = JSON.parse(localStorage.getItem("selectedAssignment"));
+      if (selectedAssignment) {
+        fetchAssignmentData(selectedAssignment.email, selectedAssignment.classCode, selectedAssignment.assignmentID);
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('assignmentSelected', handleStorageChange);
+    window.addEventListener("assignmentSelected", handleAssignmentSelected);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('assignmentSelected', handleStorageChange);
+      window.removeEventListener("assignmentSelected", handleAssignmentSelected);
     };
   }, []);
 
@@ -57,8 +61,12 @@ export default function CurrentAssignmentCard({ email, classCode }) {
       <Card style={{ height: '3vw' }} variant="outlined" sx={{ mb: 2 }}>
         <CardContent>
           <Typography variant="h10" component="div">
-            {assignmentTitle ? assignmentTitle : "No Assignment selected"}
+            {currentAssignment ? assignmentTitle.replace(/^\d+\. /, "") : "No Assignment selected"}
           </Typography>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary">
+            {currentAssignment ? `${chapter} - ${lesson}` : ""}
+          </Typography>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary"></Typography>
         </CardContent>
       </Card>
     </Box>

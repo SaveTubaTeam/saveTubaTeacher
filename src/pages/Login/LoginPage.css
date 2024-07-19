@@ -1,4 +1,4 @@
-/* roughly inspired by gradescope's login page and other mockups */
+/* design roughly inspired by gradescope's login page and other mockups */
 
 .background {
   position: relative;
@@ -49,7 +49,7 @@
   align-items: stretch;
   justify-content: center;
   font-weight: bold;
-  height: 490px; /* 70% of window height */
+  height: 510px;
   width: 20%;
   min-width: 350px;
   background-color: var(--light);
@@ -73,10 +73,6 @@
   margin-right: 0.7rem;
 }
 
-#other {
-  margin-bottom: 9rem;
-}
-
 .altSignIn {
   padding: 0.5rem;
   align-self: center;
@@ -98,8 +94,7 @@
   margin-bottom: 5px;
 }
 
-
-/* this ::before ::after thing was taken from gradescope's login page */
+/* this ::before ::after thing was inspired by gradescope's login page css */
 #or::before {
   content: "";
   position: absolute;
@@ -110,7 +105,6 @@
   background: var(--grey);
   right: 51.5%;
 }
-
 
 #or::after {
   content: "";
@@ -123,14 +117,6 @@
   left: 51.5%;
 }
 
-#emailInput {
-  margin-top: 2rem;
-}
-
-#return {
-  margin-top: 3rem;
-}
-
 #forgotPassword {
   text-decoration: underline;
   color: var(--grey);
@@ -139,9 +125,4 @@
 #forgotPassword:hover {
   color: var(--primary);
   cursor: pointer
-}
-
-#createAnAccount {
-  width: 65%;
-  margin: 0;
 }

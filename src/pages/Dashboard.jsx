@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { selectTeacher } from "../../redux/teacherSlice";
 import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
 import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
 import ActivitySelect from "../components/DashboardComponents/DataTableComponents/ActivitySelect";
@@ -18,10 +19,8 @@ import StudentDataGrid from "../components/DashboardComponents/DataTableComponen
 import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
 
 function Dashboard() {
-  const [email, setEmail] = useState("testteacher1@gmail.com");
   const [classCode, setClassCode] = useState("");
   const [grade, setGrade] = useState("");
-  //react-router hook to pass dynamic classCode value into url route
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
   const [selectedChapter, setSelectedChapter] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
@@ -29,8 +28,9 @@ function Dashboard() {
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
-  const [assignmentID, setAssignmentID] = useState("");
-  const user = useSelector((state) => state.teacher.teacher);
+  const [assignmentID, setAssignmentID] = useState(null);
+  const teacher = useSelector(selectTeacher);
+  const email = teacher.email;
 
   useEffect(() => {
     const savedClassGrade = localStorage.getItem("selectedClassGrade");
@@ -43,23 +43,34 @@ function Dashboard() {
     setPopupOpen(true);
   };
 
-  useEffect(() => {
-    if(localStorage.getItem('selectedAssignment')){
-      setAssignmentID(localStorage.getItem('selectedAssignment').assignmentID);
-    }
-    else{ 
-      return;
-    }
-  }, [])
-
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
 
+  useEffect(() => {
+    const handleAssignmentSelected = () => {
+      const selectedAssignment = JSON.parse(
+        localStorage.getItem("selectedAssignment")
+      );
+      if (selectedAssignment) {
+        setAssignmentID(selectedAssignment.assignmentId);
+      }
+    };
+
+    window.addEventListener("assignmentSelected", handleAssignmentSelected);
+
+    return () => {
+      window.removeEventListener(
+        "assignmentSelected",
+        handleAssignmentSelected
+      );
+    };
+  }, []);
+
   return (
     <>
       <div className="grid-container">
-        <NavigationBar email={email} classCode={classCode} />
+        <NavigationBar email={email} classCode={classCode} assignmentID={assignmentID}/>
         <div className="adjustclass">
           {/* <div className="dayrange">
             <DateSlider />
@@ -69,8 +80,8 @@ function Dashboard() {
           </div> */}
         </div>
         <div className="additional-charts">
-          <CompletionTimeLine />
-          <AssignmentCompletionPieChart email={email} classCode={classCode} />
+          {/* <CompletionTimeLine />
+          <AssignmentCompletionPieChart email={email} classCode={classCode} /> */}
         </div>
         <div className="completionTime">
           <div className="completionTime2">
@@ -122,7 +133,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="chart-full">
-            <ActivityCompletionBar />
+            {/* <ActivityCompletionBar /> */}
           </div>
           <PastAssignmentCards email={email} classCode={classCode} />
         </div>

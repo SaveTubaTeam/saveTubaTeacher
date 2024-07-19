@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Dashboard from './pages/Dashboard';
@@ -13,6 +15,10 @@ import AlternativeRegistration from './pages/Login/AlternativeRegistration';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
 import ClassSelection from './pages/ClassSelection/ClassSelection';
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+
+let persistor = persistStore(store);
 
 const router = createBrowserRouter([
   {
@@ -49,17 +55,31 @@ const router = createBrowserRouter([
         element: <AlternativeRegistration />
       },
       {
-        path: 'classselection',
+        path: 'class-selection',
         element: <ClassSelection />,
       }
     ]
   }
 ]);
 
+//ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <RouterProvider router={router} />
+
+      <ToastContainer 
+        position="top-center"
+        autoClose={1500}
+        closeButton={true}
+        hideProgressBar={true}
+        closeOnClick={true}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+      />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

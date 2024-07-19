@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInTeacher } from '../../../redux/teacherSlice';
 import logoDarkText from '../../assets/logoDarkText.png'
+import { toast } from 'react-toastify';
 
 export default function AlternativeLogin() {
    const navigate = useNavigate();
@@ -12,49 +13,81 @@ export default function AlternativeLogin() {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
 
-   //TODO: handle error codes
    async function handleEmailPasswordSignin() {
       try {
-        console.log(email, password);
+        //console.log(`Email: ${email}, Password: ${password}`);
+        const popup = toast.loading(`Logging in`);
         //please see: https://firebase.google.com/docs/auth/web/password-auth#web_3
         const result = await auth.signInWithEmailAndPassword(email, password);
         const user = result.user;
         console.log(user);
 
         await getTeacher(email);
-  
-        navigate("/classselection");
+
+        console.log(`logged in with: ${email}`)
+        toast.update(popup, { render: `Login Success!`, type: "success", isLoading: false, autoClose: 1500 });
+        navigate("/class-selection");
+
       } catch(error) {
-        console.error(`ERROR WITH SIGNIN: ${error.message}`);
+
+         if(error.code) {
+            console.error(`ERROR WITH EMAIL/PASSWORD SIGNIN | Error Code: ${error.code} | ${error.message}`);
+            if(error.code === "auth/wrong-password") {
+               toast.update(popup, { render: `Incorrect Password`, type: "error", isLoading: false, autoClose: 1500 });
+            } else {
+               toast.update(popup, { render: `Invalid Login`, type: "error", isLoading: false, autoClose: 1500 });
+            }
+
+         } else if(error.message == `Teacher doc does not exist`) {
+            console.error(error);
+            toast.update(popup, { render: `Please Create a Teacher Account to Continue`, type: "error", isLoading: false, autoClose: 1500 });
+
+         } else {
+            console.error("ERROR in handleEmailPasswordSignin:", error);
+            toast.update(popup, { render: `An error occured. Please try again or contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+         }
+
       }
    }
 
-   //pasted from LoginPage.jsx
    async function getTeacher(email) {
-      try {
-      //TODO: replace w/ real user doc name
       const teacherDoc = await db.collection('teachers').doc(email).get();
 
-         if(!teacherDoc.exists) { throw new Error(`ERROR --> handleEmailPassword failed to throw error for non-existent account`)}
-         
-         const teacherData = teacherDoc.data();
-         dispatch(signInTeacher({ data: teacherData })); //dispatching to teacherSlice store
+      if(!teacherDoc.exists) { 
+         //edge case: user is authorized but teacher doc is non-existent. They most likely already have a 'users' account on the mobile app...
+         throw new Error(`Teacher doc does not exist`);
+      };
 
-      } catch(error) {
-      console.error(`ERROR w/ getTeacher: ${error.message}`)
-      }
+      const teacherData = teacherDoc.data();
+      dispatch(signInTeacher({ data: teacherData })); //dispatching to teacherSlice store
    }
 
-   //TODO: add status toasts
    //see: https://firebase.google.com/docs/auth/web/manage-users#send_a_password_reset_email
    async function sendPasswordReset() {
-      if(await userExists()) { //see below
-        await auth.sendPasswordResetEmail(email);
+      try {
+         const notifyReset = toast.loading(`Sending Password Reset Email...`);
+         if(await teacherExists() === false) { //guard clause
+            console.error(`Teacher ${email} does not exist`);
+            throw new Error(`Teacher DNE`);
+         }
+
+         await auth.sendPasswordResetEmail(email);
+         toast.update(notifyReset, { render: `Reset password email sent to ${email}`, type: "success", isLoading: false, autoClose: 1500 });
+
+      } catch(error) {
+         console.error("ERROR in sendPasswordReset:", error);
+
+         if(error.message === `Teacher DNE`) {
+            toast.update(notifyReset, { render: `Teacher ${email} does not exist`, type: "error", isLoading: false, autoClose: 1500 });
+         } else {
+            toast.update(notifyReset, { render: `Invalid Email`, type: "error", isLoading: false, autoClose: 1500 });
+         }
+
       }
    }
 
   //helper for sendPasswordReset
-   async function userExists() {
+   async function teacherExists() {
       const snapshot = await db.collection('teachers').doc(email).get();
       if(snapshot.exists) {
          console.log("teacher exists. sending password reset email to:", email);
@@ -77,7 +110,7 @@ export default function AlternativeLogin() {
             <input 
                placeholder='Email' 
                type='email' 
-               id="emailInput"
+               style={{ marginTop: '2rem' }}
                onChange={(event) => setEmail(event.target.value)}
                />
             <input 
@@ -94,11 +127,15 @@ export default function AlternativeLogin() {
 
             <span className="smallText" id="or">Or</span>
 
-            <button className="altSignIn" id="createAnAccount" onClick={() => navigate("/alt-registration")}>
+            <button 
+               className="altSignIn" 
+               style={{ width: '65%', margin: 0 }} 
+               onClick={() => navigate("/alt-registration")}
+            >
                Create an Account
             </button>
 
-            <button className="altSignIn" id="return" onClick={() => navigate("/")}>
+            <button className="altSignIn" style={{ marginTop: '3rem' }} onClick={() => navigate("/")}>
                Return
             </button>
          </div>
