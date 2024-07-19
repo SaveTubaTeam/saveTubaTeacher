@@ -86,7 +86,7 @@ function Dashboard() {
         <div className="completionTime">
           <div className="completionTime2">
             <div className="Buttonsss">
-              <div className="select-container">
+              {/* <div className="select-container">
                 <ChapterSelect
                   grade={grade}
                   onChange={(chapter) => setSelectedChapter(chapter)}
@@ -106,7 +106,7 @@ function Dashboard() {
                   lesson={selectedLesson}
                   onChange={(activity) => setSelectedActivity(activity)}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="table-container">
               <StudentDataGrid
