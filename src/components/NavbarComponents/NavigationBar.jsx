@@ -92,7 +92,7 @@ const Navbar = ({ email, classCode, assignmentID }) => {
       <div className="sss">
         <IoExitOutline title="Logout" size="40px" color="Green" onClick={handleLogout} />
       </div>
-      {location.pathname == "/classselection" ? (
+      {location.pathname == "/class-selection" ? (
         <div className="sss">
           <Link to="/">
             <FaHome title="Home" size="40px" color="Green"/>
@@ -100,7 +100,7 @@ const Navbar = ({ email, classCode, assignmentID }) => {
         </div>
       ) : (
         <div className="sss">
-          <Link to="/classselection">
+          <Link to="/class-selection">
             <ImBooks title="Home" size="40px" color="Green" />
           </Link>
         </div>

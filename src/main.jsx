@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         element: <AlternativeRegistration />
       },
       {
-        path: 'classselection',
+        path: 'class-selection',
         element: <ClassSelection />,
       }
     ]

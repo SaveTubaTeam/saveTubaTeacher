@@ -26,7 +26,7 @@ export default function AlternativeLogin() {
 
         console.log(`logged in with: ${email}`)
         toast.update(popup, { render: `Login Success!`, type: "success", isLoading: false, autoClose: 1500 });
-        navigate("/classselection");
+        navigate("/class-selection");
 
       } catch(error) {
 
@@ -110,7 +110,7 @@ export default function AlternativeLogin() {
             <input 
                placeholder='Email' 
                type='email' 
-               id="emailInput"
+               style={{ marginTop: '2rem' }}
                onChange={(event) => setEmail(event.target.value)}
                />
             <input 
@@ -127,11 +127,15 @@ export default function AlternativeLogin() {
 
             <span className="smallText" id="or">Or</span>
 
-            <button className="altSignIn" id="createAnAccount" onClick={() => navigate("/alt-registration")}>
+            <button 
+               className="altSignIn" 
+               style={{ width: '65%', margin: 0 }} 
+               onClick={() => navigate("/alt-registration")}
+            >
                Create an Account
             </button>
 
-            <button className="altSignIn" id="return" onClick={() => navigate("/")}>
+            <button className="altSignIn" style={{ marginTop: '3rem' }} onClick={() => navigate("/")}>
                Return
             </button>
          </div>

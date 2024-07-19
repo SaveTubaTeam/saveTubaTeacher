@@ -84,7 +84,7 @@ export default function AlternativeRegistration() {
             <input 
                placeholder='Email' 
                type='email' 
-               id="emailInput"
+               style={{ marginTop: '2rem' }}
                onChange={(event) => setEmail(event.target.value)}
             />
             <input 
@@ -107,7 +107,7 @@ export default function AlternativeRegistration() {
                Register
             </button>
 
-            <button className="altSignIn" id="return" onClick={() => navigate("/alt-login")}>
+            <button className="altSignIn" style={{ marginTop: '3rem' }} onClick={() => navigate("/alt-login")}>
                Return
             </button>
          </div>

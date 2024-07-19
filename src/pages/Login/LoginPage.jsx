@@ -22,7 +22,7 @@ export default function LoginPage() {
 
       // see link for toast.loading & toast.update implementation: https://fkhadra.github.io/react-toastify/promise#toastloading
 
-      // @jac927 07/18/24 | I decided against toast.promise because the implementation is really weird. 
+      // @jac927 07/18/24 | I decided against toast.promise because the implementation is kinda weird. 
       // The alternative, which is toast.update, is kinda jank imo but is easier to read within try-catch and async await.
       // Note: I found that the options object in toast.update(notify, options) can override the options in ToastContainer - I think this is a bug but idk. Workaround was to hardcode the autoClose property.
 
@@ -32,7 +32,7 @@ export default function LoginPage() {
       await getTeacher(email, popup);
 
       console.log(`logged in with: ${email}`);
-      navigate("/classselection");
+      navigate("/class-selection");
       
     } catch(error) {
 
@@ -100,16 +100,23 @@ export default function LoginPage() {
     <div className='background'>
     <img src={logoDarkText} alt="Logo Dark" id="logoDark" />
 
-    <div style={{ padding: '3.5rem' }}></div>
-      <div className="loginContainer">
+    <div style={{ padding: '2rem' }}></div>
+      <div className="loginContainer" style={{ height: 420 }}>
         <h1 style={{ color: 'var(--primary)' }}>Teacher Login</h1>
         
-        <button id="googleSignIn" onClick={handleGooglePopupSignin}>
+        <button 
+          id="googleSignIn" 
+          style={{ width: '80%', alignSelf: 'center' }} 
+          onClick={handleGooglePopupSignin}
+        >
           <img src={googleLogoButton} alt="Google Logo" />
           <span>Log in with Google</span>
         </button>
 
-        <button id="other" onClick={() => navigate("/alt-login")}>
+        <button 
+          style={{ marginBottom: '2rem', width: '80%', alignSelf: 'center' }} 
+          onClick={() => navigate("/alt-login")}
+        >
           Other
         </button>
       </div>

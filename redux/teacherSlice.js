@@ -24,3 +24,5 @@ const teacherSlice = createSlice({
 
 export const { signInTeacher, signOutTeacher } = teacherSlice.actions;
 export default teacherSlice.reducer //exports all reducers
+
+export const selectTeacher = state => state.teacher.teacher;
