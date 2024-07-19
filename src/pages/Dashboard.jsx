@@ -21,7 +21,6 @@ import PastAssignmentCards from "../components/DashboardComponents/PastAssignmen
 function Dashboard() {
   const [classCode, setClassCode] = useState("");
   const [grade, setGrade] = useState("");
-  //react-router hook to pass dynamic classCode value into url route
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
   const [selectedChapter, setSelectedChapter] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
@@ -29,7 +28,7 @@ function Dashboard() {
   const [selectedActivity, setSelectedActivity] = useState("");
   const [highlightedButton, setHighlightedButton] = useState("");
   const navigate = useNavigate();
-  const [assignmentID, setAssignmentID] = useState("");
+  const [assignmentID, setAssignmentID] = useState(null);
   const teacher = useSelector(selectTeacher);
   const email = teacher.email;
 
@@ -44,23 +43,34 @@ function Dashboard() {
     setPopupOpen(true);
   };
 
-  useEffect(() => {
-    if(localStorage.getItem('selectedAssignment')){
-      setAssignmentID(localStorage.getItem('selectedAssignment').assignmentID);
-    }
-    else{ 
-      return;
-    }
-  }, [])
-
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
 
+  useEffect(() => {
+    const handleAssignmentSelected = () => {
+      const selectedAssignment = JSON.parse(
+        localStorage.getItem("selectedAssignment")
+      );
+      if (selectedAssignment) {
+        setAssignmentID(selectedAssignment.assignmentId);
+      }
+    };
+
+    window.addEventListener("assignmentSelected", handleAssignmentSelected);
+
+    return () => {
+      window.removeEventListener(
+        "assignmentSelected",
+        handleAssignmentSelected
+      );
+    };
+  }, []);
+
   return (
     <>
       <div className="grid-container">
-        <NavigationBar email={email} classCode={classCode}/>
+        <NavigationBar email={email} classCode={classCode} assignmentID={assignmentID}/>
         <div className="adjustclass">
           {/* <div className="dayrange">
             <DateSlider />

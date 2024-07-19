@@ -122,7 +122,7 @@ export default function StudentDataGrid({ email, classCode }) {
           }
           return {
             ...student,
-            completionsCount: totalCompletions + "/" + totalNumAssignments,
+            completionsCount: totalCompletions + "/" + totalNumAssignments +  ", " + Math.round(totalCompletions / totalNumAssignments * 100) + "%",
             dateCompleted: completionsData.map((completion) => ({
               ...completion,
             })),
