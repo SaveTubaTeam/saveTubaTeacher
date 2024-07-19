@@ -82,6 +82,14 @@ export default function PastAssignmentCards({ email, classCode }) {
     console.log("Current Time:", currentTime);
   }, [email, classCode]);
 
+  const handleSelectAssignment = (assignmentId) => {
+    localStorage.setItem(
+      "selectedAssignment",
+      JSON.stringify({ email, classCode, assignmentId })
+    );
+    window.dispatchEvent(new Event("assignmentSelected"));
+  };
+
   return (
     <Box sx={{ minWidth: 275 }}>
       {currentAssignments.map((assignment, index) => (
@@ -111,7 +119,12 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Select Assignment</Button>
+            <Button
+              size="small"
+              onClick={() => handleSelectAssignment(assignment.assignmentID)}
+            >
+              Select Assignment
+            </Button>
           </CardActions>
         </Card>
       ))}
@@ -145,7 +158,12 @@ export default function PastAssignmentCards({ email, classCode }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Select Assignment</Button>
+            <Button
+              size="small"
+              onClick={() => handleSelectAssignment(assignment.assignmentID)}
+            >
+              Select Assignment
+            </Button>
           </CardActions>
         </Card>
       ))}
