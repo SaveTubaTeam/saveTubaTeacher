@@ -50,7 +50,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar email={email} classCode={classCode} />
+        <NavigationBar email={email} classCode={classCode} assignmentID={"G2C1L1"}/>
         <div className="adjustclass">
           {/* <div className="dayrange">
             <DateSlider />
@@ -60,8 +60,8 @@ function Dashboard() {
           </div> */}
         </div>
         <div className="additional-charts">
-          <CompletionTimeLine />
-          <AssignmentCompletionPieChart email={email} classCode={classCode} />
+          {/* <CompletionTimeLine />
+          <AssignmentCompletionPieChart email={email} classCode={classCode} /> */}
         </div>
         <div className="completionTime">
           <div className="completionTime2">
@@ -113,7 +113,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="chart-full">
-            <ActivityCompletionBar />
+            {/* <ActivityCompletionBar /> */}
           </div>
           <PastAssignmentCards email={email} classCode={classCode} />
         </div>

@@ -5,9 +5,11 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { getAssignmentsData, convertIDToName } from "../../../data/dataFunctions";
+import {
+  getAssignmentsData,
+  convertIDToName,
+} from "../../../data/dataFunctions";
 import moment from "moment";
-import { current } from "@reduxjs/toolkit";
 
 export default function PastAssignmentCards({ email, classCode }) {
   const [currentAssignments, setCurrentAssignments] = useState([]);
@@ -15,7 +17,7 @@ export default function PastAssignmentCards({ email, classCode }) {
   const [assignmentTitles, setAssignmentTitles] = useState([]);
   const [pastAssignmentTitles, setPastAssignmentTitles] = useState([]);
   const [currentTime, setCurrentTime] = useState(
-    moment().format("DD/MM/YYYY h:mm:ss a")
+    moment().format("DD/MM/YYYY HH:mm:ss")
   );
 
   useEffect(() => {
@@ -30,57 +32,54 @@ export default function PastAssignmentCards({ email, classCode }) {
         assignments.forEach((assignment) => {
           const assignmentObj = {
             assignmentID: assignment.assignmentID,
-            assignmentDateAssigned: moment(assignment.dateAssigned),
-            assignmentDateDue: moment(assignment.dateDue),
+            assignmentDateAssigned: moment(
+              assignment.dateAssigned,
+              "DD/MM/YYYY"
+            ),
+            assignmentDateDue: moment(assignment.dateDue, "DD/MM/YYYY"),
             assignmentSize: assignment.numActivities,
           };
 
-          if (moment().isAfter(assignmentObj.assignmentDateDue)) {
+          if (moment().isAfter(assignmentObj.assignmentDateDue, "day")) {
             pastAssignments.push(assignmentObj);
           } else {
             currentAssignments.push(assignmentObj);
           }
         });
 
-        currentAssignments.sort((a, b) => b.assignmentDateDue - a.assignmentDateDue);
-        pastAssignments.sort((a, b) => b.assignmentDateDue - a.assignmentDateDue);
+        currentAssignments.sort((a, b) =>
+          b.assignmentDateDue.diff(a.assignmentDateDue)
+        );
+        pastAssignments.sort((a, b) =>
+          b.assignmentDateDue.diff(a.assignmentDateDue)
+        );
 
-        setCurrentAssignments(
-          currentAssignments.map((assignment) => ({
-            ...assignment,
-            assignmentDateAssigned: assignment.assignmentDateAssigned.format("DD/MM/YYYY h:mm:ss a"),
-            assignmentDateDue: assignment.assignmentDateDue.format("DD/MM/YYYY h:mm:ss a"),
-          }))
+        setCurrentAssignments(currentAssignments);
+        setPastAssignments(pastAssignments);
+
+        const currentTitles = await convertIDToName(currentAssignments);
+        const pastTitles = await convertIDToName(pastAssignments);
+
+        const cleanCurrentTitles = currentTitles.map((title) =>
+          title.replace(/^\d+\. /, "")
         );
-        setPastAssignments(
-          pastAssignments.map((assignment) => ({
-            ...assignment,
-            assignmentDateAssigned: assignment.assignmentDateAssigned.format("DD/MM/YYYY h:mm:ss a"),
-            assignmentDateDue: assignment.assignmentDateDue.format("DD/MM/YYYY h:mm:ss a"),
-          }))
+        const cleanPastTitles = pastTitles.map((title) =>
+          title.replace(/^\d+\. /, "")
         );
-        
-        const titleArr = await convertIDToName(currentAssignments);
-        for (let i = 0; i < titleArr.length; i++) {
-          titleArr[i].replace(/[0-9]/g, '');
-          titleArr[i] = titleArr[i].substring(2);
-        }
-        setAssignmentTitles(titleArr);
-        const pastArr = await convertIDToName(pastAssignments);
-        for (let i = 0; i < pastArr.length; i++) {
-          pastArr[i].replace(/[0-9]/g, '');
-          pastArr[i] = pastArr[i].substring(2);
-        }
-        setPastAssignmentTitles(pastArr);
-        console.log("Assignments titles:", assignmentTitles);
-        console.log("Past Assignments titles:", pastAssignmentTitles);
+
+        setAssignmentTitles(cleanCurrentTitles);
+        setPastAssignmentTitles(cleanPastTitles);
+
+        console.log("Assignments titles:", cleanCurrentTitles);
+        console.log("Past Assignments titles:", cleanPastTitles);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-    setCurrentTime(moment().format("DD/MM/YYYY h:mm:ss a"));
+    setCurrentTime(moment().format("DD/MM/YYYY HH:mm:ss"));
+    console.log("Current Time:", currentTime);
   }, [email, classCode]);
 
   return (
@@ -97,10 +96,11 @@ export default function PastAssignmentCards({ email, classCode }) {
               {assignment.assignmentID.substring(5, 6)}
             </Typography>
             <Typography sx={{}} color="text.secondary">
-              Due Date: {assignment.assignmentDateDue}
+              Due Date: {assignment.assignmentDateDue.format("DD/MM/YYYY")}
             </Typography>
             <Typography sx={{}} color="text.secondary">
-              Date Assigned: {assignment.assignmentDateAssigned}
+              Date Assigned:{" "}
+              {assignment.assignmentDateAssigned.format("DD/MM/YYYY")}
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}
@@ -130,10 +130,11 @@ export default function PastAssignmentCards({ email, classCode }) {
               {assignment.assignmentID.substring(5, 6)}
             </Typography>
             <Typography sx={{}} color="text.secondary">
-              Due Date: {assignment.assignmentDateDue}
+              Due Date: {assignment.assignmentDateDue.format("DD/MM/YYYY")}
             </Typography>
             <Typography sx={{}} color="text.secondary">
-              Date Assigned: {assignment.assignmentDateAssigned}
+              Date Assigned:{" "}
+              {assignment.assignmentDateAssigned.format("DD/MM/YYYY")}
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}

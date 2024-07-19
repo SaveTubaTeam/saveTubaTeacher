@@ -37,7 +37,9 @@ export default function CurrentAssignmentCard({
         console.log(assignment);
 
         setChapter(chapter);
+        console.log(chapter);
         setLesson(lesson);
+        console.log(lesson);
         const assignmentTitleArray = await convertIDToName([assignment]);
         setAssignmentTitle(assignmentTitleArray[0]);
         console.log(assignmentTitle);
