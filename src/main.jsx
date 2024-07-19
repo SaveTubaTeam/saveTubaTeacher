@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Dashboard from './pages/Dashboard';
@@ -49,17 +51,29 @@ const router = createBrowserRouter([
         element: <AlternativeRegistration />
       },
       {
-        path: 'classselection',
+        path: 'class-selection',
         element: <ClassSelection />,
       }
     ]
   }
 ]);
 
+//ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+
+      <ToastContainer 
+        position="top-center"
+        autoClose={1500}
+        closeButton={true}
+        hideProgressBar={true}
+        closeOnClick={true}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+      />
     </Provider>
   </React.StrictMode>
 );

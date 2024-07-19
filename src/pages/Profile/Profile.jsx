@@ -5,12 +5,13 @@ import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import { getStudents } from '../../data/dataFunctions';
 import { useSelector } from 'react-redux';
+import { selectTeacher } from '../../../redux/teacherSlice';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
 const Profile = () => {
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
-  const teacher = useSelector(state => state.teacher.teacher);
+  const teacher = useSelector(selectTeacher);
 
   const handleShowStudents = async (classCode) => {
     const studentsList = await getStudents(classCode);

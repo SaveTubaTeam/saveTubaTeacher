@@ -3,8 +3,8 @@ import './LoginPage.css';
 import { auth, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import logoDarkText from '../../assets/logoDarkText.png'
+import { toast } from 'react-toastify';
 
-//TODO: add toasts for success & prefer google signin - also catch auth error codes
 export default function AlternativeRegistration() {
    const navigate = useNavigate();
    const [firstName, setFirstName] = useState('');
@@ -14,23 +14,49 @@ export default function AlternativeRegistration() {
 
    //createUserWithEmailAndPassword: https://firebase.google.com/docs/auth/web/password-auth
    //auth error codes: https://firebase.google.com/docs/reference/js/auth#autherrorcodes
-  //if we successfully register, we add the user (and initial user metadata) to Firestore
-   async function createUser() {
+  //if we successfully register, we add the teacher (and initial teacher metadata) to Firestore
+   async function createTeacher() {
       try {
-         await auth.createUserWithEmailAndPassword(email, password) //creating user
-         console.log("\n\tUser Registered: ", auth.currentUser.email)
-         await postUser(); //see below
+         const popup = toast.loading('Creating Account');
 
-         console.log("new teacher creation successful. Pushing back to alt-login . . .");
+         const checkEdgeCase = await db.collection('users').doc(email).get();
+         if(checkEdgeCase.exists) { //edge case where the user already has a student account on mobile
+            await auth.signInWithEmailAndPassword(email, password); //regular signin
+         } else { //new account creation
+            await auth.createUserWithEmailAndPassword(email, password);
+         }
+         console.log("\n\tTeacher:", auth.currentUser.email);
+
+         await postTeacher();
+
+         toast.update(popup, { render: `Account Successfully Created!`, type: "success", isLoading: false, autoClose: 1500 });
+         console.log("new teacher creation successful. Pushing back to /alt-login . . .");
          navigate("/alt-login");
 
       } catch(error) {
-         console.error("ERROR in createUser | Error Code: ", error.code, "| Message: ", error.message);
+
+         if(error.code) {
+            console.error(`ERROR: ${error.code} | ${error.message}`);
+            if(error.code === "auth/email-already-in-use") { 
+               toast.update(popup, { render: `Account already exists.`, type: "error", isLoading: false, autoClose: 1500 });
+            } else if(error.code === "auth/invalid-email") {
+               toast.update(popup, { render: `Error - please enter a valid email`, type: "error", isLoading: false, autoClose: 1500 });
+            } else if(error.code === "auth/weak-password") {
+               toast.update(popup, { render: `Weak password. Make sure it is longer than 6 characters.`, type: "warning", isLoading: false, autoClose: 1500 });
+            } else {
+               toast.update(popup, { render: `Invalid registration. Please try again.`, type: "error", isLoading: false, autoClose: 1500 });
+            }
+
+         } else {
+            console.error("ERROR in createTeacher:", error);
+            toast.update(popup, { render: `An error occured. Please try again or contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+         }
+
       }
    }
 
-   //posting user to "users" and "classrooms" collection
-   async function postUser(){
+   //posting teacher to "teachers" collection
+   async function postTeacher(){
       await db.collection("teachers").doc(email).set({
          classes: [],
          firstName: firstName,
@@ -58,7 +84,7 @@ export default function AlternativeRegistration() {
             <input 
                placeholder='Email' 
                type='email' 
-               id="emailInput"
+               style={{ marginTop: '2rem' }}
                onChange={(event) => setEmail(event.target.value)}
             />
             <input 
@@ -77,11 +103,11 @@ export default function AlternativeRegistration() {
                onChange={(event) => setLastName(event.target.value)}
             />
 
-            <button className="altSignIn" onClick={createUser}>
+            <button className="altSignIn" onClick={createTeacher}>
                Register
             </button>
 
-            <button className="altSignIn" id="return" onClick={() => navigate("/alt-login")}>
+            <button className="altSignIn" style={{ marginTop: '3rem' }} onClick={() => navigate("/alt-login")}>
                Return
             </button>
          </div>
