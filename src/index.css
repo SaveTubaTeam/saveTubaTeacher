@@ -1,6 +1,6 @@
 /* root applies globally, is overriden by the #root selector referenced in main.jsx */
 :root {
-   font-family: Monsterrat, sans-serif, Arial, system-ui;
+   font-family: Monsterrat, Noto Sans, sans-serif, Arial, system-ui;
    line-height: 1.15; /* line-height is basically spacing */
    font-weight: normal;
    font-size: 14px;
@@ -12,7 +12,7 @@
  
    /* CSS HEX THEME*/
    --grey: #636B73;
-   --dark: #4E4E4E;
+   --dark-grey: #4E4E4E;
    --accent: #cde6f7;
    --primary: #364b6c;
    --secondary: #88a7d7;
@@ -22,11 +22,12 @@
    --warning: #C28644;
    --error: #C2445C;
    --light: #F8F9F9;
-   --black: #1A1A1A;
+   --black-light: #313131;
+   --black-dark: #1A1A1A
  
    /* global color scheme */
    color-scheme: light;
-   color: var(--black);
+   color: var(--black-dark);
    background-color: var(--light);
 }
 
@@ -41,26 +42,37 @@ body, html {
   /* enable scrolling */
   overflow-x: auto; 
   overflow-y: auto;
-  height: 100%;
+  height: 100%; /* to stop vertical page resizing */
 }
 
 h1 {
-  font-size: 50px;
+  font-size: 3.6rem;
   font-weight: 600;
   margin: 0;
   line-height: 1.2;
   color: var(--primary);
-  text-shadow: 1px 1px 1px var(--black); /* taken from @robertbasic: https://stackoverflow.com/questions/2618192/how-to-create-nice-text-depth-shadow-effect-html */
+  text-shadow: 1px 1px 1px var(--black-dark); /* taken from @robertbasic: https://stackoverflow.com/questions/2618192/how-to-create-nice-text-depth-shadow-effect-html */
 }
 
 h2 {
-  font-size: 30px;
-  font-weight: 550;
+  font-family: Lexend Deca;
+  font-size: 2rem;
+  font-weight: 600;
   margin: 0;
   line-height: 1.2;
-  color: var(--primary);
+  color: var(--black-dark);
 }
 
+h4 {
+  font-family: Noto Sans;
+  font-size: 1.2rem;
+  line-height: 2;
+  font-weight: 600;
+  color: var(--black-light);
+}
+
+/* styling for textarea, input, and button taken from the react-router tutorial. */
+/* see: https://gist.githubusercontent.com/ryanflorence/ba20d473ef59e1965543fa013ae4163f/raw/499707f25a5690d490c7b3d54c65c65eb895930c/react-router-6.4-tutorial-css.css */
 textarea,
 input,
 button {
@@ -78,7 +90,7 @@ button {
 
 button {
   background-color: #FFFFFF;
-  color: var(--black);
+  color: var(--black-dark);
   font-weight: 500;
   cursor: pointer;
 }
@@ -91,7 +103,7 @@ button:hover {
 
 button:active {
   background-color: var(--light);
-  color: var(--black);
+  color: var(--black-dark);
   box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
   transform: translateY(1px);
 }

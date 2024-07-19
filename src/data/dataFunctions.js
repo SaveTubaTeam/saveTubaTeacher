@@ -114,7 +114,7 @@ async function getMasteryAndMinigamesData(grade, chpt, lesson, languageCode) {
 
 async function getAssignmentsData(email, classCode) {
   if (!email || !classCode) {
-    console.error("Invalid arguments passed to getAssignmentsData():", { email, classCode });
+    console.error("Invalid arguments passed to getAssignmentsData():", email, classCode);
     return [];
   }
 

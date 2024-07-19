@@ -54,10 +54,11 @@ const ClassSelection = () => {
   }
   
   return (
-    <div className="App">
-      <WelcomeMessage teacherName={teacher.firstName} teacherLastname={teacher.lastName} />
-      <h1>My Classes</h1>
-      <div className="year">2024-2025</div>
+    <div id="classSelectionContainer">
+      {/* <h1>Welcome, {teacher.firstName} {teacher.lastName}</h1> */}
+      <h2>Your Classrooms</h2>
+      <h4>2024-2025</h4>
+      {/* <div className="year">2024-2025</div>
       <div className="class-list">
         {teacher.classes && teacher.classes.map((classItem, index) => (
           <ClassCard 
@@ -82,16 +83,10 @@ const ClassSelection = () => {
         onClose={handleClosePopup}
         students={students}
         classCode={selectedClassCode}
-      />
+      /> */}
     </div>
   );
 };
-
-const WelcomeMessage = ({ teacherName, teacherLastname }) => (
-  <div>
-    <h1>Welcome, {teacherName} {teacherLastname}</h1>
-  </div>
-);
 
 const ClassCard = ({ classItem, onClassNameClick, onShowStudents, assignmentsCount }) => (
   <div className="class-card">

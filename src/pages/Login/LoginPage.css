@@ -77,7 +77,7 @@
   padding: 0.5rem;
   align-self: center;
   width: 45%;
-  color: var(--dark);
+  color: var(--dark-grey);
 }
 
 .smallText {
@@ -89,7 +89,7 @@
 
 #or {
   font-size: 1.05rem;
-  color: var(--dark);
+  color: var(--dark-grey);
   margin-top: 15px;
   margin-bottom: 5px;
 }

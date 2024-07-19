@@ -5,13 +5,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { db } from '../../../firebase'; 
-import { useNavigate } from 'react-router-dom';
 
 const ClassSelect = ({ onChange }) => {
   const [selectedClass, setSelectedClass] = useState("");
   const [teacher, setTeacher] = useState(null);
   const [email, setEmail] = useState('testteacher1@gmail.com');
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -33,8 +31,8 @@ const ClassSelect = ({ onChange }) => {
   }, [email]);
 
   const handleClassChange = (event) => {
-    const selectedClass = classCollections.find(cls => cls.gradeLevel === event.target.value);
-    setSelectedClass(selectedClass.gradeLevel);
+    const selectedClass = classCollections.find(cls => cls.className === event.target.value);
+    setSelectedClass(selectedClass.className);
     onChange({ grade: selectedClass.gradeLevel, className: selectedClass.className });
   };
 
@@ -58,7 +56,7 @@ const ClassSelect = ({ onChange }) => {
             No Option
           </MenuItem>
           {classCollections.map((cls, index) => (
-            <MenuItem key={index} value={cls.gradeLevel} style={{ fontFamily: "Montserrat, sans-serif" }}>
+            <MenuItem key={index} value={cls.className} style={{ fontFamily: "Montserrat, sans-serif" }}>
               {`${cls.className} - ${cls.gradeLevel}`}
             </MenuItem>
           ))}
