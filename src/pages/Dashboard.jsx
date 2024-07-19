@@ -59,7 +59,7 @@ function Dashboard() {
   return (
     <>
       <div className="grid-container">
-        <NavigationBar email={email} classCode={classCode} />
+        <NavigationBar email={email} classCode={classCode} assignmentID={assignmentID}/>
         <div className="adjustclass">
           {/* <div className="dayrange">
             <DateSlider />
