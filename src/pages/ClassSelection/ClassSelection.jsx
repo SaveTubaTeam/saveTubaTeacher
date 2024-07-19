@@ -21,7 +21,7 @@ const ClassSelection = () => {
     async function fetchAssignments() {
       // Fetch assignments count for each class
       const assignmentsCounts = {};
-      for (const classItem of teacherData.classes) {
+      for (const classItem of teacher.classes) {
         const assignments = await getAssignmentsData(email, classItem.classCode);
         assignmentsCounts[classItem.classCode] = assignments.length;
       }
