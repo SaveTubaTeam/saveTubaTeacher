@@ -18,7 +18,8 @@ import ClassSelection from './pages/ClassSelection/ClassSelection';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 
-let persistor = persistStore(store);
+//re: https://stackoverflow.com/questions/63761763/how-to-configure-redux-persist-with-redux-toolkit
+export let persistor = persistStore(store);
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+
       <RouterProvider router={router} />
 
       <ToastContainer 
@@ -79,6 +81,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         draggable={false}
         pauseOnHover={false}
       />
+
       </PersistGate>
     </Provider>
   </React.StrictMode>

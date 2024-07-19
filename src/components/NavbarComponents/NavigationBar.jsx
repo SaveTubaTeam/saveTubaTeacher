@@ -4,10 +4,10 @@ import { useState } from "react";
 import iconic from "../../assets/iconpic.png";
 import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
-import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { signOutTeacher } from "../../../redux/teacherSlice";
 import { useDispatch } from "react-redux";
+import { persistor } from "../../main";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
 
 import { CiCirclePlus } from "react-icons/ci";
@@ -27,12 +27,13 @@ const Navbar = ({ email, classCode, assignmentID }) => {
 
   async function handleLogout() {
     try {
+      console.log("LOGGING OUT USER");
       await auth.signOut();
-      dispatch(signOutTeacher()); //clearing redux store teacherSlice
-      navigate('/login');
     } catch(error) {
-      console.error(`ERROR LOGGING OUT`)
+      console.error("ERROR LOGGING OUT:", error);
+    } finally {
       dispatch(signOutTeacher()); //clearing redux store teacherSlice
+      persistor.purge(); //purging redux-persist store: https://stackoverflow.com/questions/68929107/how-to-purge-any-persisted-state-using-react-tool-kit-with-redux-persist
       navigate('/login');
     }
   }

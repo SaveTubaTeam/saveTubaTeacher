@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { PURGE } from "redux-persist";
 
 const initialState = {
    teacher: {},
@@ -19,7 +20,13 @@ const teacherSlice = createSlice({
          console.log("signOutTeacher successfully dispatched to teacherSlice!")
          return initialState; //reset state
       }
-   }
+   },
+   //for purging redux-persist store: https://stackoverflow.com/questions/68929107/how-to-purge-any-persisted-state-using-react-tool-kit-with-redux-persist
+   extraReducers: (builder) => {
+      builder.addCase(PURGE, () => {
+        return initialState;
+      });
+   },
 });
 
 export const { signInTeacher, signOutTeacher } = teacherSlice.actions;
