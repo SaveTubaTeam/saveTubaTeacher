@@ -13,10 +13,10 @@ const teacherSlice = createSlice({
       signInTeacher(state, action) {
          const { data } = action.payload;
          state.teacher = data;
-         console.log("dispatched signInTeacher | USER:", data);
+         console.log("dispatched signInTeacher | TEACHER:", data);
       },
       signOutTeacher(state, action) {
-         console.log("signOutTeacher successfully dispatched to userSlice!")
+         console.log("signOutTeacher successfully dispatched to teacherSlice!")
          return initialState; //reset state
       }
    }
