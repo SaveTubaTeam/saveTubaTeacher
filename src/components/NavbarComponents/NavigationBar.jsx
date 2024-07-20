@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signOutTeacher } from "../../../redux/teacherSlice";
+import { auth } from "../../../firebase";
 import iconic from "../../assets/iconpic.png";
 import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
@@ -9,21 +11,38 @@ import { signOutTeacher } from "../../../redux/teacherSlice";
 import { useDispatch } from "react-redux";
 import { persistor } from "../../main";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
-
 import { CiCirclePlus } from "react-icons/ci";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { IoExitOutline } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
 
-
-
-const Navbar = ({ email, classCode, assignmentID }) => {
+const Navbar = ({ email, classCode }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [highlightedButton, setHighlightedButton] = useState("");
-  const [currentAssignment, setCurrentAssignment] = useState("");
+  const [assignmentID, setAssignmentID] = useState(null);
+
+  useEffect(() => {
+    const handleAssignmentSelected = () => {
+      const selectedAssignment = JSON.parse(
+        localStorage.getItem("selectedAssignment")
+      );
+      if (selectedAssignment) {
+        setAssignmentID(selectedAssignment.assignmentId);
+      }
+    };
+
+    window.addEventListener("assignmentSelected", handleAssignmentSelected);
+
+    return () => {
+      window.removeEventListener(
+        "assignmentSelected",
+        handleAssignmentSelected
+      );
+    };
+  }, []);
 
   async function handleLogout() {
     try {
@@ -37,8 +56,6 @@ const Navbar = ({ email, classCode, assignmentID }) => {
       navigate('/login');
     }
   }
-
-
 
   return (
     <div className="navbar">
@@ -55,13 +72,13 @@ const Navbar = ({ email, classCode, assignmentID }) => {
         />
       </div>
       <div className="sss">
-          <CurrentAssignmentCard
-          email = {email}
-          classCode = {classCode}
-          assignmentID = {assignmentID}
-          />
+        <CurrentAssignmentCard
+          email={email}
+          classCode={classCode}
+          assignmentID={assignmentID}
+        />
       </div>
-      {location.pathname == "/createassignment" ? (
+      {location.pathname === "/createassignment" ? (
         <div className="sss">
           <Link to="/">
             <FaHome title="Home" size="40px" color="Green" />
@@ -80,23 +97,23 @@ const Navbar = ({ email, classCode, assignmentID }) => {
       {location.pathname === "/profile" ? (
         <div className="sss">
           <Link to="/">
-            <FaHome title="Home" size="40px" color="Green"/>
+            <FaHome title="Home" size="40px" color="Green" />
           </Link>
         </div>
       ) : (
         <div className="sss">
           <Link to="/profile">
-            <IoPersonCircleSharp title="Profile" size="40px" color="Green"/>
+            <IoPersonCircleSharp title="Profile" size="40px" color="Green" />
           </Link>
         </div>
       )}
       <div className="sss">
         <IoExitOutline title="Logout" size="40px" color="Green" onClick={handleLogout} />
       </div>
-      {location.pathname == "/class-selection" ? (
+      {location.pathname === "/class-selection" ? (
         <div className="sss">
           <Link to="/">
-            <FaHome title="Home" size="40px" color="Green"/>
+            <FaHome title="Home" size="40px" color="Green" />
           </Link>
         </div>
       ) : (
