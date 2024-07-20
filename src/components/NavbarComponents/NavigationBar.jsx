@@ -6,7 +6,6 @@ import { auth } from "../../../firebase";
 import iconic from "../../assets/iconpic.png";
 import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
-import { persistor } from "../../main";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
 import { CiCirclePlus } from "react-icons/ci";
 import { IoPersonCircleSharp } from "react-icons/io5";
@@ -49,7 +48,6 @@ const Navbar = ({ email, classCode }) => {
       console.error("ERROR LOGGING OUT:", error);
     } finally {
       dispatch(signOutTeacher()); //clearing redux store teacherSlice
-      persistor.purge(); //purging redux-persist store: https://stackoverflow.com/questions/68929107/how-to-purge-any-persisted-state-using-react-tool-kit-with-redux-persist
       navigate('/login');
     }
   }

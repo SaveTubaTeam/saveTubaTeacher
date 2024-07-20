@@ -51,7 +51,8 @@ export default function ClassSelection() {
         <h2>Your Classrooms</h2>
         <h4 style={{ paddingTop: '0.7rem' }}>2024-2025</h4>
         <div className="classesGrid">
-          {teacher.classes && teacher.classes.map((classItem, index) => (
+          {/* see: https://stackoverflow.com/questions/49268267/dealing-with-an-empty-array-when-using-map-in-react */}
+          {teacher.classes.length && teacher.classes.map((classItem, index) => (
             <ClassCard 
               key={index} 
               classItem={classItem}

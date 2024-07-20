@@ -98,7 +98,7 @@ export default function LoginPage() {
         
         <button 
           id="googleSignIn" 
-          style={{ marginTop: '7rem', width: '80%', alignSelf: 'center' }} 
+          style={{ marginTop: '7rem', width: '85%', alignSelf: 'center' }} 
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />
@@ -106,7 +106,7 @@ export default function LoginPage() {
         </button>
 
         <button 
-          style={{ marginBottom: '2rem', width: '80%', alignSelf: 'center' }} 
+          style={{ marginBottom: '2rem', width: '85%', alignSelf: 'center' }} 
           onClick={() => navigate("/alt-login")}
         >
           Other

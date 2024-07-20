@@ -1,12 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { PURGE } from "redux-persist";
 
 const initialState = {
-   teacher: {},
-   assignments: []
+   teacher: {}
 }
 
-//slice boilerplate re: https://redux-toolkit.js.org/tutorials/quick-start
+//slice boilerplate see: https://redux-toolkit.js.org/tutorials/quick-start
 const teacherSlice = createSlice({
    name: 'teacher',
    initialState: initialState,
@@ -20,16 +18,10 @@ const teacherSlice = createSlice({
          console.log("signOutTeacher successfully dispatched to teacherSlice!")
          return initialState; //reset state
       }
-   },
-   //for purging redux-persist store: https://stackoverflow.com/questions/68929107/how-to-purge-any-persisted-state-using-react-tool-kit-with-redux-persist
-   extraReducers: (builder) => {
-      builder.addCase(PURGE, () => {
-        return initialState;
-      });
-   },
+   }
 });
 
 export const { signInTeacher, signOutTeacher } = teacherSlice.actions;
 export default teacherSlice.reducer //exports all reducers
 
-export const selectTeacher = state => state.teacher.teacher;
+export const selectTeacher = state => state.teacher.teacher; //custom selector

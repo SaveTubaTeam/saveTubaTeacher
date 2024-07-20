@@ -1,36 +1,29 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import teacherSlice from "./teacherSlice";
-import { combineReducers } from "@reduxjs/toolkit";
-import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { rememberReducer, rememberEnhancer } from 'redux-remember';
 
-//why are we using redux-persist? Please see: https://stackoverflow.com/questions/37195590/how-can-i-persist-redux-state-tree-on-refresh
-//boilerplate from: https://github.com/rt2zz/redux-persist?tab=readme-ov-file
-//see also: https://stackoverflow.com/questions/63761763/how-to-configure-redux-persist-with-redux-toolkit
-//NOTE: redux-persist might become unstable in the future as the package has not been maintained for a while, even tho the redux docs suggest its use.
+// @jac927 07/20/24 | we are using redux-remember because the more popular alternative package to persisted state (redux-persist) is no longer maintained.
+// Q: what is persisted state? why do we need it? 
+// A: persisted state is state that is kept in the browser even after closing the tab, closing the browser, or refreshing.
+//    Without a persisted state library, the redux store will completely clear to initialState if any of the above actions are triggered.
+//    This leaves the authorized user with an unpopulated page if they navigate directly to the dashboard, for example.
+
+//redux-remember setup taken from here: https://github.com/zewish/redux-remember?tab=readme-ov-file#usage---web
 
 //see: https://redux.js.org/api/combinereducers
 const reducers = combineReducers({
    teacher: teacherSlice,
 });
 
-//using default state reconciler (autoMergeLevel1) --> see: https://github.com/rt2zz/redux-persist?tab=readme-ov-file#state-reconciler
-const persistConfig = {
-   key: 'root',
-   storage,
-}
- 
-const persistedReducer = persistReducer(persistConfig, reducers)
+const rememberedKeys = ['teacher']; // specify slices to remember by their key
+const rememberedReducer = rememberReducer(reducers);
 
-//re: https://redux-toolkit.js.org/tutorials/quick-start
+//for configureStore see: https://redux-toolkit.js.org/tutorials/quick-start
 export const store = configureStore({
-   reducer: persistedReducer,
+   reducer: rememberedReducer,
 
-   //see: https://redux-toolkit.js.org/usage/usage-guide#use-with-redux-persist
-   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+   //redux-remember setup boilerplate
+   enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(
+      rememberEnhancer(window.localStorage, rememberedKeys) //using localStorage under the hood
+   )
 })

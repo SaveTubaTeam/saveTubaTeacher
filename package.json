@@ -33,8 +33,7 @@
     "react-router-dom": "^6.24.1",
     "react-toastify": "^10.0.5",
     "recharts": "^2.12.7",
-    "redux": "^5.0.1",
-    "redux-persist": "^6.0.0"
+    "redux-remember": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",

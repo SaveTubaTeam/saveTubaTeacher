@@ -15,11 +15,6 @@ import AlternativeRegistration from './pages/Login/AlternativeRegistration';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
 import ClassSelection from './pages/ClassSelection/ClassSelection';
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore } from 'redux-persist'
-
-//re: https://stackoverflow.com/questions/63761763/how-to-configure-redux-persist-with-redux-toolkit
-export let persistor = persistStore(store);
 
 const router = createBrowserRouter([
   {
@@ -66,13 +61,11 @@ const router = createBrowserRouter([
 // React.StrictMode see: https://react.dev/reference/react/StrictMode
 // NOTE: StrictMode causes all useEffects to run twice in development
 // Provider (global redux config) see: https://react-redux.js.org/api/provider
-// PersistGate see: //re: https://stackoverflow.com/questions/63761763/how-to-configure-redux-persist-with-redux-toolkit
 // ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
 
       <RouterProvider router={router} />
 
@@ -87,7 +80,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         pauseOnHover={false}
       />
 
-      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
