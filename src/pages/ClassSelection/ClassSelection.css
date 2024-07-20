@@ -1,6 +1,7 @@
 #classSelectionContainer {
   min-width: 1000px;
-  margin: 2.5rem 3.5rem;
+  margin: 0 3.5rem; /* vertical horizontal */
+  padding-top: 2.4rem;
   text-align: start;
 }
 
