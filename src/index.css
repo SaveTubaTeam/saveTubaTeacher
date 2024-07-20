@@ -10,7 +10,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* CSS HEX THEME*/
+  /* CSS HEX THEME - see: https://color.adobe.com/create/color-wheel */
   --grey: #EBEDF0;
   --dark-grey: #4E4E4E;
   --accent: #cde6f7;
@@ -18,12 +18,14 @@
   --secondary: #88a7d7;
   --tertiary: #c6d5ee;
   --quaternary: #58739d;
-  --success: #81C244; 
-  --warning: #C28644;
-  --error: #C2445C;
-  --light: #F8F9F9;
   --black-light: #313131;
-  --black-dark: #1A1A1A
+  --black-dark: #1A1A1A;
+  --light: #F8F9F9;
+
+  /* these are based on the primary color */
+  --success: #386B36; 
+  --warning: #6B5A36;
+  --error: #6B3654;
 
   /* global color scheme */
   color-scheme: light;

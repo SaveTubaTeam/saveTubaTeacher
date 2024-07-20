@@ -1,4 +1,5 @@
 /* design roughly inspired by gradescope's login page and other mockups */
+/* the styles here are imported by LoginPage.jsx, AlternativeLogin.jsx, and AlternativeRegistration.jsx */
 
 .background {
   position: relative;

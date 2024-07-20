@@ -40,18 +40,6 @@ const Navbar = ({ email, classCode }) => {
     };
   }, []);
 
-  async function handleLogout() {
-    try {
-      console.log("LOGGING OUT USER");
-      await auth.signOut();
-    } catch(error) {
-      console.error("ERROR LOGGING OUT:", error);
-    } finally {
-      dispatch(signOutTeacher()); //clearing redux store teacherSlice
-      navigate('/login');
-    }
-  }
-
   return (
     <div className="navbar">
       <div>
@@ -103,7 +91,7 @@ const Navbar = ({ email, classCode }) => {
         </div>
       )}
       <div className="sss">
-        <IoExitOutline title="Logout" size="40px" color="Green" onClick={handleLogout} />
+        <IoExitOutline title="Logout" size="40px" color="Green" onClick={() => navigate("/class-selection")} />
       </div>
       {location.pathname === "/class-selection" ? (
         <div className="sss">

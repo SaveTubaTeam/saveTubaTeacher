@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './ClassCards.css';
+import DisplayCode from './DisplayClassCodeModal';
 
 function ClassCard({ classItem, assignmentsCount }) {
   const navigate = useNavigate();
+  const [displayCodeVisible, setDisplayCodeVisible] = useState(false);
 
   let assignmentString = "";
   if(assignmentsCount) {
@@ -36,8 +38,14 @@ function ClassCard({ classItem, assignmentsCount }) {
 
       <div className="cardBottom">
         <span>{assignmentString}</span>
-        <span id="viewClassCode">Show Class Code</span>
+        <span id="viewClassCode" onClick={() => setDisplayCodeVisible(true)}>Show Class Code</span>
       </div>
+
+      <DisplayCode 
+        displayCodeVisible={displayCodeVisible}
+        setDisplayCodeVisible={setDisplayCodeVisible}
+        classItem={classItem}
+      />
     </div>
   );
 }
