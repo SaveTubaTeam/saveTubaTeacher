@@ -64,7 +64,6 @@
   align-items: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  margin-top: 8rem;
 }
 
 #googleSignIn img {
@@ -102,7 +101,7 @@
   height: 2px;
   margin: 0 5px;
   margin-top: 13px;
-  background: var(--grey);
+  background: var(--dark-grey);
   right: 51.5%;
 }
 
@@ -113,13 +112,13 @@
   height: 2px;
   margin: 0 5px;
   margin-top: 13px;
-  background: var(--grey);
+  background: var(--dark-grey);
   left: 51.5%;
 }
 
 #forgotPassword {
   text-decoration: underline;
-  color: var(--grey);
+  color: var(--dark-grey);
 }
 
 #forgotPassword:hover {

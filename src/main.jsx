@@ -63,7 +63,12 @@ const router = createBrowserRouter([
   }
 ]);
 
-//ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
+// React.StrictMode see: https://react.dev/reference/react/StrictMode
+// NOTE: StrictMode causes all useEffects to run twice in development
+// Provider (global redux config) see: https://react-redux.js.org/api/provider
+// PersistGate see: //re: https://stackoverflow.com/questions/63761763/how-to-configure-redux-persist-with-redux-toolkit
+// ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>

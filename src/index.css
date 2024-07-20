@@ -1,34 +1,34 @@
 /* root applies globally, is overriden by the #root selector referenced in main.jsx */
 :root {
-   font-family: Monsterrat, Noto Sans, sans-serif, Arial, system-ui;
-   line-height: 1.15; /* line-height is basically spacing */
-   font-weight: normal;
-   font-size: 14px;
- 
-   /* some browser text optimization */
-   text-rendering: optimizeLegibility;
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
- 
-   /* CSS HEX THEME*/
-   --grey: #636B73;
-   --dark-grey: #4E4E4E;
-   --accent: #cde6f7;
-   --primary: #364b6c;
-   --secondary: #88a7d7;
-   --tertiary: #c6d5ee;
-   --quaternary: #58739d;
-   --success: #81C244; 
-   --warning: #C28644;
-   --error: #C2445C;
-   --light: #F8F9F9;
-   --black-light: #313131;
-   --black-dark: #1A1A1A
- 
-   /* global color scheme */
-   color-scheme: light;
-   color: var(--black-dark);
-   background-color: var(--light);
+  font-family: Montserrat, sans-serif, Arial, system-ui;
+  line-height: 1.15; /* line-height is basically spacing */
+  font-weight: normal;
+  font-size: 14px;
+
+  /* some browser text optimization */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* CSS HEX THEME*/
+  --grey: #EBEDF0;
+  --dark-grey: #4E4E4E;
+  --accent: #cde6f7;
+  --primary: #364b6c;
+  --secondary: #88a7d7;
+  --tertiary: #c6d5ee;
+  --quaternary: #58739d;
+  --success: #81C244; 
+  --warning: #C28644;
+  --error: #C2445C;
+  --light: #F8F9F9;
+  --black-light: #313131;
+  --black-dark: #1A1A1A
+
+  /* global color scheme */
+  color-scheme: light;
+  color: var(--black-dark);
+  background-color: var(--light);
 }
 
 html {
@@ -46,17 +46,18 @@ body, html {
 }
 
 h1 {
-  font-size: 3.6rem;
+  font-family: Montserrat;
+  font-size: 3.4rem;
   font-weight: 600;
   margin: 0;
   line-height: 1.2;
   color: var(--primary);
-  text-shadow: 1px 1px 1px var(--black-dark); /* taken from @robertbasic: https://stackoverflow.com/questions/2618192/how-to-create-nice-text-depth-shadow-effect-html */
+  text-shadow: 1px 1px 1px #000000; /* taken from @robertbasic: https://stackoverflow.com/questions/2618192/how-to-create-nice-text-depth-shadow-effect-html */
 }
 
 h2 {
-  font-family: Lexend Deca;
-  font-size: 2rem;
+  font-family: Montserrat;
+  font-size: 2.2rem;
   font-weight: 600;
   margin: 0;
   line-height: 1.2;
@@ -64,10 +65,9 @@ h2 {
 }
 
 h4 {
-  font-family: Noto Sans;
-  font-size: 1.2rem;
-  line-height: 2;
-  font-weight: 600;
+  font-family: Montserrat;
+  font-size: 1.3rem;
+  font-weight: 500;
   color: var(--black-light);
 }
 
@@ -77,12 +77,12 @@ textarea,
 input,
 button {
   font-size: 1.2rem;
-  font-family: inherit;
+  font-family: sans-serif;
   border: none;
   border-radius: 6px;
   padding: 0.9rem 1.8rem;
   box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
-  background-color: white;
+  background-color: #FFFFFF;
   line-height: 1.5;
   margin: 0.3rem;
   overflow: hidden;
@@ -90,7 +90,7 @@ button {
 
 button {
   background-color: #FFFFFF;
-  color: var(--black-dark);
+  color: var(--black-light);
   font-weight: 500;
   cursor: pointer;
 }

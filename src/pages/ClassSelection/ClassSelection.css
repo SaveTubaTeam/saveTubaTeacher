@@ -1,52 +1,116 @@
 #classSelectionContainer {
+  min-width: 1000px;
   margin: 2.5rem 3.5rem;
   text-align: start;
 }
 
-.year {
-  text-align: left;
-  font-size: 18px;
-  font-weight: bold;
-  padding-left:15px;
-}
-
-.class-list {
+.classesGrid {
+  min-width: 800px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* border: 2px solid #000000; */
 }
 
-.class-card, .add-class-card {
-  background-color: #f0f0f0;
-  border-radius: 8px;
+.classCard {
+  font-size: 1.2rem;
+  position: relative;
+  height: 160px;
+  width: 93%;
+  margin-bottom: 1.2rem;
+  border-radius: 3px;
+  background: var(--grey);
   display: flex;
   flex-direction: column;
-  height: 150px;
-  text-align:left;
-  padding: 15px;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
-.class-card h2 {
-  font-size: 18px;
+.classCard:hover { 
+  background: #E6E8EB; /* slightly darker than var(--grey) */
 }
 
-.class-card p {
-  font-size: 14px;
-}
-
-.add-class-card p {
-  font-size: 18px;
-  color: #5a9;
-}
-
-.class-list{
-  padding: 0px 15px 15px 10px;
-}
-
-.yoyy{
+.cardTop {
+  height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding: 4%;
+  font-weight: 600;
 }
-.right12{
-  align-items: right;
+
+.cardTop:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cardBottom {
+  font-size: 1.1rem;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 45%;
+  background: var(--primary);
+  padding-left: 4%;
+  padding-right: 4%;
+  color: #FFFFFF;
+}
+
+#viewStudents:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#cardCreateClass {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  border: 2px dashed var(--tertiary);
+}
+
+#cardCreateClass:hover {
+  cursor: pointer;
+}
+
+.footer {
+  position: absolute;
+  height: 65px;
+  width: 100%;
+  bottom: 0;
+  background: var(--grey);
+  border-top: 1px solid #C1C3C5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#createClassButton {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  border-radius: 3px;
+  margin-right: 20px;
+  padding: 0.6rem 1.5rem;
+  background: var(--primary);
+  color: var(--light);
+  font-weight: 600;
+}
+
+#createClassButton:hover {
+  cursor: pointer;
+  background: rgba(54, 75, 108, 0.95);
+}
+
+#backToLoginIcon {
+  background: var(--primary);
+  color: var(--light);
+  margin-left: 17px;
+  padding: 7px 8px 0 8px; /* top right bottom left */
+  border-radius: 3px;
+}
+
+#backToLoginIcon:hover {
+  cursor: pointer;
+  background: rgba(54, 75, 108, 0.95);
 }

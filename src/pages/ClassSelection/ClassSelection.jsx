@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../../firebase';
 import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import './ClassSelection.css';
-import { getStudents, getAssignmentsData } from '../../data/dataFunctions';
+import { getStudents } from '../../data/dataFunctions';
+import { getAssignmentsCount } from './classSelectionFunctions';
 import CreateClassButton from './CreateClassButton2';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
+import { ClassCard, CreateAClass } from './ClassCards';
+import { ImPlus } from "react-icons/im";
+import { PiSignIn } from "react-icons/pi";
 
-const ClassSelection = () => {
+export default function ClassSelection() {
+  const navigate = useNavigate();
   const teacher = useSelector(selectTeacher);
-  const email = teacher.email;
   const [students, setStudents] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedClassCode, setSelectedClassCode] = useState('');
   const [assignmentsCounts, setAssignmentsCounts] = useState({});
-  const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchAssignments() {
+    async function fetchAssignmentsCounts() {
       // Fetch assignments count for each class
       const assignmentsCounts = {};
       for (const classItem of teacher.classes) {
-        const assignments = await getAssignmentsData(email, classItem.classCode);
-        assignmentsCounts[classItem.classCode] = assignments.length;
+        console.log(`\tClass ${classItem.classCode}: ${JSON.stringify(classItem, null, 2)}`);
+        const count = await getAssignmentsCount(teacher.email, classItem.classCode);
+        assignmentsCounts[classItem.classCode] = count;
       }
       setAssignmentsCounts(assignmentsCounts);
     };
 
-    fetchAssignments();
-  }, [email]);
+    fetchAssignmentsCounts();
+  }, [teacher]);
 
   const handleShowStudents = async (classCode) => {
     const studentsList = await getStudents(classCode);
     setStudents(studentsList);
-    setSelectedClassCode(classCode);
     setPopupOpen(true);
   };
 
@@ -42,72 +43,44 @@ const ClassSelection = () => {
     setPopupOpen(false);
     setStudents([]);
   };
-
-  const handleClassNameClick = (classCode, grade) => {
-    localStorage.setItem('selectedClassCode', classCode);
-    localStorage.setItem('selectedClassGrade', grade);
-    navigate(`/dashboard/${classCode}`);
-  };
-
-  if (!teacher) {
-    return <div>Loading...</div>;
-  }
   
   return (
-    <div id="classSelectionContainer">
-      {/* <h1>Welcome, {teacher.firstName} {teacher.lastName}</h1> */}
-      <h2>Your Classrooms</h2>
-      <h4>2024-2025</h4>
-      {/* <div className="year">2024-2025</div>
-      <div className="class-list">
-        {teacher.classes && teacher.classes.map((classItem, index) => (
-          <ClassCard 
-            key={index} 
-            classItem={classItem} 
-            onClassNameClick={handleClassNameClick} 
-            onShowStudents={handleShowStudents} 
-            assignmentsCount={assignmentsCounts[classItem.classCode] || 0}
-          />
-        ))}
-        <AddClassCard email={email} />
+    <>
+      <div id="classSelectionContainer">
+        {/* <h1>Welcome, {teacher.firstName} {teacher.lastName}</h1> */}
+        <h2>Your Classrooms</h2>
+        <h4 style={{ paddingTop: '0.7rem' }}>2024-2025</h4>
+        <div className="classesGrid">
+          {teacher.classes && teacher.classes.map((classItem, index) => (
+            <ClassCard 
+              key={index} 
+              classItem={classItem}
+              assignmentsCount={assignmentsCounts[classItem.classCode] || null}
+            />
+          ))}
+          <CreateAClass />
+        </div>
       </div>
-      <div className="year">2025-2026</div>
-      <div className="class-list">
-        <AddClassCard email={email} />
-        <AddClassCard email={email} />
-        <AddClassCard email={email} />
-        <AddClassCard email={email} />
+
+      <div className="footer">
+
+      <button id="backToLoginIcon" onClick={() => navigate("/")}>
+          <PiSignIn title="Back to Login" size="25px" />
+      </button>
+
+      <button id="createClassButton">
+        <ImPlus title="Create Class" size="0.8rem" style={{ color: 'var(--light)', paddingRight: '0.6rem' }}/>
+        <span>Create a Class</span>
+      </button>
+
       </div>
-      <ClassStudentsPopup
-        open={popupOpen}
-        onClose={handleClosePopup}
-        students={students}
-        classCode={selectedClassCode}
-      /> */}
-    </div>
+
+    </>
   );
 };
-
-const ClassCard = ({ classItem, onClassNameClick, onShowStudents, assignmentsCount }) => (
-  <div className="class-card">
-    <div className="yoyy">
-      <h2 
-        onClick={() => onClassNameClick(classItem.classCode, classItem.gradeLevel)} 
-        style={{ cursor: 'pointer' }}
-      >
-        {classItem.className}
-      </h2>
-      <button onClick={() => onShowStudents(classItem.classCode)}>View Students</button>
-    </div>
-    <p>{classItem.gradeLevel}</p>
-    <p>Assignments: {assignmentsCount}</p>
-  </div>
-);
 
 const AddClassCard = ({ email }) => (
   <div className="class-card add-class-card">
     <CreateClassButton email={email} />
   </div>
 );
-
-export default ClassSelection;
