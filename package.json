@@ -17,7 +17,6 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^5.15.19",
     "@mui/material": "^5.15.20",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-data-grid": "^7.6.1",
     "@reduxjs/toolkit": "^2.2.6",
     "chart.js": "^4.4.3",

@@ -6,9 +6,7 @@ import { useDispatch } from 'react-redux';
 import { signInTeacher } from '../../../redux/teacherSlice';
 import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
-
-//see: https://fkhadra.github.io/react-toastify/api/toast
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -35,10 +33,12 @@ export default function LoginPage() {
         console.error(`ERROR WITH GOOGLE SIGNIN | Error Code: ${error.code} | ${error.message}`);
         if(error.code === "auth/email-already-in-use") {
           toast.error(`Email already in use.`);
-        } else if(error.code === "auth/popup-closed-by-user" || error.code === "cancelled-popup-request") {
-          toast.error(`Popup closed`);
-        } else if(error.code === "auth/popup-blocked") {
+        } else if(error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
           toast.error(`Google popup was blocked. Please allow popups.`);
+        } else if(error.code === "auth/network-request-failed") {
+          toast.error("Network Request Failed. Please try again or contact support.")
+        } else if(error.code === "auth/popup-closed-by-user") {
+          return; //do nothing here
         } else { //catch others
           toast.error(`Invalid Login. Please try again.`);
         }

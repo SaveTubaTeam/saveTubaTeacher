@@ -112,7 +112,7 @@ export default function AlternativeRegistration() {
                Register
             </button>
 
-            <button className="altSignIn" style={{ marginTop: '3rem' }} onClick={() => navigate("/alt-login")}>
+            <button className="altSignIn" style={{ marginTop: '2.5rem' }} onClick={() => navigate("/alt-login")}>
                Return
             </button>
          </div>

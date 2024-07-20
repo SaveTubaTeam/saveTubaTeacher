@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import './ClassSelection.css';
-import { ImPlus } from "react-icons/im";
+import './ClassCards.css';
 
 function ClassCard({ classItem, assignmentsCount }) {
   const navigate = useNavigate();
@@ -14,6 +13,7 @@ function ClassCard({ classItem, assignmentsCount }) {
     assignmentString = `Loading...`
   }
 
+  //regex to match the numbers and letters in the grade string
   const splicedGrade = classItem.gradeLevel.match(/[a-zA-Z]+|[0-9]+/g);
   //console.log(splicedGrade); // e.g. ["Grade", "5"]
  
@@ -36,19 +36,10 @@ function ClassCard({ classItem, assignmentsCount }) {
 
       <div className="cardBottom">
         <span>{assignmentString}</span>
-        <span id="viewStudents">View Students</span>
+        <span id="viewClassCode">Show Class Code</span>
       </div>
     </div>
   );
 }
 
-function CreateAClass() {
-  return (
-    <div className="classCard" id="cardCreateClass">
-      <ImPlus title="Create Class" size="0.8rem" style={{ color: 'var(--dark-grey)', paddingRight: '0.6rem' }}/>
-      <span style={{ fontWeight: 600, color: 'var(--dark-grey)' }}>Create a Class</span>
-    </div>
-  )
-}
-
-export { ClassCard, CreateAClass }
+export { ClassCard }
