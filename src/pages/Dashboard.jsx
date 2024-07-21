@@ -73,6 +73,8 @@ function Dashboard() {
     <div className="mainContainer">
       <NavigationBar />
 
+      <div>Spacer</div>
+
       <div className="dashboardGrid">
         <div className="childOne">A</div>
         <div className="childTwo">B</div>

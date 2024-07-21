@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, NavLink, useNavigate, useParams } from "react-router-dom";
 import logoWhiteText from "../../assets/logoWhiteText.png";
 import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
@@ -7,7 +7,8 @@ import CurrentAssignmentCard from "./CurrentAssignmentCard";
 import "./NavigationBar.css"
 import NavBarRightContainer from "./NavBarRightContainer";
 
-const Navbar = ({ email, classCode }) => {
+const Navbar = () => {
+  const { classCode: urlClassCode } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const [highlightedButton, setHighlightedButton] = useState("");
@@ -39,7 +40,36 @@ const Navbar = ({ email, classCode }) => {
 
       <div className="navBarLeftContainer">
         <img src={logoWhiteText} alt="Save Tuba" id="whiteTextLogo" />
-        <span>B</span>
+        
+        <nav>
+          <NavLink 
+            to={`/dashboard/${urlClassCode}`} 
+            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+            id="navBarDashboard"
+          >
+            Dashboard
+          </NavLink>
+        </nav>
+
+        <nav>
+          <NavLink 
+            to={`/create-assignment/${urlClassCode}`}
+            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+            id="navBarCreateAssignment"
+          >
+            Create Assignment
+          </NavLink>
+        </nav>
+
+        <nav>
+          <NavLink 
+            to="/class-selection"
+            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+            id="navBarClassrooms"
+          >
+            Classrooms
+          </NavLink>
+        </nav>
       </div>
 
       <NavBarRightContainer />

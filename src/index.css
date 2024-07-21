@@ -47,9 +47,7 @@ body, html {
   height: 100%; /* to stop vertical page resizing */
 }
 
-/* overriding default behaviour of links here */
 a {
-  color: var(--black-light);
   text-decoration: none;
 }
 

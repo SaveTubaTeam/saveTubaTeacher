@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  min-width: 800px;
+  min-width: 1000px;
 }
 
 .mainFooter {
@@ -39,6 +39,11 @@
 #copyrightFooter:hover {
   cursor: pointer;
   color: var(--black-dark);
+}
+
+.mainFooter a {
+  /* overriding default behaviour of links here */
+  color: var(--black-light);
 }
 
 
