@@ -23,6 +23,7 @@ function Dashboard() {
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
   const [assignmentID, setAssignmentID] = useState(null);
   const teacher = useSelector(selectTeacher);
+  const classItem = useSelector(state => state.teacher.selectedClass);
   const email = teacher.email;
 
   useEffect(() => {
@@ -51,7 +52,7 @@ function Dashboard() {
       <NavigationBar />
 
       <div className="dashboardHeader">
-        <h1>Class A</h1>
+        <h1>{classItem.className}</h1>
         <CurrentAssignmentCard
           email={email}
           classCode={urlClassCode}
