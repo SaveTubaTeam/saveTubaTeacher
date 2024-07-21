@@ -45,7 +45,7 @@ function Dashboard() {
     };
   }, []);
 
-  //note: grid layout styling can be found in Dashboard.css except for .mainContainer, which can be found in App.css
+//note: grid layout styling can be found in Dashboard.css
   return ( 
     <div className="mainContainer">
       <NavigationBar />

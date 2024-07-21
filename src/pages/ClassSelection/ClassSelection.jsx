@@ -10,12 +10,14 @@ import { ClassCard } from './ClassCards';
 import { ImPlus } from "react-icons/im";
 import { MdLogout } from "react-icons/md";
 import { Tooltip } from '@mui/material';
+import CreateClassPopup from '../../components/CreateClassComponent/CreateClassPopup';
 
 export default function ClassSelection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const teacher = useSelector(selectTeacher);
   const [assignmentsCounts, setAssignmentsCounts] = useState({});
+  const [createClassModalVisible, setCreateClassModalVisible] = useState(false);
 
   useEffect(() => {
     async function fetchAssignmentsCounts() {
@@ -33,10 +35,18 @@ export default function ClassSelection() {
     fetchAssignmentsCounts();
   }, [teacher]);
 
+  function handleCreateClassClick() {
+    setCreateClassModalVisible(true);
+  }
+
+  function handleCreateClassClose() {
+    setCreateClassModalVisible(false);
+  }
+
   function CreateAClass() {
     return (
       /* this div takes the .classCard css from ClassCards.css */
-      <div className="classCard" id="cardCreateClass">
+      <div className="classCard" id="cardCreateClass" onClick={handleCreateClassClick}>
         <ImPlus title="Create Class" size="0.8rem" style={{ color: 'var(--dark-grey)', paddingRight: '0.6rem' }}/>
         <span style={{ fontWeight: 600, color: 'var(--dark-grey)' }}>Create a Class</span>
       </div>
@@ -81,11 +91,13 @@ export default function ClassSelection() {
         </button>
         </Tooltip>
 
-        <button id="createClassButton">
+        <button id="createClassButton" onClick={handleCreateClassClick}>
           <ImPlus title="Create Class" size="0.8rem" style={{ color: 'var(--light)', paddingRight: '0.6rem' }}/>
           <span>Create a Class</span>
         </button>
       </div>
+
+      <CreateClassPopup open={createClassModalVisible} onClose={handleCreateClassClose} />
     </>
   );
 };
