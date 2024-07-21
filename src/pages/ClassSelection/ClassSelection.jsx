@@ -73,7 +73,7 @@ export default function ClassSelection() {
         </div>
       </div>
 
-      <div className="footer">
+      <div className="classSelectionFooter">
         <button id="backToLoginIcon" onClick={handleLogout}>
             <PiSignIn title="Back to Login" size="25px" />
         </button>

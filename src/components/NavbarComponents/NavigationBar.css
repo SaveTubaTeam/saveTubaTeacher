@@ -1,0 +1,46 @@
+.navigationBarContainer {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   height: 60px;
+   /* border: 1px solid black; */
+   background: var(--primary);
+}
+
+/* this is a css hack to make the top-overflowing color primary when overscrolling vertically */
+#topOverflowColor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background-color: var(--primary);
+  z-index: -1;
+}
+
+.navBarLeftContainer {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   width: 45%;
+   /* border: 1px solid black; */
+   margin-left: 20px;
+}
+
+#whiteTextLogo {
+   width: 192px;
+   height: 108px;
+   padding-right: 20px;
+}
+
+.navBarRightContainer {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-end;
+   align-items: center;
+   width: 45%;
+   border: 1px solid black;
+   margin-right: 20px;
+}
