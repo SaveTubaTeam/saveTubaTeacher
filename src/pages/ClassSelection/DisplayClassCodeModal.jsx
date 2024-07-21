@@ -5,7 +5,7 @@ import { RiCloseFill } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
 
-function DisplayCode({ displayCodeVisible, setDisplayCodeVisible, classItem }) {
+function DisplayClassCodeModal({ displayCodeVisible, setDisplayCodeVisible, classItem }) {
    const teacher = useSelector(selectTeacher);
 
    return (
@@ -30,4 +30,4 @@ function DisplayCode({ displayCodeVisible, setDisplayCodeVisible, classItem }) {
    )
 }
 
-export default DisplayCode;
+export default DisplayClassCodeModal;

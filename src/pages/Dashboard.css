@@ -1,7 +1,19 @@
+.dashboardHeader {
+   height: 60px;
+   padding-top: 20px;
+   padding-left: 50px;
+   padding-right: 50px;
+   padding-bottom: 10px;
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   background: var(--light);
+}
+
 /* @jac927 07/20/24 | I would HIGHLY recommend you check out the below link to learn about css grid: */
 /* Josh Comeau's dev blog: https://www.joshwcomeau.com/css/interactive-guide-to-grid/ */
 .dashboardGrid {
-   height: 700px;
+   height: 800px;
    width: 100%;
    display: grid;
    grid-template-columns: repeat(6, 1fr);

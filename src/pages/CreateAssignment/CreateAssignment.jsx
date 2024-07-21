@@ -7,6 +7,7 @@ import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import ClassSelect from './ClassSelect';
 import ChapterSelect from '../../components/DashboardComponents/DataTableComponents/ChapterSelect';
 import LessonSelect from '../../components/DashboardComponents/DataTableComponents/LessonSelect';
+import Footer from '../../components/Footer';
 
 const CreateAssignment = () => {
   const [grade, setGrade] = useState('');
@@ -129,8 +130,9 @@ const CreateAssignment = () => {
   const isFormValid = grade && chapter && lesson && dateDue;
 
   return (
-    <div>
+    <div className='mainContainer'>
       <NavigationBar />
+      
       <h1>Create Assignment</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -160,6 +162,8 @@ const CreateAssignment = () => {
         </div>
         <button type="submit" className='sas' disabled={!isFormValid}>Create</button>
       </form>
+
+      <Footer />
     </div>
   );
 };

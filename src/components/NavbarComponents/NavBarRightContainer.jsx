@@ -10,6 +10,7 @@ import { PiUserSquareFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import { ImBooks } from "react-icons/im";
+import { MdOutlineHelpOutline } from "react-icons/md";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { useNavigate } from "react-router";
 
@@ -87,7 +88,10 @@ export default function NavBarRightContainer() {
         Classrooms
       </MenuItem>
       <MenuItem 
-        onClick={() => setAnchorElement(null)} 
+        onClick={() => {
+          setAnchorElement(null);
+          navigate("/account")
+        }} 
         sx={{ fontFamily: 'Montserrat' }}
       >
         <ListItemIcon>
@@ -97,6 +101,16 @@ export default function NavBarRightContainer() {
       </MenuItem>
 
       <Divider />
+
+      <MenuItem 
+        onClick={() => setAnchorElement(null)} 
+        sx={{ fontFamily: 'Montserrat' }}
+      >
+        <ListItemIcon>
+          <MdOutlineHelpOutline size="20px" color="var(--black-light)" />
+        </ListItemIcon>
+        Help
+      </MenuItem>
 
       <MenuItem 
         onClick={() => setAnchorElement(null)} 

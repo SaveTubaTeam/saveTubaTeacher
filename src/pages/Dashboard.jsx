@@ -15,38 +15,15 @@ import NavigationBar from "../components/NavbarComponents/NavigationBar";
 import Footer from "../components/Footer";
 import ResetGridButton from "../components/DashboardComponents/ResetGridButton";
 import ViewStudentPopup from "../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup";
-import Button from "@mui/material/Button";
 import StudentDataGrid from "../components/DashboardComponents/DataTableComponents/StudentDataGrid";
 import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
+import CurrentAssignmentCard from "../components/NavbarComponents/CurrentAssignmentCard";
 
 function Dashboard() {
-  const [classCode, setClassCode] = useState("");
-  const [grade, setGrade] = useState("");
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
-  const [selectedChapter, setSelectedChapter] = useState("");
-  const [selectedLesson, setSelectedLesson] = useState("");
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedActivity, setSelectedActivity] = useState("");
-  const [highlightedButton, setHighlightedButton] = useState("");
-  const navigate = useNavigate();
   const [assignmentID, setAssignmentID] = useState(null);
   const teacher = useSelector(selectTeacher);
   const email = teacher.email;
-
-  useEffect(() => {
-    const savedClassGrade = localStorage.getItem("selectedClassGrade");
-
-    setClassCode(urlClassCode || "");
-    setGrade(savedClassGrade || "");
-  }, [navigate, urlClassCode]);
-
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-
-  const handleClosePopup = () => {
-    setPopupOpen(false);
-  };
 
   useEffect(() => {
     const handleAssignmentSelected = () => {
@@ -68,18 +45,37 @@ function Dashboard() {
     };
   }, []);
 
-  //note: all layout styling can be found in Dashboard.css except for .mainContainer, which can be found in App.css
+  //note: grid layout styling can be found in Dashboard.css except for .mainContainer, which can be found in App.css
   return ( 
     <div className="mainContainer">
       <NavigationBar />
 
-      <div>Spacer</div>
+      <div className="dashboardHeader">
+        <h1>Class A</h1>
+        <CurrentAssignmentCard
+          email={email}
+          classCode={urlClassCode}
+          assignmentID={assignmentID}
+        />
+      </div>
 
       <div className="dashboardGrid">
-        <div className="childOne">A</div>
-        <div className="childTwo">B</div>
-        <div className="childThree">C</div>
-        <div className="childFour">D</div>
+        <div className="childOne">
+          <CompletionTimeLine />
+        </div>
+        <div className="childTwo">
+          <AssignmentCompletionPieChart email={email} classCode={urlClassCode} />
+        </div>
+        <div className="childThree">
+          <StudentDataGrid
+            email={email}
+            classCode={urlClassCode}
+            assignmentID={assignmentID}
+          />
+        </div>
+        <div className="childFour">
+          <PastAssignmentCards email={email} classCode={urlClassCode} />
+        </div>
       </div>
 
       <Footer />

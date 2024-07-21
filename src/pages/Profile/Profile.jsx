@@ -5,6 +5,7 @@ import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
 import ViewStudentsDialog from '../../components/ViewStudentsDialog';
+import Footer from '../../components/Footer';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
 const Profile = () => {
@@ -18,7 +19,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="profiles-container">
+    <div className="mainContainer">
       <NavigationBar />
       <div className="profile-container">
         <h1>Teacher Profile</h1>
@@ -45,6 +46,8 @@ const Profile = () => {
         setViewStudentsDialog={setViewStudentsDialog}
         classCode={selectedClassCode}
       />
+
+      <Footer />
     </div>
   );
 };

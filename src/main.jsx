@@ -31,11 +31,11 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: 'profile',
+        path: 'account',
         element: <Profile />,
       },
       {
-        path: 'createassignment',
+        path: 'create-assignment/:classCode',
         element: <CreateAssignment />,
       },
       {

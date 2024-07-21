@@ -6,33 +6,19 @@ import CreateClassButton from "../CreateClassComponent/CreateClassButton";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
 import "./NavigationBar.css"
 import NavBarRightContainer from "./NavBarRightContainer";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const { classCode: urlClassCode } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
-  const [highlightedButton, setHighlightedButton] = useState("");
-  const [assignmentID, setAssignmentID] = useState(null);
+  const classItem = useSelector(state => state.teacher.selectedClass);
+  const classCode = classItem.classCode;
 
   useEffect(() => {
-    const handleAssignmentSelected = () => {
-      const selectedAssignment = JSON.parse(
-        localStorage.getItem("selectedAssignment")
-      );
-      if (selectedAssignment) {
-        setAssignmentID(selectedAssignment.assignmentId);
-      }
-    };
-
-    window.addEventListener("assignmentSelected", handleAssignmentSelected);
-
-    return () => {
-      window.removeEventListener(
-        "assignmentSelected",
-        handleAssignmentSelected
-      );
-    };
-  }, []);
+    if(classCode === undefined) {
+      navigate("/class-selection");
+      console.error("NO CLASSCODE AVAILABLE! pushing back to /class-selection");
+    }
+  }, [classCode]);
 
   return (
     <div className="navigationBarContainer">
@@ -43,7 +29,7 @@ const Navbar = () => {
         
         <nav>
           <NavLink 
-            to={`/dashboard/${urlClassCode}`} 
+            to={`/dashboard/${classCode}`} 
             className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
             id="navBarDashboard"
           >
@@ -53,7 +39,7 @@ const Navbar = () => {
 
         <nav>
           <NavLink 
-            to={`/create-assignment/${urlClassCode}`}
+            to={`/create-assignment/${classCode}`}
             className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
             id="navBarCreateAssignment"
           >
