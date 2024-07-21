@@ -4,12 +4,8 @@ import logoWhiteText from "../../assets/logoWhiteText.png";
 import ClassButton from "./ClassButton";
 import CreateClassButton from "../CreateClassComponent/CreateClassButton";
 import CurrentAssignmentCard from "./CurrentAssignmentCard";
-import { CiCirclePlus } from "react-icons/ci";
-import { IoPersonCircleSharp } from "react-icons/io5";
-import { ImBooks } from "react-icons/im";
-import { IoExitOutline } from "react-icons/io5";
-import { FaHome } from "react-icons/fa";
 import "./NavigationBar.css"
+import NavBarRightContainer from "./NavBarRightContainer";
 
 const Navbar = ({ email, classCode }) => {
   const location = useLocation();
@@ -46,10 +42,7 @@ const Navbar = ({ email, classCode }) => {
         <span>B</span>
       </div>
 
-      <div className="navBarRightContainer">
-        <span>C</span>
-        <span>D</span>
-      </div>
+      <NavBarRightContainer />
     </div>
   );
 };

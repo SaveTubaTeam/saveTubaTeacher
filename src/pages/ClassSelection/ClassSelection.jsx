@@ -8,7 +8,8 @@ import { signOutTeacher } from '../../../redux/teacherSlice';
 import { selectTeacher } from '../../../redux/teacherSlice';
 import { ClassCard } from './ClassCards';
 import { ImPlus } from "react-icons/im";
-import { PiSignIn } from "react-icons/pi";
+import { MdLogout } from "react-icons/md";
+import { Tooltip } from '@mui/material';
 
 export default function ClassSelection() {
   const navigate = useNavigate();
@@ -74,9 +75,11 @@ export default function ClassSelection() {
       </div>
 
       <div className="classSelectionFooter">
-        <button id="backToLoginIcon" onClick={handleLogout}>
-            <PiSignIn title="Back to Login" size="25px" />
+        <Tooltip title="Log Out" placement="top-start" arrow={true}>
+        <button id="classSelectionFooterLogOut" onClick={handleLogout}>
+          <MdLogout size="25px" />
         </button>
+        </Tooltip>
 
         <button id="createClassButton">
           <ImPlus title="Create Class" size="0.8rem" style={{ color: 'var(--light)', paddingRight: '0.6rem' }}/>

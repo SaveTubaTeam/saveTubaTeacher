@@ -1,6 +1,6 @@
 #root {
-  width: 100vw;
-  min-height: 100vh; 
+/*   width: 100vw;
+  min-height: 100vh;  */
   text-align: center;
   background: var(--light);
 }
@@ -34,6 +34,11 @@
   cursor: pointer;
   color: var(--black-dark);
   text-decoration: underline;
+}
+
+#copyrightFooter:hover {
+  cursor: pointer;
+  color: var(--black-dark);
 }
 
 

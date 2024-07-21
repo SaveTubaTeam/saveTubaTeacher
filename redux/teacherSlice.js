@@ -15,7 +15,7 @@ const teacherSlice = createSlice({
          console.log("dispatched signInTeacher | TEACHER:", data);
       },
       signOutTeacher(state, action) {
-         console.log("signOutTeacher successfully dispatched to teacherSlice!")
+         console.log("signOutTeacher has successfully reset teacherSlice!")
          return initialState; //reset state
       }
    }

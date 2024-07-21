@@ -22,10 +22,10 @@
 .navBarLeftContainer {
    display: flex;
    flex-direction: row;
-   justify-content: flex-start;
+   justify-content: space-between;
    align-items: center;
-   width: 45%;
-   /* border: 1px solid black; */
+   width: 300px;
+   border: 1px solid black;
    margin-left: 20px;
 }
 
@@ -40,7 +40,11 @@
    flex-direction: row;
    justify-content: flex-end;
    align-items: center;
-   width: 45%;
-   border: 1px solid black;
+   width: 50px;
+   /* border: 1px solid black; */
    margin-right: 20px;
+}
+
+.navBarRightContainer:hover {
+   cursor: pointer;
 }

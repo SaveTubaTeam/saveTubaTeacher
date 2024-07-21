@@ -54,7 +54,7 @@
   background: rgba(54, 75, 108, 0.95);
 }
 
-#backToLoginIcon {
+#classSelectionFooterLogOut {
   background: var(--primary);
   color: var(--light);
   margin-left: 17px;
@@ -62,7 +62,7 @@
   border-radius: 3px;
 }
 
-#backToLoginIcon:hover {
+#classSelectionFooterLogOut:hover {
   cursor: pointer;
   background: rgba(54, 75, 108, 0.95);
 }
