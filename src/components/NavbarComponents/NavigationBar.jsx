@@ -8,14 +8,13 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const navigate = useNavigate();
   const classItem = useSelector(state => state.teacher.selectedClass);
-  const classCode = classItem.classCode;
 
   useEffect(() => {
-    if(classCode === undefined) {
+    if(classItem.classCode === undefined) {
       navigate("/class-selection");
       console.error("NO CLASSCODE AVAILABLE! pushing back to /class-selection");
     }
-  }, [classCode]);
+  }, [classItem.classCode]);
 
   return (
     <div className="navigationBarContainer">
@@ -26,17 +25,17 @@ const Navbar = () => {
         
         <nav>
           <NavLink 
-            to={`/dashboard/${classCode}`} 
+            to={`/dashboard/${classItem.classCode}`} 
             className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
             id="navBarDashboard"
           >
-            Dashboard
+            {`Dashboard - ${classItem.className}`}
           </NavLink>
         </nav>
 
         <nav>
           <NavLink 
-            to={`/create-assignment/${classCode}`}
+            to={`/create-assignment/${classItem.classCode}`}
             className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
             id="navBarCreateAssignment"
           >
