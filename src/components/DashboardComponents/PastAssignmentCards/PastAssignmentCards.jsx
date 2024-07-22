@@ -15,7 +15,9 @@ export default function PastAssignmentCards({ email, classCode }) {
   const [currentAssignments, setCurrentAssignments] = useState([]);
   const [pastAssignments, setPastAssignments] = useState([]);
   const [assignmentTitles, setAssignmentTitles] = useState([]);
+  const [assignmentImg, setAssignmentImg] = useState([]);
   const [pastAssignmentTitles, setPastAssignmentTitles] = useState([]);
+  const [pastAssignmentImg, setPastAssignmentImg] = useState([]);
   const [currentTime, setCurrentTime] = useState(
     moment().format("DD/MM/YYYY HH:mm:ss")
   );
@@ -57,21 +59,48 @@ export default function PastAssignmentCards({ email, classCode }) {
         setCurrentAssignments(currentAssignments);
         setPastAssignments(pastAssignments);
 
-        const currentTitles = await convertIDToName(currentAssignments);
-        const pastTitles = await convertIDToName(pastAssignments);
+        const assignmentData = await convertIDToName(currentAssignments);
+        const pastAssignmetData = await convertIDToName(pastAssignments);
 
-        const cleanCurrentTitles = currentTitles.map((title) =>
-          title.replace(/^\d+\. /, "")
-        );
-        const cleanPastTitles = pastTitles.map((title) =>
-          title.replace(/^\d+\. /, "")
-        );
+        let titleArray = [];
+        let imgArray = [];
+        let pastTitleArray = [];
+        let pastImgArray = [];
 
-        setAssignmentTitles(cleanCurrentTitles);
-        setPastAssignmentTitles(cleanPastTitles);
+        for (let i = 0; i < assignmentData.length; i++) {
+          titleArray.push(assignmentData[i].title.replace(/^\d+\. /, ""));
+          imgArray.push(assignmentData[i].downloadURL);
+        }
 
-        console.log("Assignments titles:", cleanCurrentTitles);
-        console.log("Past Assignments titles:", cleanPastTitles);
+        for (let i = 0; i < pastAssignmetData.length; i++) {
+          pastTitleArray.push(
+            pastAssignmetData[i].title.replace(/^\d+\. /, "")
+          );
+          pastImgArray.push(pastAssignmetData[i].downloadURL);
+        }
+
+        for (let i = 0; i < imgArray.length; i++) {
+          let storageRef = firebase.storage();
+          let fileRef = storageRef.refFromURL(imgArray[i]);
+          fileRef
+            .getData(maxSize, 3 * 1024 * 1024)
+            .then((url) => {
+              paths[i] = url;
+            })
+            .catch((error) => {
+              console.log("Error getting image:", error);
+            });
+        }
+
+        console.log("Assignments titles:", titleArray);
+        console.log("Assignments images:", imgArray);
+        console.log("Past Assignments titles:", pastTitleArray);
+        console.log("Past Assignments images:", pastImgArray);
+
+        setAssignmentTitles(titleArray);
+        setPastAssignmentTitles(pastTitleArray);
+        setAssignmentImg(imgArray);
+        setPastAssignmentImg(pastImgArray);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -91,7 +120,7 @@ export default function PastAssignmentCards({ email, classCode }) {
   };
 
   return (
-    <Box sx={{ minWidth: 275, maxHeight: '400px', overflow: 'scroll' }}>
+    <Box sx={{ minWidth: 275, maxHeight: "400px", overflow: "scroll" }}>
       {currentAssignments.map((assignment, index) => (
         <Card key={assignment.assignmentID} variant="outlined" sx={{ mb: 2 }}>
           <CardContent sx={{ textAlign: "left" }}>
@@ -117,6 +146,7 @@ export default function PastAssignmentCards({ email, classCode }) {
             >
               Number of Activities: {assignment.assignmentSize}
             </Typography>
+            <img src={assignmentImg[index]} alt={`Assignment ${index}`} style={{height: 100, width: 100}} />
           </CardContent>
           <CardActions>
             <Button
@@ -156,6 +186,7 @@ export default function PastAssignmentCards({ email, classCode }) {
             >
               Number of Activities: {assignment.assignmentSize}
             </Typography>
+            <img src={pastAssignmentImg[index]} alt={`Assignment ${index}`} style={{height: 100, width: 100}} />
           </CardContent>
           <CardActions>
             <Button

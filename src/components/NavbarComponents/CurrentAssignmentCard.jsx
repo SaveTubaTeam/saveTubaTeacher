@@ -35,7 +35,7 @@ export default function CurrentAssignmentCard({
       setChapter(chapter);
       setLesson(lesson);
       const assignmentTitleArray = await convertIDToName([assignment]);
-      setAssignmentTitle(assignmentTitleArray[0]);
+      setAssignmentTitle(assignmentTitleArray[0].title);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

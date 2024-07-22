@@ -321,22 +321,32 @@ async function getClassroomStudents(classCode) {
   return students;
 }
 
-async function convertIDToName(idArray){
-  const regex = /G(\d+)C(\d+)L(\d+)/; 
-  let titleArray = []; 
-  let lessonTitle = "";
-  for(let i = 0; i < idArray.length; i++){
-      const matches = idArray[i].assignmentID.match(regex);
+async function convertIDToName(idArray) {
+  const regex = /G(\d+)C(\d+)L(\d+)/;
+  let titleArray = [];
+  for (let i = 0; i < idArray.length; i++) {
+    const matches = idArray[i].assignmentID.match(regex);
+    if (matches) {
       const grade = `Grade${matches[1]}`;
       const chapter = `Chapter${matches[2]}`;
       const lesson = `Lesson${matches[3]}`;
       const lessonInfo = await db.collection(grade).doc(chapter).collection(lesson).doc("en").get();
-      lessonTitle = lessonInfo.data().title;
-      titleArray.push(lessonTitle);
-      lessonTitle = "";
+      if (lessonInfo.exists) {
+        let lessonData = {
+          title: lessonInfo.data().title,
+          downloadURL: lessonInfo.data().thumbnailDownloadURL,
+        };
+        console.log("Lesson Data: ", lessonData);
+        titleArray.push(lessonData);
+      } else {
+        console.log(`No data found for ID: ${idArray[i].assignmentID}`);
+      }
+    } else {
+      console.log(`Invalid ID format: ${idArray[i].assignmentID}`);
     }
-    return titleArray;
   }
+  return titleArray;
+}
   
 
 
