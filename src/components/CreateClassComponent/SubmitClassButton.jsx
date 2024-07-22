@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { db, firebase } from "../../../firebase";
+import { selectTeacher } from '../../../redux/teacherSlice';
+import { useSelector } from 'react-redux';
 
 async function submitClassData(email, classCode, className, gradeLevel) {
   try {
@@ -42,7 +44,10 @@ async function submitClassData(email, classCode, className, gradeLevel) {
   }
 }
 
-const SubmitClassButton = ({ email, classCode, className, gradeLevel }) => {
+const SubmitClassButton = ({ classCode, className, gradeLevel }) => {
+  const teacher = useSelector(selectTeacher);
+  const email = teacher.email;
+
   return (
     <div>
       <Button

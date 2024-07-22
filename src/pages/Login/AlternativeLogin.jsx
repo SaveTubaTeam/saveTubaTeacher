@@ -16,7 +16,6 @@ export default function AlternativeLogin() {
    async function handleEmailPasswordSignin() {
       try {
         //console.log(`Email: ${email}, Password: ${password}`);
-        const popup = toast.loading(`Logging in`);
         //please see: https://firebase.google.com/docs/auth/web/password-auth#web_3
         const result = await auth.signInWithEmailAndPassword(email, password);
         const user = result.user;
@@ -25,7 +24,6 @@ export default function AlternativeLogin() {
         await getTeacher(email);
 
         console.log(`logged in with: ${email}`)
-        toast.update(popup, { render: `Login Success!`, type: "success", isLoading: false, autoClose: 1500 });
         navigate("/class-selection");
 
       } catch(error) {
@@ -33,18 +31,18 @@ export default function AlternativeLogin() {
          if(error.code) {
             console.error(`ERROR WITH EMAIL/PASSWORD SIGNIN | Error Code: ${error.code} | ${error.message}`);
             if(error.code === "auth/wrong-password") {
-               toast.update(popup, { render: `Incorrect Password`, type: "error", isLoading: false, autoClose: 1500 });
+               toast.error(`Incorrect Password`);
             } else {
-               toast.update(popup, { render: `Invalid Login`, type: "error", isLoading: false, autoClose: 1500 });
+               toast.error(`Invalid Login`);
             }
 
          } else if(error.message == `Teacher doc does not exist`) {
             console.error(error);
-            toast.update(popup, { render: `Please Create a Teacher Account to Continue`, type: "error", isLoading: false, autoClose: 1500 });
+            toast.error(`Please Create a Teacher Account to Continue`);
 
          } else {
             console.error("ERROR in handleEmailPasswordSignin:", error);
-            toast.update(popup, { render: `An error occured. Please try again or contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+            toast.error(`An error occured. Please try again or contact support.`);
          }
 
       }
@@ -105,7 +103,7 @@ export default function AlternativeLogin() {
       <div style={{ padding: '3.5rem' }}></div>
 
          <div className="loginContainer">
-            <h1 style={{ color: 'var(--primary)' }}>Teacher Login</h1>
+            <h1>Teacher Login</h1>
             
             <input 
                placeholder='Email' 

@@ -1,0 +1,52 @@
+.dashboardHeader {
+   height: 60px;
+   padding-top: 20px;
+   padding-left: 50px;
+   padding-right: 50px;
+   padding-bottom: 10px;
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   background: var(--light);
+}
+
+/* @jac927 07/20/24 | I would HIGHLY recommend you check out the below link to learn about css grid: */
+/* Josh Comeau's dev blog: https://www.joshwcomeau.com/css/interactive-guide-to-grid/ */
+.dashboardGrid {
+   height: 800px;
+   width: 100%;
+   display: grid;
+   grid-template-columns: repeat(6, 1fr);
+   grid-template-rows: 1fr 1fr;
+   /* border: 1px solid black; */
+   background: var(--light);
+}
+
+/* all of the below children are descendants of the .dashboardGrid class */
+/* !!!grid-row and grid-column proportions are accessed via 1-based indexing!!! */
+
+/* for the main graph */
+.childOne {
+   border: 1px solid black;
+   grid-row: 1 / 2;
+   grid-column: 1 / 5;
+}
+
+/*  */
+.childTwo {
+   border: 1px solid black;
+   grid-row: 1 / 2;
+   grid-column: 5 / 7;
+}
+
+.childThree {
+   border: 1px solid black;
+   grid-row: 2 / 3;
+   grid-column: 1 / 4;
+}
+
+.childFour {
+   border: 1px solid black;
+   grid-row: 2 / 3;
+   grid-column: 4 / 7;
+}

@@ -1,0 +1,46 @@
+.classCard {
+   font-size: 1.2rem;
+   position: relative;
+   height: 160px;
+   width: 93%;
+   margin-bottom: 1.2rem;
+   border-radius: 3px;
+   background: var(--grey);
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: stretch;
+}
+
+.cardTop {
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   padding: 4%;
+   font-weight: 600;
+}
+ 
+.cardTop:hover {
+   text-decoration: underline;
+   cursor: pointer;
+   background: #E6E8EB; /* slightly darker than var(--grey) */
+}
+ 
+.cardBottom {
+   font-size: 1.1rem;
+   border-bottom-left-radius: 3px;
+   border-bottom-right-radius: 3px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   height: 45%;
+   background: var(--primary);
+   padding-left: 4%;
+   padding-right: 4%;
+   color: #FFFFFF;
+}
+ 
+#viewClassCode:hover {
+   text-decoration: underline;
+   cursor: pointer;
+}

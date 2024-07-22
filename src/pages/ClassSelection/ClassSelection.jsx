@@ -1,118 +1,103 @@
 import React, { useEffect, useState } from 'react';
+import { auth } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../../firebase';
-import ClassStudentsPopup from '../../components/ProfileComponents/ClassStudentsPopup';
 import './ClassSelection.css';
-import { getStudents, getAssignmentsData } from '../../data/dataFunctions';
-import CreateClassButton from './CreateClassButton2';
-import { useSelector } from 'react-redux';
+import { getAssignmentsCount } from './classSelectionFunctions';
+import { useSelector, useDispatch } from 'react-redux';
+import { signOutTeacher } from '../../../redux/teacherSlice';
 import { selectTeacher } from '../../../redux/teacherSlice';
+import { ClassCard } from './ClassCards';
+import { ImPlus } from "react-icons/im";
+import { MdLogout } from "react-icons/md";
+import { Tooltip } from '@mui/material';
+import CreateClassPopup from '../../components/CreateClassComponent/CreateClassPopup';
 
-const ClassSelection = () => {
-  const teacher = useSelector(selectTeacher);
-  const email = teacher.email;
-  const [students, setStudents] = useState([]);
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedClassCode, setSelectedClassCode] = useState('');
-  const [assignmentsCounts, setAssignmentsCounts] = useState({});
+export default function ClassSelection() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const teacher = useSelector(selectTeacher);
+  const [assignmentsCounts, setAssignmentsCounts] = useState({});
+  const [createClassModalVisible, setCreateClassModalVisible] = useState(false);
 
   useEffect(() => {
-    async function fetchAssignments() {
+    async function fetchAssignmentsCounts() {
       // Fetch assignments count for each class
       const assignmentsCounts = {};
       for (const classItem of teacher.classes) {
-        const assignments = await getAssignmentsData(email, classItem.classCode);
-        assignmentsCounts[classItem.classCode] = assignments.length;
+        console.log(`\tClass ${classItem.classCode}: ${JSON.stringify(classItem, null, 2)}`);
+        const count = await getAssignmentsCount(teacher.email, classItem.classCode);
+        assignmentsCounts[classItem.classCode] = count;
       }
+
       setAssignmentsCounts(assignmentsCounts);
     };
 
-    fetchAssignments();
-  }, [email]);
+    fetchAssignmentsCounts();
+  }, [teacher]);
 
-  const handleShowStudents = async (classCode) => {
-    const studentsList = await getStudents(classCode);
-    setStudents(studentsList);
-    setSelectedClassCode(classCode);
-    setPopupOpen(true);
-  };
+  function handleCreateClassClick() {
+    setCreateClassModalVisible(true);
+  }
 
-  const handleClosePopup = () => {
-    setPopupOpen(false);
-    setStudents([]);
-  };
+  function handleCreateClassClose() {
+    setCreateClassModalVisible(false);
+  }
 
-  const handleClassNameClick = (classCode, grade) => {
-    localStorage.setItem('selectedClassCode', classCode);
-    localStorage.setItem('selectedClassGrade', grade);
-    navigate(`/dashboard/${classCode}`);
-  };
+  function CreateAClass() {
+    return (
+      /* this div takes the .classCard css from ClassCards.css */
+      <div className="classCard" id="cardCreateClass" onClick={handleCreateClassClick}>
+        <ImPlus title="Create Class" size="0.8rem" style={{ color: 'var(--dark-grey)', paddingRight: '0.6rem' }}/>
+        <span style={{ fontWeight: 600, color: 'var(--dark-grey)' }}>Create a Class</span>
+      </div>
+    )
+  }
 
-  if (!teacher) {
-    return <div>Loading...</div>;
+  async function handleLogout() {
+    try {
+      console.log("LOGGING OUT USER");
+      await auth.signOut();
+      dispatch(signOutTeacher()); //clearing redux store teacherSlice
+    } catch(error) {
+      console.error("ERROR LOGGING OUT:", error);
+    } finally {
+      navigate('/login');
+    }
   }
   
   return (
-    <div className="App">
-      <WelcomeMessage teacherName={teacher.firstName} teacherLastname={teacher.lastName} />
-      <h1>My Classes</h1>
-      <div className="year">2024-2025</div>
-      <div className="class-list">
-        {teacher.classes && teacher.classes.map((classItem, index) => (
-          <ClassCard 
-            key={index} 
-            classItem={classItem} 
-            onClassNameClick={handleClassNameClick} 
-            onShowStudents={handleShowStudents} 
-            assignmentsCount={assignmentsCounts[classItem.classCode] || 0}
-          />
-        ))}
-        <AddClassCard email={email} />
+    <>
+      <div id="classSelectionContainer">
+        {/* <h1>Welcome, {teacher.firstName} {teacher.lastName}</h1> */}
+        <h2>Your Classrooms</h2>
+        <h4 style={{ paddingTop: '0.7rem' }}>2024-2025</h4>
+        <div className="classesGrid">
+          {/* see: https://stackoverflow.com/questions/49268267/dealing-with-an-empty-array-when-using-map-in-react */}
+          {teacher.classes.length && teacher.classes.map((classItem, index) => (
+            <ClassCard 
+              key={index} 
+              classItem={classItem}
+              assignmentsCount={assignmentsCounts[classItem.classCode] || null}
+            />
+          ))}
+          <CreateAClass />
+        </div>
       </div>
-      <div className="year">2025-2026</div>
-      <div className="class-list">
-        <AddClassCard email={email} />
-        <AddClassCard email={email} />
-        <AddClassCard email={email} />
-        <AddClassCard email={email} />
+
+      <div className="classSelectionFooter">
+        <Tooltip title="Log Out" placement="top-start" arrow={true}>
+        <button id="classSelectionFooterLogOut" onClick={handleLogout}>
+          <MdLogout size="25px" />
+        </button>
+        </Tooltip>
+
+        <button id="createClassButton" onClick={handleCreateClassClick}>
+          <ImPlus title="Create Class" size="0.8rem" style={{ color: 'var(--light)', paddingRight: '0.6rem' }}/>
+          <span>Create a Class</span>
+        </button>
       </div>
-      <ClassStudentsPopup
-        open={popupOpen}
-        onClose={handleClosePopup}
-        students={students}
-        classCode={selectedClassCode}
-      />
-    </div>
+
+      <CreateClassPopup open={createClassModalVisible} onClose={handleCreateClassClose} />
+    </>
   );
 };
-
-const WelcomeMessage = ({ teacherName, teacherLastname }) => (
-  <div>
-    <h1>Welcome, {teacherName} {teacherLastname}</h1>
-  </div>
-);
-
-const ClassCard = ({ classItem, onClassNameClick, onShowStudents, assignmentsCount }) => (
-  <div className="class-card">
-    <div className="yoyy">
-      <h2 
-        onClick={() => onClassNameClick(classItem.classCode, classItem.gradeLevel)} 
-        style={{ cursor: 'pointer' }}
-      >
-        {classItem.className}
-      </h2>
-      <button onClick={() => onShowStudents(classItem.classCode)}>View Students</button>
-    </div>
-    <p>{classItem.gradeLevel}</p>
-    <p>Assignments: {assignmentsCount}</p>
-  </div>
-);
-
-const AddClassCard = ({ email }) => (
-  <div className="class-card add-class-card">
-    <CreateClassButton email={email} />
-  </div>
-);
-
-export default ClassSelection;

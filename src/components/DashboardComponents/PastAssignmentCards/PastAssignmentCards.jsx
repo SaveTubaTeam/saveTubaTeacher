@@ -91,7 +91,7 @@ export default function PastAssignmentCards({ email, classCode }) {
   };
 
   return (
-    <Box sx={{ minWidth: 275 }}>
+    <Box sx={{ minWidth: 275, maxHeight: '400px', overflow: 'scroll' }}>
       {currentAssignments.map((assignment, index) => (
         <Card key={assignment.assignmentID} variant="outlined" sx={{ mb: 2 }}>
           <CardContent sx={{ textAlign: "left" }}>

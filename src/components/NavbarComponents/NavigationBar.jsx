@@ -1,120 +1,61 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signOutTeacher } from "../../../redux/teacherSlice";
-import { auth } from "../../../firebase";
-import iconic from "../../assets/iconpic.png";
-import ClassButton from "./ClassButton";
-import CreateClassButton from "../CreateClassComponent/CreateClassButton";
-import CurrentAssignmentCard from "./CurrentAssignmentCard";
-import { CiCirclePlus } from "react-icons/ci";
-import { IoPersonCircleSharp } from "react-icons/io5";
-import { ImBooks } from "react-icons/im";
-import { IoExitOutline } from "react-icons/io5";
-import { FaHome } from "react-icons/fa";
+import { useLocation, NavLink, useNavigate, useParams } from "react-router-dom";
+import logoWhiteText from "../../assets/logoWhiteText.png";
+import "./NavigationBar.css"
+import NavBarRightContainer from "./NavBarRightContainer";
+import { useSelector } from "react-redux";
 
-const Navbar = ({ email, classCode }) => {
-  const dispatch = useDispatch();
-  const location = useLocation();
+const Navbar = () => {
   const navigate = useNavigate();
-  const [highlightedButton, setHighlightedButton] = useState("");
-  const [assignmentID, setAssignmentID] = useState(null);
+  const classItem = useSelector(state => state.teacher.selectedClass);
+  const classCode = classItem.classCode;
 
   useEffect(() => {
-    const handleAssignmentSelected = () => {
-      const selectedAssignment = JSON.parse(
-        localStorage.getItem("selectedAssignment")
-      );
-      if (selectedAssignment) {
-        setAssignmentID(selectedAssignment.assignmentId);
-      }
-    };
-
-    window.addEventListener("assignmentSelected", handleAssignmentSelected);
-
-    return () => {
-      window.removeEventListener(
-        "assignmentSelected",
-        handleAssignmentSelected
-      );
-    };
-  }, []);
-
-  async function handleLogout() {
-    try {
-      await auth.signOut();
-      dispatch(signOutTeacher()); // clearing redux store teacherSlice
-      navigate("/login");
-    } catch (error) {
-      console.error(`ERROR LOGGING OUT`);
-      dispatch(signOutTeacher()); // clearing redux store teacherSlice
-      navigate("/login");
+    if(classCode === undefined) {
+      navigate("/class-selection");
+      console.error("NO CLASSCODE AVAILABLE! pushing back to /class-selection");
     }
-  }
+  }, [classCode]);
 
   return (
-    <div className="navbar">
-      <div>
-        <Link className="imgs" to="/">
-          <img src={iconic} alt="picture of icon" />
-        </Link>
+    <div className="navigationBarContainer">
+      <div id="topOverflowColor"></div>
+
+      <div className="navBarLeftContainer">
+        <img src={logoWhiteText} alt="Save Tuba" id="whiteTextLogo" />
+        
+        <nav>
+          <NavLink 
+            to={`/dashboard/${classCode}`} 
+            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+            id="navBarDashboard"
+          >
+            Dashboard
+          </NavLink>
+        </nav>
+
+        <nav>
+          <NavLink 
+            to={`/create-assignment/${classCode}`}
+            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+            id="navBarCreateAssignment"
+          >
+            Create Assignment
+          </NavLink>
+        </nav>
+
+        <nav>
+          <NavLink 
+            to="/class-selection"
+            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+            id="navBarClassrooms"
+          >
+            Classrooms
+          </NavLink>
+        </nav>
       </div>
-      <div className="sss">
-        <ClassButton
-          title="Class 4-A"
-          isHighlighted={highlightedButton === "Grade 1"}
-          onClick={() => setHighlightedButton("Grade 1")}
-        />
-      </div>
-      <div className="sss">
-        <CurrentAssignmentCard
-          email={email}
-          classCode={classCode}
-          assignmentID={assignmentID}
-        />
-      </div>
-      {location.pathname === "/createassignment" ? (
-        <div className="sss">
-          <Link to="/">
-            <FaHome title="Home" size="40px" color="Green" />
-          </Link>
-        </div>
-      ) : (
-        <div className="sss">
-          <Link to="/createassignment">
-            <CiCirclePlus title="Create Assignment" size="40px" color="Green" />
-          </Link>
-        </div>
-      )}
-      {location.pathname === "/profile" ? (
-        <div className="sss">
-          <Link to="/">
-            <FaHome title="Home" size="40px" color="Green" />
-          </Link>
-        </div>
-      ) : (
-        <div className="sss">
-          <Link to="/profile">
-            <IoPersonCircleSharp title="Profile" size="40px" color="Green" />
-          </Link>
-        </div>
-      )}
-      <div className="sss">
-        <IoExitOutline title="Logout" size="40px" color="Green" onClick={handleLogout} />
-      </div>
-      {location.pathname === "/class-selection" ? (
-        <div className="sss">
-          <Link to="/">
-            <FaHome title="Home" size="40px" color="Green" />
-          </Link>
-        </div>
-      ) : (
-        <div className="sss">
-          <Link to="/class-selection">
-            <ImBooks title="Home" size="40px" color="Green" />
-          </Link>
-        </div>
-      )}
+
+      <NavBarRightContainer />
     </div>
   );
 };

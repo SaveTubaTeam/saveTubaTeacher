@@ -57,7 +57,7 @@ const StyledButton = styled(Button)({
   fontFamily: "Montserrat, sans-serif",
 });
 
-const CreateClassPopup = ({ open, onClose, email }) => {
+const CreateClassPopup = ({ open, onClose }) => {
   const [className, setClassName] = useState('');
   const [grade, setGrade] = useState('');
   const [existingCodes, setExistingCodes] = useState([]);
@@ -106,7 +106,7 @@ const CreateClassPopup = ({ open, onClose, email }) => {
         <GradeSelect handleChange={handleGradeChange} />
       </StyledDialogContent>
       <DialogActions>
-        <SubmitClassButton email={email} classCode={generateRandomCode(existingCodes)} className={className} gradeLevel={grade}/>
+        <SubmitClassButton classCode={generateRandomCode(existingCodes)} className={className} gradeLevel={grade}/>
         <StyledButton onClick={onClose} color="success">
           Close
         </StyledButton>

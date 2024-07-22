@@ -15,10 +15,6 @@ import AlternativeRegistration from './pages/Login/AlternativeRegistration';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
 import ClassSelection from './pages/ClassSelection/ClassSelection';
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore } from 'redux-persist'
-
-let persistor = persistStore(store);
 
 const router = createBrowserRouter([
   {
@@ -35,11 +31,11 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: 'profile',
+        path: 'account',
         element: <Profile />,
       },
       {
-        path: 'createassignment',
+        path: 'create-assignment/:classCode',
         element: <CreateAssignment />,
       },
       {
@@ -62,11 +58,15 @@ const router = createBrowserRouter([
   }
 ]);
 
-//ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
+// React.StrictMode see: https://react.dev/reference/react/StrictMode
+// NOTE: StrictMode causes all useEffects to run twice in development
+// Provider (global redux config) see: https://react-redux.js.org/api/provider
+// ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+
       <RouterProvider router={router} />
 
       <ToastContainer 
@@ -79,7 +79,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         draggable={false}
         pauseOnHover={false}
       />
-      </PersistGate>
+
     </Provider>
   </React.StrictMode>
 );

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { signInTeacher } from '../../../redux/teacherSlice';
 import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -20,16 +20,8 @@ export default function LoginPage() {
       const teacher = result.user;
       //console.log("TEACHER JSON:", teacher);
 
-      // see link for toast.loading & toast.update implementation: https://fkhadra.github.io/react-toastify/promise#toastloading
-
-      // @jac927 07/18/24 | I decided against toast.promise because the implementation is kinda weird. 
-      // The alternative, which is toast.update, is kinda jank imo but is easier to read within try-catch and async await.
-      // Note: I found that the options object in toast.update(notify, options) can override the options in ToastContainer - I think this is a bug but idk. Workaround was to hardcode the autoClose property.
-
-      const popup = toast.loading(`Logging in`);
-
       const email = teacher.email;
-      await getTeacher(email, popup);
+      await getTeacher(email);
 
       console.log(`logged in with: ${email}`);
       navigate("/class-selection");
@@ -40,18 +32,20 @@ export default function LoginPage() {
       if(error.code) { //firebase errors have a .code property
         console.error(`ERROR WITH GOOGLE SIGNIN | Error Code: ${error.code} | ${error.message}`);
         if(error.code === "auth/email-already-in-use") {
-          toast.update(popup, { render: `Email already in use.`, type: "error", isLoading: false, autoClose: 1500 });
-        } else if(error.code === "auth/popup-closed-by-user" || error.code === "cancelled-popup-request") {
-          toast.update(popup, { render: `Popup closed`, type: "info", isLoading: false, autoClose: 1500 });
-        } else if(error.code === "auth/popup-blocked") {
-          toast.update(popup, { render: `Google popup was blocked. Please allow popups.`, type: "error", isLoading: false, autoClose: 1500 });
+          toast.error(`Email already in use.`);
+        } else if(error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+          toast.error(`Google popup was blocked. Please allow popups.`);
+        } else if(error.code === "auth/network-request-failed") {
+          toast.error("Network Request Failed. Please try again or contact support.")
+        } else if(error.code === "auth/popup-closed-by-user") {
+          return; //do nothing here
         } else { //catch others
-          toast.update(popup, { render: `Invalid Login. Please try again.`, type: "error", isLoading: false, autoClose: 1500 });
+          toast.error(`Invalid Login. Please try again.`);
         }
 
       } else { //not a firebase auth error
         console.error("ERROR in handleGooglePopupSignin:", error);
-        toast.update(popup, { render: `An error occured. Please try again or contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+        toast.error(`An error occured. Please try again or contact support.`);
       }
 
     }
@@ -59,7 +53,7 @@ export default function LoginPage() {
 
   // we get only the teacher's document and NOT their assignments collection. 
   // retrieving assignments is done after entry.
-  async function getTeacher(email, popup) {
+  async function getTeacher(email) {
     //TODO: replace w/ real teacher doc name
     const teacherDoc = await db.collection('teachers').doc('testteacher1@gmail.com').get();
 
@@ -67,13 +61,11 @@ export default function LoginPage() {
       const teacherData = teacherDoc.data();
       dispatch(signInTeacher({ data: teacherData })); //dispatching to teacherSlice store
 
-      toast.update(popup, { render: `Login Success!`, type: "success", isLoading: false, autoClose: 1000 });
-
     } else { //teacherDoc does not exist
       const newTeacherData = await createNewTeacherAccount(); //this new account will NOT have any assignments
       dispatch(signInTeacher({ data: newTeacherData })); //dispatching to teacherSlice store
 
-      toast.update(popup, { render: `Account Created. Welcome, ${newTeacherData.email}!`, type: "success", isLoading: false, autoClose: 1500 });
+      toast.success(`Account Created. Welcome, ${newTeacherData.email}!`);
     }
   }
 
@@ -102,11 +94,11 @@ export default function LoginPage() {
 
     <div style={{ padding: '2rem' }}></div>
       <div className="loginContainer" style={{ height: 420 }}>
-        <h1 style={{ color: 'var(--primary)' }}>Teacher Login</h1>
+        <h1>Teacher Login</h1>
         
         <button 
           id="googleSignIn" 
-          style={{ width: '80%', alignSelf: 'center' }} 
+          style={{ marginTop: '7rem', width: '85%', alignSelf: 'center' }} 
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />
@@ -114,7 +106,7 @@ export default function LoginPage() {
         </button>
 
         <button 
-          style={{ marginBottom: '2rem', width: '80%', alignSelf: 'center' }} 
+          style={{ marginBottom: '2rem', width: '85%', alignSelf: 'center' }} 
           onClick={() => navigate("/alt-login")}
         >
           Other

@@ -1,0 +1,44 @@
+/* inspiration taken from the google classroom class code display modal */
+
+.classCodeDisplay {
+   height: 600px;
+   background: var(--error);
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-end;
+   align-items: center;
+   overflow-x: hidden; /* to prevent horizontal scrolling when the container width is squeezed on small screens */
+}
+
+.classCodeDisplay h1 {
+   color: var(--light);
+   font-size: 13rem;
+   font-weight: 500;
+   line-height: 0;
+   padding-bottom: 145px;
+   margin: 0;
+   text-decoration: underline;
+   text-underline-offset: 3rem;
+   text-decoration-thickness: 0.3rem;
+}
+
+.textUnderClassCode {
+   color: var(--light);
+   padding-bottom: 170px;
+   font-size: 1.2rem;
+   text-shadow: 1px 1px 1px #000000;
+}
+
+#exitIcon {
+   color: var(--light);
+   position: absolute;
+   top: -1%;
+   right: 0;
+   margin: 10px;
+}
+
+#exitIcon:hover {
+   color: var(--grey);
+   cursor: pointer;
+}

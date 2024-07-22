@@ -17,6 +17,11 @@ export default function AlternativeRegistration() {
   //if we successfully register, we add the teacher (and initial teacher metadata) to Firestore
    async function createTeacher() {
       try {
+         // see link for toast.loading & toast.update implementation: https://fkhadra.github.io/react-toastify/promise#toastloading
+
+         // @jac927 07/18/24 | I decided against toast.promise because the implementation is kinda weird. 
+         // The alternative, which is toast.update, is kinda jank imo but is easier to read within try-catch and async await.
+         // Note: I found that the options object in toast.update(notify, options) can override the options in ToastContainer - I think this is a bug but idk. Workaround was to hardcode the autoClose property.
          const popup = toast.loading('Creating Account');
 
          const checkEdgeCase = await db.collection('users').doc(email).get();
@@ -107,7 +112,7 @@ export default function AlternativeRegistration() {
                Register
             </button>
 
-            <button className="altSignIn" style={{ marginTop: '3rem' }} onClick={() => navigate("/alt-login")}>
+            <button className="altSignIn" style={{ marginTop: '2.5rem' }} onClick={() => navigate("/alt-login")}>
                Return
             </button>
          </div>

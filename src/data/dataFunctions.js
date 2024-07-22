@@ -114,7 +114,7 @@ async function getMasteryAndMinigamesData(grade, chpt, lesson, languageCode) {
 
 async function getAssignmentsData(email, classCode) {
   if (!email || !classCode) {
-    console.error("Invalid arguments passed to getAssignmentsData():", { email, classCode });
+    console.error("Invalid arguments passed to getAssignmentsData():", email, classCode);
     return [];
   }
 
@@ -261,41 +261,22 @@ async function getCompletionData(grade, chpt, lesson, activity, email) {
 }
 
 async function getStudents(classCode) {
-  // const docSnapshot = await db.collection("teachers").doc(email).get();
-  // const codeArray = docSnapshot.data().classes;
-  let adminCode = classCode;
-  // for (let i = 0; i < codeArray.length; i++) {
-  //   if (codeArray[i] === classCode) {
-  //     adminCode = codeArray[i];
-  //     break; // Exit loop once the admin code is found
-  //   }
-  // }
-  //console.log("Admin Code: ", adminCode);
-  let students = [];
-  let users = [];
-  let userClassCodes = [];
   try {
-    await db
-      .collection("users")
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          users.push(doc.data());
-          userClassCodes.push(doc.data().classCode);
-        });
-      });
-  } catch (error) {
-    console.log("Error in getting users collection");
-  }
+    //see: https://firebase.google.com/docs/firestore/query-data/queries#web_3
+    const usersRef = db.collection('users');
+    const classQuery = usersRef.where("classCode", "==", classCode);
 
-  //console.log("Users: ", users, userClassCodes);
-  for (let i = 0; i < userClassCodes.length; i++) {
-    if (userClassCodes[i] === adminCode) {
-      students.push(users[i]);
-    }
+    const studentSnapshot = await classQuery.get();
+    const students = []
+    studentSnapshot.forEach((student) => students.push(student.data()));
+
+    console.log("Students: ", students);
+    return students;
+
+  } catch(error) {
+    console.error("ERROR in getStudents:", error);
+    return null;
   }
-  console.log("Students: ", students);
-  return students;
 }
 
 async function getCompletedPerAssignment(assignment, classCode) {

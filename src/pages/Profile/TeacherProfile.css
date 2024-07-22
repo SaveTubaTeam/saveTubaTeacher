@@ -1,11 +1,5 @@
-/* TeacherProfile.css */
-.profiles-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .profile-container {
+  align-self: center;
   max-width: 600px;
   margin: 20px;
   padding: 20px;

@@ -17,7 +17,6 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^5.15.19",
     "@mui/material": "^5.15.20",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-data-grid": "^7.6.1",
     "@reduxjs/toolkit": "^2.2.6",
     "chart.js": "^4.4.3",
@@ -33,8 +32,7 @@
     "react-router-dom": "^6.24.1",
     "react-toastify": "^10.0.5",
     "recharts": "^2.12.7",
-    "redux": "^5.0.1",
-    "redux-persist": "^6.0.0"
+    "redux-remember": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",

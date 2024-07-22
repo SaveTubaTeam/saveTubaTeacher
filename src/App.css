@@ -1,10 +1,55 @@
 #root {
-  width: 100vw;
-  min-height: 100vh; 
+/*   width: 100vw;
+  min-height: 100vh;  */
   text-align: center;
+  background: var(--light);
 }
 
-.grid-container {
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  min-width: 1000px;
+}
+
+.mainFooter {
+  /* positioning the footer relative to the mainContainer flexbox so it is no longer sticky */
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  /* border: 1px solid black; */
+  background: var(--grey);
+
+  /* text font for the children */
+  color: var(--black-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+#contactSupport:hover {
+  cursor: pointer;
+  color: var(--black-dark);
+  text-decoration: underline;
+}
+
+#copyrightFooter:hover {
+  cursor: pointer;
+  color: var(--black-dark);
+}
+
+.mainFooter a {
+  /* overriding default behaviour of links here */
+  color: var(--black-light);
+}
+
+
+
+
+.grid-container { /* marked */
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 56px 56px auto auto;
@@ -12,93 +57,20 @@
   padding: 0;
   margin: 0;
 }
-.adjustclass {
+.adjustclass { /* marked */
   grid-column: span 2;
   background-color: #ffffff;
   display: flex;
   gap: 5px;
+  border: 1px solid black;
 }
 
-.navbar {
-  grid-column: span 2;
-  background-color: #CCE882;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  height: 70px;
-  width: 100%;
-  display: flex;
-  gap: 20px;
-}
-.navbar a.imgs {
-  padding: 0px;
-}
-.navbar img {
-  height: 56px;
-  vertical-align: middle;
-}
-.sss {
-  position: relative;
-  border-radius: 25px;
-  margin-top: 10px;
-}
-
-.completionTime {
-  grid-column: span 2;
-  background-color: #ffffff;
-  display: flex;
-  gap: 10px;
-}
-.completionTime2{
-  background-color: #CCE882;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.Buttonsss {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-top: 5px;
-}
-.select-container {
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 5px;
-  flex: 1;
-  margin: 0 5px;
-}
-.dayrange {
-  background-color: #CCE882;
-  padding: 10px;
-  border-radius: 15px;
-}
-.chart-full {
-  flex: 1;
-  display: flex;
-}
 .chart-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 350px;
+  overflow: scroll;
   font-family: "Monsterrat", sans-serif;
 }
-.additional-charts {
-  grid-column: span 2;
-  display: flex;
-  gap: 10px;
-  font-family: "Monsterrat", sans-serif;
-  overflow: hidden; /* Prevent overflow horizontally */
-}
-.se{
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-
