@@ -86,9 +86,6 @@ const Navbar = ({ email, classCode }) => {
           </Link>
         </div>
       )}
-      <div className="sss">
-        <CreateClassButton title="+" />
-      </div>
       {location.pathname === "/profile" ? (
         <div className="sss">
           <Link to="/">
