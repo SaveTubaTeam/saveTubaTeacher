@@ -32,7 +32,15 @@ const router = createBrowserRouter([
       },
       {
         path: 'account',
-        element: <AccountPage />,
+        element: <AccountPage page="account" />,
+      },
+      {
+        path: 'settings',
+        element: <AccountPage page="settings" />
+      },
+      {
+        path: 'support',
+        element: <AccountPage page="support" />
       },
       {
         path: 'create-assignment/:classCode',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./AccountPage.css"
 
-export default function ContactSupport() {
+export default function Profile() {
   return null;
 }
