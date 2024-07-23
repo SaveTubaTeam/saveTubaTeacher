@@ -79,19 +79,6 @@ export default function PastAssignmentCards({ email, classCode }) {
           pastImgArray.push(pastAssignmetData[i].downloadURL);
         }
 
-        for (let i = 0; i < imgArray.length; i++) {
-          let storageRef = firebase.storage();
-          let fileRef = storageRef.refFromURL(imgArray[i]);
-          fileRef
-            .getData(maxSize, 3 * 1024 * 1024)
-            .then((url) => {
-              paths[i] = url;
-            })
-            .catch((error) => {
-              console.log("Error getting image:", error);
-            });
-        }
-
         console.log("Assignments titles:", titleArray);
         console.log("Assignments images:", imgArray);
         console.log("Past Assignments titles:", pastTitleArray);

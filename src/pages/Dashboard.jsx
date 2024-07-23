@@ -5,7 +5,7 @@ import { selectTeacher } from "../../redux/teacherSlice";
 import ChapterSelect from "../components/DashboardComponents/DataTableComponents/ChapterSelect";
 import LessonSelect from "../components/DashboardComponents/DataTableComponents/LessonSelect";
 import ActivitySelect from "../components/DashboardComponents/DataTableComponents/ActivitySelect";
-import "./Dashboard.css"
+import "./Dashboard.css";
 import DateSlider from "../components/DateSlider";
 import CompletionTimeLine from "../components/DashboardComponents/Charts/CompletionTimeLine";
 import ActivityCompletionBar from "../components/DashboardComponents/Charts/ActivityCompletionBar";
@@ -23,7 +23,7 @@ function Dashboard() {
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
   const [assignmentID, setAssignmentID] = useState(null);
   const teacher = useSelector(selectTeacher);
-  const classItem = useSelector(state => state.teacher.selectedClass);
+  const classItem = useSelector((state) => state.teacher.selectedClass);
   const email = teacher.email;
 
   useEffect(() => {
@@ -33,6 +33,8 @@ function Dashboard() {
       );
       if (selectedAssignment) {
         setAssignmentID(selectedAssignment.assignmentId);
+      } else {
+        setAssignmentID(null); // Reset assignment ID if no assignment is selected
       }
     };
 
@@ -46,10 +48,19 @@ function Dashboard() {
     };
   }, []);
 
-//note: grid layout styling can be found in Dashboard.css
-  return ( 
+  const handleResetAssignment = () => {
+    localStorage.removeItem("selectedAssignment");
+    setAssignmentID(null);
+    window.dispatchEvent(new Event("assignmentSelected")); // Trigger event to update other components
+  };
+
+  return (
     <div className="mainContainer">
-      <NavigationBar />
+      <NavigationBar
+        email={email}
+        classCode={urlClassCode}
+        assignmentID={assignmentID}
+      />
 
       <div className="dashboardHeader">
         <h1>{classItem.className}</h1>
@@ -58,6 +69,7 @@ function Dashboard() {
           classCode={urlClassCode}
           assignmentID={assignmentID}
         />
+        <button style={{width: 80, height: 35}}onClick={handleResetAssignment}>Reset</button>
       </div>
 
       <div className="dashboardGrid">
@@ -65,7 +77,11 @@ function Dashboard() {
           <CompletionTimeLine />
         </div>
         <div className="childTwo">
-          <AssignmentCompletionPieChart email={email} classCode={urlClassCode} />
+          <AssignmentCompletionPieChart
+            email={email}
+            classCode={urlClassCode}
+            assignmentID={assignmentID}
+          />
         </div>
         <div className="childThree">
           <StudentDataGrid
@@ -85,7 +101,6 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
 
 // <div className="grid-container">
 //         <NavigationBar email={email} classCode={classCode} assignmentID={assignmentID}/>

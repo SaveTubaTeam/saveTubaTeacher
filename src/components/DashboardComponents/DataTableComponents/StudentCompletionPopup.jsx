@@ -32,12 +32,12 @@ function checkDateCompleted(dateCompleted) {
       </StyledTypography>
     );
   } else {
-  
     //const assignmentName = placeholder.replace(/_/g,' ');
 
     return dateCompleted.map((completion, index) => (
       <StyledTypography key={index} variant="body1">
-        <strong>Assignment Name:</strong> {completion.completionID.replace(/_/g,' ')}
+        <strong>Assignment Name:</strong>{" "}
+        {completion.completionID.replace(/_/g, " ")}
         <span> </span>
         <strong>Date Completed:</strong> {completion.submissionTime}
       </StyledTypography>
@@ -45,13 +45,24 @@ function checkDateCompleted(dateCompleted) {
   }
 }
 
-const StudentCompletionPopup = ({ open, onClose, rowData}) => {
+const StudentCompletionPopup = ({ open, onClose, rowData }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <StyledDialogTitle><strong>Student Completion Dates</strong></StyledDialogTitle>
-      <StyledDialogContent>{checkDateCompleted(rowData.dateCompleted)}</StyledDialogContent>
+      <StyledDialogTitle>
+        <strong>Student Completion Dates</strong>
+      </StyledDialogTitle>
+      <StyledDialogContent>
+        {checkDateCompleted(rowData.dateCompleted)}
+      </StyledDialogContent>
       <DialogActions>
-        <StyledButton onClick={onClose} color="success">
+        <StyledButton
+          onClick={onClose}
+          variant="contained"
+          color="success"
+          sx={{
+            fontFamily: "Montserrat, sans-serif",
+          }}
+        >
           Close
         </StyledButton>
       </DialogActions>
