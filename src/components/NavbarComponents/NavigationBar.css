@@ -35,8 +35,7 @@
    justify-content: center;
    height: 60px;
    width: auto;
-   padding: 0 0.6rem;
-   margin: 0 0.2rem;
+   padding: 0 1rem;
    color: var(--grey);
    font-size: 1.3rem;
    position: relative; /* Making this element the containing block for the .active::after element */
