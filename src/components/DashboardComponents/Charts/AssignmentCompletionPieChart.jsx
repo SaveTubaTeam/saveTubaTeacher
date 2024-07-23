@@ -53,6 +53,7 @@ const AssignmentCompletionPieChart = ({ email, classCode, assignmentID }) => {
   const [assignments, setAssignments] = useState([]);
   const [totalStudents, setTotalStudents] = useState([]);
   const [totalCompleted, setTotalCompleted] = useState(0);
+  console.log("Assignment ID", assignmentID);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,17 +63,22 @@ const AssignmentCompletionPieChart = ({ email, classCode, assignmentID }) => {
       let totalCompleted = 0;
       for (const student of studentsData) {
         let completionData = await getCompletionsData(student.email);
-        console.log("Completion Data:", completionData);
+        console.log("Completion Data:", completionData, student.email);
         if (assignmentID) {
           for (let i = 0; i < completionData.length; i++) {
-            let name = completionData[i].completionID;
-            let assignmentName = name.split("_")[0];
-            console.log("Assignment Name:", assignmentName);
-            if (assignmentName === assignmentID) {
-              totalCompleted += 1;
-              console.log("Matches!");
+            if (!completionData[i].completionID) {
+              console.log("No completion ID");
+              continue;
+            } else {
+              let name = completionData[i].completionID;
+              let assignmentName = name.split("_")[0];
+              console.log("Assignment Name:", assignmentName);
+              if (assignmentName === assignmentID) {
+                totalCompleted += 1;
+                console.log("Matches!");
+              }
+              //totalCompleted += completionData.length;
             }
-            totalCompleted += completionData.length;
           }
           console.log("Total Completed:", totalCompleted);
         } else {
@@ -89,10 +95,22 @@ const AssignmentCompletionPieChart = ({ email, classCode, assignmentID }) => {
   }, [email, classCode, assignmentID]);
 
   let totalAssignments = 0;
-  assignments.forEach((assignment) => {
-    totalAssignments += assignment.numActivities;
-  });
+  if(!assignmentID){
+    assignments.forEach((assignment) => {
+      totalAssignments += assignment.numActivities;
+    });
+  }
+  else{
+    assignments.forEach((assignment) => {
+      if(assignment.assignmentID === assignmentID){
+        totalAssignments += assignment.numActivities;
+      }
+    });
+  }
   totalAssignments *= totalStudents.length;
+
+  console.log("Total Completed:", totalCompleted);
+  console.log("Total Assignment:", totalAssignments);  
   //console.log("Total Assignments:", totalAssignments);
 
   const defaultData = [
@@ -102,7 +120,7 @@ const AssignmentCompletionPieChart = ({ email, classCode, assignmentID }) => {
 
   return (
     <div className="chart-container">
-      <h1 className="text-heading">Total Activity Completion</h1>
+      <h1 className="tex t-heading">Total Activity Completion</h1>
       <ResponsiveContainer>
         <PieChart>
           <Pie
