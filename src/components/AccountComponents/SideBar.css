@@ -48,14 +48,14 @@
 }
 
 #sidebarDivider {
-  margin-bottom: 1rem;
+  margin-bottom: 0.4rem;
 }
 
 /* section divider */
 #sidebarDivider::after {
   content: '';
   position: absolute;
-  bottom: -0.5rem;
+  bottom: -0.2rem;
   height: 1px;
   width: 100%;
   background-color: var(--grey);

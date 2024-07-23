@@ -8,6 +8,9 @@ import ViewStudentsDialog from '../../components/AccountComponents/ViewStudentsD
 import SideBar from '../../components/AccountComponents/SideBar';
 import Footer from '../../components/Footer';
 import { FaUserCircle } from "react-icons/fa";
+import Profile from './Profile';
+import Settings from './Settings';
+import ContactSupport from './ContactSupport';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
 export default function AccountPage({ page }) {
@@ -24,21 +27,15 @@ export default function AccountPage({ page }) {
   let content;
   if(page === "account") {
     content = (
-      <div className="accountContent">
-        Account
-      </div>
+      <Profile />
     )
   } else if(page === "settings") {
     content = (
-      <div className="accountContent">
-        Settings
-      </div>
+      <Settings />
     )
   } else if(page === "support") {
     content = (
-      <div className="accountContent">
-        Support
-      </div>
+      <ContactSupport />
     )
   } else { //this conditional should never happen because our props are hardcoded...
     console.error("ERROR!!! 'page' prop in main.jsx passed into AccountPage is undefined");
@@ -56,7 +53,9 @@ export default function AccountPage({ page }) {
 
         <SideBar />
 
-        {content}
+        <div className="accountContent">
+          {content}
+        </div>
 
       </div>
 
@@ -68,11 +67,26 @@ export default function AccountPage({ page }) {
 function AccountHeader() {
   const teacher = useSelector(selectTeacher);
 
-  return (
-    <div className="headerAccount">
+  let userCircle;
+  if(teacher.photoURL) {
+    userCircle = (
+      <img 
+        src={teacher.photoURL} 
+        alt="User Photo"  
+        style={{ width: '80px', height: '80px', marginLeft: '80px', borderRadius: '50%', transform: 'scale(0.8)' }}
+      />
+    )
+  } else {
+    userCircle = ( 
       <div id="userCircle">
         <FaUserCircle size="60px" color="var(--black-light)" />
-      </div>
+      </div> 
+    );
+  }
+
+  return (
+    <div className="headerAccount">
+      {userCircle}
 
       <div className="profileContainer">
         <span style={{ fontSize: '1.5rem' }}><strong>{`${teacher.firstName} ${teacher.lastName}`}</strong></span>

@@ -2,5 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./AccountPage.css"
 
 export default function ContactSupport() {
-  return null;
+  return (
+    <span>C</span>
+  )
 }
