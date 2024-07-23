@@ -9,7 +9,6 @@ import SideBar from '../../components/AccountComponents/SideBar';
 import Footer from '../../components/Footer';
 import { FaUserCircle } from "react-icons/fa";
 import Profile from './Profile';
-import Settings from './Settings';
 import ContactSupport from './ContactSupport';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
@@ -28,10 +27,6 @@ export default function AccountPage({ page }) {
   if(page === "account") {
     content = (
       <Profile />
-    )
-  } else if(page === "settings") {
-    content = (
-      <Settings />
     )
   } else if(page === "support") {
     content = (
@@ -90,7 +85,7 @@ function AccountHeader() {
 
       <div className="profileContainer">
         <span style={{ fontSize: '1.5rem' }}><strong>{`${teacher.firstName} ${teacher.lastName}`}</strong></span>
-        <span style={{ fontSize: '1.1rem', marginTop: '0.2rem' }}>{teacher.email}</span>
+        <span style={{ fontSize: '1rem', marginTop: '0.2rem' }}>Your personal account</span>
       </div>
       
     </div>

@@ -31,12 +31,14 @@ export default function SideBar() {
         <NavLink 
           to={`/account`}
           className={({ isActive }) => isActive ? "sidebarSection active" : "sidebarSection"}
+          id="sidebarDivider"
         >
           <PiUserSquareFill style={{ margin: '0 0.6rem' }} size="25px" color="var(--black-dark)"/>
           <span>Account</span>
         </NavLink>
       </nav>
-      <nav>
+
+      {/* <nav>
         <NavLink 
           to={`/settings`}
           className={({ isActive }) => isActive ? "sidebarSection active" : "sidebarSection"}
@@ -45,7 +47,7 @@ export default function SideBar() {
           <IoMdSettings style={{ margin: '0 0.8rem' }} size="20px" color="var(--black-dark)"/>
           <span>Settings</span>
         </NavLink>
-      </nav>
+      </nav> */}
 
       <nav>
         <NavLink 

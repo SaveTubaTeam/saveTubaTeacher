@@ -3,6 +3,6 @@ import "./AccountPage.css"
 
 export default function ContactSupport() {
   return (
-    <span>C</span>
+    <h2>Contact Support</h2>
   )
 }

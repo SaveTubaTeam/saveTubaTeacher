@@ -2,11 +2,11 @@
 
 .contentContainerGrid {
   align-self: center;
-  height: 650px;
+  height: 800px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 115px 535px;
+  grid-template-rows: 115px 685px;
   background: var(--light);
 }
 
@@ -22,22 +22,17 @@
   padding-bottom: 10px;
 }
 
-.accountContent {
-  /* border: 1px solid black; */
-  grid-row: 2 / 3;
-  grid-column: 2 / 5;
-}
-
 #userCircle {
   width: 80px;
   height: 80px;
-  /* border: 1px solid red; */
+  /* border: 1px solid black; */
   display: flex;
   align-items: center;
   justify-content: center;
   padding-left: 80px;
 }
 
+/* displays the teacher's full name and email to the right of the userCircle icon */
 .profileContainer {
   padding: 0.5rem;
   width: 600px; 
@@ -47,4 +42,48 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+}
+
+.accountContent {
+  position: relative;
+  /* border: 1px solid black; */
+  grid-row: 2 / 3;
+  grid-column: 2 / 5;
+
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: var(--black-light);
+  text-align: left;
+}
+
+.accountContent h2 {
+  position: relative;
+  padding-bottom: 3rem;
+  font-weight: 500;
+}
+
+/* this styling line below is absolute in relation to the h2 element */
+.accountContent h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+  width: 850px;
+  height: 2px; 
+  background-color: #c7c8cc;
+}
+
+.accountContent input {
+  font-size: 1rem;
+  margin: 0 0;
+  padding: 0.5rem 1rem;
+  width: 300px;
+  overflow: hidden;
+}
+
+.accountContent input:hover {
+  cursor: no-drop;
 }

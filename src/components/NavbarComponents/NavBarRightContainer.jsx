@@ -85,7 +85,7 @@ export default function NavBarRightContainer() {
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
 
-      <MenuItem 
+      {/* <MenuItem 
         onClick={() => { 
           setAnchorElement(null);
           navigate("/class-selection");
@@ -96,7 +96,8 @@ export default function NavBarRightContainer() {
           <ImBooks size="20px" color="var(--black-light)" />
         </ListItemIcon>
         Classrooms
-      </MenuItem>
+      </MenuItem> */}
+      
       <MenuItem 
         onClick={() => {
           setAnchorElement(null);
@@ -112,7 +113,7 @@ export default function NavBarRightContainer() {
 
       <Divider />
 
-      <MenuItem 
+      {/* <MenuItem 
         onClick={() => {
           setAnchorElement(null);
           navigate("/settings")
@@ -123,7 +124,7 @@ export default function NavBarRightContainer() {
           <IoMdSettings size="20px" color="var(--black-light)" />
         </ListItemIcon>
         Settings
-      </MenuItem>
+      </MenuItem> */}
 
       <MenuItem 
         onClick={() => {
