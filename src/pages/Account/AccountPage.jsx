@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './TeacherProfile.css';
-import '../../App.css';
+import "./AccountPage.css"
 import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
@@ -20,8 +19,21 @@ export default function AccountPage() {
 
   return (
     <div className="mainContainer">
-      <NavigationBar />
+      <NavigationBar contentType="account" />
       
+      <div className="contentContainerGrid">
+        <div className="headerAccount">
+          A
+        </div>
+
+        <div className="sidebarAccount">
+          B
+        </div>
+
+        <div className="accountContent">
+          C
+        </div>
+      </div>
 
       <Footer />
     </div>

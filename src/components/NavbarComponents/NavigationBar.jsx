@@ -5,7 +5,7 @@ import "./NavigationBar.css"
 import NavBarRightContainer from "./NavBarRightContainer";
 import { useSelector } from "react-redux";
 
-const Navbar = () => {
+export default function NavigationBar({ contentType }) {
   const navigate = useNavigate();
   const classItem = useSelector(state => state.teacher.selectedClass);
 
@@ -16,47 +16,56 @@ const Navbar = () => {
     }
   }, [classItem.classCode]);
 
+  let content;
+  if(contentType === "dashboard") {
+    content = (
+      <>
+      <nav>
+        <NavLink 
+          to={`/dashboard/${classItem.classCode}`} 
+          className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+          id="navBarDashboard"
+        >
+          {`Dashboard - ${classItem.className}`}
+        </NavLink>
+      </nav>
+
+      <nav>
+        <NavLink 
+          to={`/create-assignment/${classItem.classCode}`}
+          className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+          id="navBarCreateAssignment"
+        >
+          Create Assignment
+        </NavLink>
+      </nav>
+      </>
+    );
+  } else if(contentType === "account") {
+    content = (
+      <nav>
+        <NavLink 
+          to="/class-selection"
+          className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
+          id="navBarClassrooms"
+        >
+          Back to Classrooms
+        </NavLink>
+      </nav>
+    );
+  }
+
   return (
     <div className="navigationBarContainer">
       <div id="topOverflowColor"></div>
 
       <div className="navBarLeftContainer">
         <img src={logoWhiteText} alt="Save Tuba" id="whiteTextLogo" />
-        
-        <nav>
-          <NavLink 
-            to={`/dashboard/${classItem.classCode}`} 
-            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
-            id="navBarDashboard"
-          >
-            {`Dashboard - ${classItem.className}`}
-          </NavLink>
-        </nav>
 
-        <nav>
-          <NavLink 
-            to={`/create-assignment/${classItem.classCode}`}
-            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
-            id="navBarCreateAssignment"
-          >
-            Create Assignment
-          </NavLink>
-        </nav>
-
-        <nav>
-          <NavLink 
-            to="/class-selection"
-            className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
-            id="navBarClassrooms"
-          >
-            Classrooms
-          </NavLink>
-        </nav>
+        {content}
       </div>
 
       <NavBarRightContainer />
     </div>
   );
 };
-
-export default Navbar;

@@ -49,7 +49,7 @@ function Dashboard() {
 //note: grid layout styling can be found in Dashboard.css
   return ( 
     <div className="mainContainer">
-      <NavigationBar />
+      <NavigationBar contentType="dashboard" />
 
       <div className="dashboardHeader">
         <h1>{classItem.className}</h1>

@@ -131,7 +131,7 @@ const CreateAssignment = () => {
 
   return (
     <div className='mainContainer'>
-      <NavigationBar />
+      <NavigationBar contentType="dashboard" />
       
       <h1>Create Assignment</h1>
       <form onSubmit={handleSubmit}>
