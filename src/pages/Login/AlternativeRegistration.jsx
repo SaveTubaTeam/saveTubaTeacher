@@ -16,13 +16,15 @@ export default function AlternativeRegistration() {
    //auth error codes: https://firebase.google.com/docs/reference/js/auth#autherrorcodes
   //if we successfully register, we add the teacher (and initial teacher metadata) to Firestore
    async function createTeacher() {
-      try {
-         // see link for toast.loading & toast.update implementation: https://fkhadra.github.io/react-toastify/promise#toastloading
+      // see link for toast.loading & toast.update implementation: https://fkhadra.github.io/react-toastify/promise#toastloading
 
-         // @jac927 07/18/24 | I decided against toast.promise because the implementation is kinda weird. 
-         // The alternative, which is toast.update, is kinda jank imo but is easier to read within try-catch and async await.
-         // Note: I found that the options object in toast.update(notify, options) can override the options in ToastContainer - I think this is a bug but idk. Workaround was to hardcode the autoClose property.
-         const popup = toast.loading('Creating Account');
+      // @jac927 07/18/24 | I decided against toast.promise because the implementation is kinda weird. 
+      // The alternative, which is toast.update, is kinda jank imo but is easier to read within try-catch and async await.
+      // Note: I found that the options object in toast.update(notify, options) can override the options in ToastContainer - I think this is a bug but idk. Workaround was to hardcode the autoClose property.
+      const popup = toast.loading('Creating Account');
+
+      try {
+         if(email.trim() === "") { throw new Error("Please enter a valid email"); }
 
          const checkEdgeCase = await db.collection('users').doc(email).get();
          if(checkEdgeCase.exists) { //edge case where the user already has a student account on mobile
@@ -52,7 +54,10 @@ export default function AlternativeRegistration() {
                toast.update(popup, { render: `Invalid registration. Please try again.`, type: "error", isLoading: false, autoClose: 1500 });
             }
 
-         } else {
+         } else if(error.message === "Please enter a valid email") {
+            console.error(error);
+            toast.update(popup, { render: `Please enter a valid email.`, type: "error", isLoading: false, autoClose: 1500 });
+         }  else {
             console.error("ERROR in createTeacher:", error);
             toast.update(popup, { render: `An error occured. Please try again or contact support.`, type: "error", isLoading: false, autoClose: 1500 });
          }
