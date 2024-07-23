@@ -4,7 +4,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import { CircularProgress } from '@mui/material';
-import { getStudents } from "../data/dataFunctions"
+import { getStudents } from "../../data/dataFunctions"
 
 export default function ViewStudentsDialog({ viewStudentsDialog, setViewStudentsDialog, classCode }) {
    const [students, setStudents] = useState(null);

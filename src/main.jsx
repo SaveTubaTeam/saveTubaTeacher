@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile/Profile';
+import AccountPage from './pages/Account/AccountPage';
 import CreateAssignment from './pages/CreateAssignment/CreateAssignment';
 import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/Login/LoginPage';
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'account',
-        element: <Profile />,
+        element: <AccountPage />,
       },
       {
         path: 'create-assignment/:classCode',

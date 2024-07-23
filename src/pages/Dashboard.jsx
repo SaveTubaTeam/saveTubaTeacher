@@ -17,7 +17,7 @@ import ResetGridButton from "../components/DashboardComponents/ResetGridButton";
 import ViewStudentPopup from "../components/DashboardComponents/ViewStudentComponents/ViewStudentsPopup";
 import StudentDataGrid from "../components/DashboardComponents/DataTableComponents/StudentDataGrid";
 import PastAssignmentCards from "../components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
-import CurrentAssignmentCard from "../components/NavbarComponents/CurrentAssignmentCard";
+import CurrentAssignmentCard from "../components/DashboardComponents/CurrentAssignmentCard";
 
 function Dashboard() {
   const { classCode: urlClassCode } = useParams(); // Extract class code from URL
