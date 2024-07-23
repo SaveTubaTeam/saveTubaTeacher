@@ -11,7 +11,8 @@
   background-color: var(--light);
   background-image: url('../../assets/loginBackground.png');
   background-size: 100% 100%;
-  min-height: 696px; /* this fixed height stops vertical resizing */
+  min-height: 600px; /* this fixed height stops vertical resizing */
+  height: 100vh;
   min-width: 1000px;
   background-position: center;
   background-repeat: no-repeat;

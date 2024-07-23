@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile/Profile';
+import AccountPage from './pages/Account/AccountPage';
 import CreateAssignment from './pages/CreateAssignment/CreateAssignment';
 import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/Login/LoginPage';
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'account',
-        element: <Profile />,
+        element: <AccountPage />,
       },
       {
         path: 'create-assignment/:classCode',
@@ -60,11 +60,13 @@ const router = createBrowserRouter([
 
 // React.StrictMode see: https://react.dev/reference/react/StrictMode
 // NOTE: StrictMode causes all useEffects to run twice in development
+// @jac927 07/23/24 | turned off React.StrictMode cuz it was annoying
+
 // Provider (global redux config) see: https://react-redux.js.org/api/provider
 // ToastContainer see: https://fkhadra.github.io/react-toastify/api/toast-container
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
     <Provider store={store}>
 
       <RouterProvider router={router} />
@@ -81,5 +83,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       />
 
     </Provider>
-  </React.StrictMode>
+  </>
 );

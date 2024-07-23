@@ -13,6 +13,7 @@ import { ImBooks } from "react-icons/im";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { useNavigate } from "react-router";
+import { Tooltip } from "@mui/material";
 
 export default function NavBarRightContainer() {
   const dispatch = useDispatch();
@@ -36,8 +37,17 @@ export default function NavBarRightContainer() {
 
   return (
     <>
-    <div className="navBarRightContainer" onClick={(event) => setAnchorElement(event.currentTarget)}>
-      <PiUserSquareFill size="50px" color="var(--grey)" />
+    <div className="navBarRightContainer">
+
+      <Tooltip title="Classrooms" placement="bottom-end" arrow={true}>
+        <div style={{ width: '100%', height: '100%' }} onClick={() => navigate("/class-selection")}>
+        <ImBooks size="45px" color="var(--grey)" />
+        </div>
+      </Tooltip>
+
+      <div onClick={(event) => setAnchorElement(event.currentTarget)}>
+        <PiUserSquareFill size="50px" color="var(--grey)" />
+      </div>
     </div>
 
     <Menu

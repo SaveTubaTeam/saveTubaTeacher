@@ -21,6 +21,8 @@ export default function ClassSelection() {
 
   useEffect(() => {
     async function fetchAssignmentsCounts() {
+      if(!teacher.classes) { return null; }
+
       // Fetch assignments count for each class
       const assignmentsCounts = {};
       for (const classItem of teacher.classes) {
@@ -34,6 +36,11 @@ export default function ClassSelection() {
 
     fetchAssignmentsCounts();
   }, [teacher]);
+
+  useEffect(() => {
+    console.log("AUTH:", auth);
+    if(!auth.currentUser) { navigate("/"); }
+  }, [])
 
   function handleCreateClassClick() {
     setCreateClassModalVisible(true);
@@ -73,7 +80,7 @@ export default function ClassSelection() {
         <h4 style={{ paddingTop: '0.7rem' }}>2024-2025</h4>
         <div className="classesGrid">
           {/* see: https://stackoverflow.com/questions/49268267/dealing-with-an-empty-array-when-using-map-in-react */}
-          {teacher.classes.length && teacher.classes.map((classItem, index) => (
+          {teacher.classes && teacher.classes.map((classItem, index) => (
             <ClassCard 
               key={index} 
               classItem={classItem}

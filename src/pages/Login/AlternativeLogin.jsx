@@ -15,6 +15,8 @@ export default function AlternativeLogin() {
 
    async function handleEmailPasswordSignin() {
       try {
+
+        if(email.trim() === "") { throw new Error("Please enter a valid email"); }
         //console.log(`Email: ${email}, Password: ${password}`);
         //please see: https://firebase.google.com/docs/auth/web/password-auth#web_3
         const result = await auth.signInWithEmailAndPassword(email, password);
@@ -40,7 +42,11 @@ export default function AlternativeLogin() {
             console.error(error);
             toast.error(`Please Create a Teacher Account to Continue`);
 
-         } else {
+         } else if(error.message == `Please enter a valid email`) {
+            console.error(error);
+            toast.error(`Please enter a valid email`);
+
+         }  else {
             console.error("ERROR in handleEmailPasswordSignin:", error);
             toast.error(`An error occured. Please try again or contact support.`);
          }
