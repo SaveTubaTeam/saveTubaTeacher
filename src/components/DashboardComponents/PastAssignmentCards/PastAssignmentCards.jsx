@@ -117,7 +117,7 @@ export default function PastAssignmentCards({ email, classCode }) {
             <Typography sx={{ fontSize: 14 }} color="text.secondary">
               Grade {assignment.assignmentID.substring(1, 2)} - Chapter{" "}
               {assignment.assignmentID.substring(3, 4)} - Lesson{" "}
-              {assignment.assignmentID.substring(5, 6)}
+              {assignment.assignmentID.substring(5)}
             </Typography>
             <Typography sx={{}} color="text.secondary">
               Due Date: {assignment.assignmentDateDue.format("DD/MM/YYYY")}

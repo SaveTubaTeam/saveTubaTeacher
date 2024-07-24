@@ -86,7 +86,7 @@ export default function StudentDataGrid({ email, classCode }) {
       } else {
         let grade = "Grade" + assignmentID.substring(1, 2);
         let chapter = "Chapter" + assignmentID.substring(3, 4);
-        let lesson = "Lesson" + assignmentID.substring(5, 6);
+        let lesson = "Lesson" + assignmentID.substring(5);
 
         const assignment = await getAssignmentData(
           grade,
