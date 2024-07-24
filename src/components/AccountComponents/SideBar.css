@@ -1,0 +1,62 @@
+/* our sidebar inherits the grid defined in AccountPage.css */
+.sidebarAccount {
+  /* border: 1px solid red; */
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+
+  margin-left: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sidebarSection {
+  position: relative;
+  width: 300px;
+  height: 3rem;
+  /* border: 1px solid orange; */
+  margin-left: 0.7rem;
+  margin-right: 0.7rem;
+  
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 5px;
+
+  color: var(--black-dark);
+}
+
+.sidebarSection.active {
+  background: var(--grey);
+  font-weight: 600;
+}
+
+/* the active element gets a nice lil blue vertical line before its element */
+.sidebarSection.active::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  height: 80%;
+  width: 3px;
+  background-color: var(--accent);
+}
+
+.sidebarSection:hover {
+  cursor: pointer;
+  background: #e1e2e5; /* slightly darker */
+}
+
+#sidebarDivider {
+  margin-bottom: 1rem;
+}
+
+/* section divider */
+#sidebarDivider::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  height: 1px;
+  width: 100%;
+  background-color: var(--grey);
+}

@@ -39,7 +39,7 @@ export default function NavBarRightContainer() {
     <>
     <div className="navBarRightContainer">
 
-      <Tooltip title="Classrooms" placement="bottom-end" arrow={true}>
+      <Tooltip title="Back to Classrooms" placement="bottom-end" arrow={true}>
         <div style={{ width: '100%', height: '100%' }} onClick={() => navigate("/class-selection")}>
         <ImBooks size="45px" color="var(--grey)" />
         </div>
@@ -85,7 +85,7 @@ export default function NavBarRightContainer() {
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
 
-      <MenuItem 
+      {/* <MenuItem 
         onClick={() => { 
           setAnchorElement(null);
           navigate("/class-selection");
@@ -96,7 +96,8 @@ export default function NavBarRightContainer() {
           <ImBooks size="20px" color="var(--black-light)" />
         </ListItemIcon>
         Classrooms
-      </MenuItem>
+      </MenuItem> */}
+
       <MenuItem 
         onClick={() => {
           setAnchorElement(null);
@@ -112,24 +113,30 @@ export default function NavBarRightContainer() {
 
       <Divider />
 
-      <MenuItem 
-        onClick={() => setAnchorElement(null)} 
-        sx={{ fontFamily: 'Montserrat' }}
-      >
-        <ListItemIcon>
-          <MdOutlineHelpOutline size="20px" color="var(--black-light)" />
-        </ListItemIcon>
-        Help
-      </MenuItem>
-
-      <MenuItem 
-        onClick={() => setAnchorElement(null)} 
+      {/* <MenuItem 
+        onClick={() => {
+          setAnchorElement(null);
+          navigate("/settings")
+        }}
         sx={{ fontFamily: 'Montserrat' }}
       >
         <ListItemIcon>
           <IoMdSettings size="20px" color="var(--black-light)" />
         </ListItemIcon>
         Settings
+      </MenuItem> */}
+
+      <MenuItem 
+        onClick={() => {
+          setAnchorElement(null);
+          navigate("/support");
+        }}
+        sx={{ fontFamily: 'Montserrat' }}
+      >
+        <ListItemIcon>
+          <MdOutlineHelpOutline size="20px" color="var(--black-light)" />
+        </ListItemIcon>
+        Help
       </MenuItem>
 
       <MenuItem 

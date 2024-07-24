@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import "./AccountPage.css"
 import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
 import ViewStudentsDialog from '../../components/AccountComponents/ViewStudentsDialog';
+import SideBar from '../../components/AccountComponents/SideBar';
 import Footer from '../../components/Footer';
+import { FaUserCircle } from "react-icons/fa";
+import Profile from './Profile';
+import ContactSupport from './ContactSupport';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
-export default function AccountPage() {
-  const [viewStudentsDialog, setViewStudentsDialog] = useState(false);
-  const [selectedClassCode, setSelectedClassCode] = useState("");
-  const teacher = useSelector(selectTeacher);
+export default function AccountPage({ page }) {
 
-  function handleViewStudents(classCode) {
-    setSelectedClassCode(classCode);
-    setViewStudentsDialog(true);
+  let content;
+  if(page === "profile") {
+    content = ( <Profile /> );
+  } else if(page === "support") {
+    content = ( <ContactSupport /> );
+  } else { //this conditional should never happen because our props are hardcoded...
+    console.error("ERROR!!! 'page' prop in main.jsx passed into AccountPage is undefined");
+    content = null;
   }
 
   return (
@@ -22,16 +29,13 @@ export default function AccountPage() {
       <NavigationBar contentType="account" />
       
       <div className="contentContainerGrid">
-        <div className="headerAccount">
-          A
-        </div>
+        {/* see bottom of file for AccountHeader def */}
+        <AccountHeader />
 
-        <div className="sidebarAccount">
-          B
-        </div>
+        <SideBar />
 
         <div className="accountContent">
-          C
+          {content}
         </div>
       </div>
 
@@ -40,29 +44,35 @@ export default function AccountPage() {
   );
 };
 
+function AccountHeader() {
+  const teacher = useSelector(selectTeacher);
 
-// <div className="profile-container">
-//         <h1>Teacher Profile</h1>
-//         <p><strong>First Name:</strong> {teacher.firstName}</p>
-//         <p><strong>Last Name:</strong> {teacher.lastName}</p>
-//         <p><strong>Email:</strong> {teacher.email}</p>
-//         <h2>Classes</h2>
-//         <ul className="class-list">
-//           {teacher.classes && teacher.classes.map((classItem, index) => (
-//             <>
-//               <li key={index} className="class-item">
-//                 <p><strong>Class Code:</strong> {classItem.classCode}</p>
-//                 <p><strong>Class Name:</strong> {classItem.className}</p>
-//                 <p><strong>Grade Level:</strong> {classItem.gradeLevel}</p>
-//                 <p onClick={() => handleViewStudents(classItem.classCode)}><strong>View Students</strong></p>
-//               </li>
-//             </>
-//           ))}
-//         </ul>
-//       </div>
+  let userCircle;
+  if(teacher.photoURL) {
+    userCircle = (
+      <img 
+        src={teacher.photoURL} 
+        alt="User Photo"  
+        style={{ width: '80px', height: '80px', marginLeft: '80px', borderRadius: '50%', transform: 'scale(0.8)' }}
+      />
+    )
+  } else {
+    userCircle = ( 
+      <div id="userCircle">
+        <FaUserCircle size="60px" color="var(--black-light)" />
+      </div> 
+    );
+  }
 
-//       <ViewStudentsDialog 
-//         viewStudentsDialog={viewStudentsDialog}
-//         setViewStudentsDialog={setViewStudentsDialog}
-//         classCode={selectedClassCode}
-//       />
+  return (
+    <div className="headerAccount">
+      {userCircle}
+
+      <div className="profileContainer">
+        <span style={{ fontSize: '1.5rem' }}><strong>{`${teacher.firstName} ${teacher.lastName}`}</strong></span>
+        <span style={{ fontSize: '1rem', marginTop: '0.2rem' }}>Your personal account</span>
+      </div>
+      
+    </div>
+  )
+};

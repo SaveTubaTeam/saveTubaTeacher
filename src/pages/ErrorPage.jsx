@@ -9,6 +9,7 @@ export default function ErrorPage() {
   const navigate = useNavigate();
 
   console.error(`ErrorPage.jsx ERROR: ${error.statusText || error.message}`);
+  //console.trace(error); //stack trace
 
   let content = null;
   if(error?.status === 404) {

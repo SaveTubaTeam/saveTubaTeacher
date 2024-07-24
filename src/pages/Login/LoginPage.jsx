@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './LoginPage.css';
 import { auth, provider, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
