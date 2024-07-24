@@ -13,25 +13,12 @@ import ContactSupport from './ContactSupport';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
 export default function AccountPage({ page }) {
-  const navigate = useNavigate();
-  const [viewStudentsDialog, setViewStudentsDialog] = useState(false);
-  const [selectedClassCode, setSelectedClassCode] = useState("");
-  const teacher = useSelector(selectTeacher);
-
-  function handleViewStudents(classCode) {
-    setSelectedClassCode(classCode);
-    setViewStudentsDialog(true);
-  }
 
   let content;
-  if(page === "account") {
-    content = (
-      <Profile />
-    )
+  if(page === "profile") {
+    content = ( <Profile /> );
   } else if(page === "support") {
-    content = (
-      <ContactSupport />
-    )
+    content = ( <ContactSupport /> );
   } else { //this conditional should never happen because our props are hardcoded...
     console.error("ERROR!!! 'page' prop in main.jsx passed into AccountPage is undefined");
     content = null;
@@ -42,7 +29,6 @@ export default function AccountPage({ page }) {
       <NavigationBar contentType="account" />
       
       <div className="contentContainerGrid">
-
         {/* see bottom of file for AccountHeader def */}
         <AccountHeader />
 
@@ -51,7 +37,6 @@ export default function AccountPage({ page }) {
         <div className="accountContent">
           {content}
         </div>
-
       </div>
 
       <Footer />

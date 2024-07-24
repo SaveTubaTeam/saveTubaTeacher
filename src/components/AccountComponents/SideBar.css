@@ -32,7 +32,7 @@
   font-weight: 600;
 }
 
-/* the active element gets a nice lil blue vertical line before its element. chatgpt'd this ngl */
+/* the active element gets a nice lil blue vertical line before its element */
 .sidebarSection.active::before {
   content: '';
   position: absolute;

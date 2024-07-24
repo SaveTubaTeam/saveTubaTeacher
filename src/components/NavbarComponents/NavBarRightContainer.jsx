@@ -97,7 +97,7 @@ export default function NavBarRightContainer() {
         </ListItemIcon>
         Classrooms
       </MenuItem> */}
-      
+
       <MenuItem 
         onClick={() => {
           setAnchorElement(null);

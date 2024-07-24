@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'account',
-        element: <AccountPage page="account" />,
+        element: <AccountPage page="profile" />,
       },
       {
         path: 'support',
