@@ -43,10 +43,12 @@ export default function ClassSelection() {
   }, [])
 
   function handleCreateClassClick() {
+    console.log("Create Class popup is visible!");
     setCreateClassModalVisible(true);
   }
 
   function handleCreateClassClose() {
+    console.log("Closed Create Class popup...");
     setCreateClassModalVisible(false);
   }
 

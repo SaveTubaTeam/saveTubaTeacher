@@ -77,12 +77,6 @@ const CreateClassPopup = ({ open, onClose }) => {
 
   async function getTeacher(email) {
     const teacherDoc = await db.collection('teachers').doc(email).get();
-
-    if(!teacherDoc.exists) { 
-       //edge case: user is authorized but teacher doc is non-existent. They most likely already have a 'users' account on the mobile app...
-       throw new Error(`Teacher doc does not exist`);
-    };
-
     const teacherData = teacherDoc.data();
     dispatch(populateTeacherSlice({ data: teacherData })); //dispatching to teacherSlice store
   }
