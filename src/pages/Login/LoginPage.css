@@ -156,3 +156,15 @@
   background: var(--dark-grey);
   left: 55.3%;
 }
+
+@media (max-width: 1250px) {
+  #changeLanguage::before {
+    right: 58%;
+    width: 110px;
+  }
+
+  #changeLanguage::after {
+    left: 58%;
+    width: 110px;
+  }
+}

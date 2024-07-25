@@ -37,11 +37,11 @@ export default function ClassSelection() {
 
     fetchAssignmentsCounts();
   }, [teacher]);
-
+/* 
   useEffect(() => {
     console.log("AUTH:", auth);
     if(!auth.currentUser) { navigate("/"); }
-  }, [])
+  }, []) */
 
   function handleCreateClassClick() {
     console.log("Create Class popup is visible!");
