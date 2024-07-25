@@ -5,7 +5,7 @@ import NavigationBar from '../../components/NavbarComponents/NavigationBar';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
 import ViewStudentsDialog from '../../components/AccountComponents/ViewStudentsDialog';
-import SideBar from '../../components/AccountComponents/SideBar';
+import SideBar from "./SideBar";
 import Footer from '../../components/Footer';
 import { FaUserCircle } from "react-icons/fa";
 import Profile from './Profile';
@@ -54,6 +54,7 @@ function AccountHeader() {
         src={teacher.photoURL} 
         alt="User Photo"  
         style={{ width: '80px', height: '80px', marginLeft: '80px', borderRadius: '50%', transform: 'scale(0.8)' }}
+        referrerPolicy="no-referrer" /* (not sure if this is working as intended) see: https://stackoverflow.com/questions/73052741/google-profile-picture-not-rendering ALSO SEE: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy */
       />
     )
   } else {
