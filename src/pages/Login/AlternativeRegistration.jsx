@@ -25,6 +25,8 @@ export default function AlternativeRegistration() {
 
       try {
          if(email.trim() === "") { throw new Error("Please enter a valid email"); }
+         if(firstName.trim() === "") { throw new Error("Please enter a first name"); }
+         if(lastName.trim() === "") { throw new Error("Please enter a last name"); }
 
          const checkEdgeCase = await db.collection('users').doc(email).get();
          if(checkEdgeCase.exists) { //edge case where the user already has a student account on mobile
@@ -57,6 +59,12 @@ export default function AlternativeRegistration() {
          } else if(error.message === "Please enter a valid email") {
             console.error(error);
             toast.update(popup, { render: `Please enter a valid email.`, type: "error", isLoading: false, autoClose: 1500 });
+         } else if(error.message === "Please enter a first name") {
+            console.error(error);
+            toast.update(popup, { render: `Please enter a first name`, type: "error", isLoading: false, autoClose: 1500 });
+         } else if(error.message === "Please enter a last name") {
+            console.error(error);
+            toast.update(popup, { render: `Please enter a last name`, type: "error", isLoading: false, autoClose: 1500 });
          }  else {
             console.error("ERROR in createTeacher:", error);
             toast.update(popup, { render: `An error occured. Please try again or contact support.`, type: "error", isLoading: false, autoClose: 1500 });

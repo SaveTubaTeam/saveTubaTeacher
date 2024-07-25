@@ -73,12 +73,19 @@ export default function LoginPage() {
     //re: https://firebase.google.com/docs/reference/js/v8/firebase.User
     const teacher = auth.currentUser; // currentUser should be defined here - else the auth error was caught in handleGooglePopupSignin()
 
+    let photoURL = "";
+    if(teacher.photoURL) { 
+      // See: https://support.google.com/mail/thread/11538455/how-can-i-view-someones-profile-picture-in-better-resolution?hl=en
+      const upscaledImage = teacher.photoURL.replace(/=s\d+-c$/, '=s200-c');
+      photoURL = upscaledImage;
+    }
+
     const name = parseDisplayName(teacher.displayName); //an array is returned. [0] is firstName, [1] is lastName
 
     const newTeacherData = {
       classes: [], //initialized as empty
       email: teacher.email,
-      photoURL: teacher.photoURL,
+      photoURL: photoURL,
       firstName: name[0],
       lastName: name[1],
     }

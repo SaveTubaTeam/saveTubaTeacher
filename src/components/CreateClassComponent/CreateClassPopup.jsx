@@ -1,116 +1,137 @@
 import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import { styled } from "@mui/system";
-import GradeSelect from "./GradeSelect";
-import Box from "@mui/material/Box";
-import { TextField, Typography } from "@mui/material";
-import SubmitClassButton from "./SubmitClassButton";
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import "./CreateClassPopup.css"
+import { fetchClassCodes, generateRandomCode } from "./classCreationFunctions";
+import { useSelector } from "react-redux";
+import { selectTeacher } from "../../../redux/teacherSlice";
 import { db } from "../../../firebase";
+import { toast } from 'react-toastify';
 
-async function fetchClassCodes() {
-  const classList = await db.collection("classrooms").get();
-  return classList.docs.map((doc) => doc.data().classCode);
-}
-
-function generateRandomCode(existingCodes) {
-  const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  const codeLength = 6;
-  let code = '';
-
-  while (code.length < codeLength) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    const randomChar = characters[randomIndex];
-
-    if (
-      code.length > 0 &&
-      ((code[code.length - 1] === 'I' && randomChar === 'L') ||
-        (code[code.length - 1] === 'L' && randomChar === 'I'))
-    ) {
-      continue; // Skip this character if I and L would be next to each other
-    }
-
-    code += randomChar;
-  }
-
-  if (existingCodes.includes(code)) {
-    return generateRandomCode(existingCodes);
-  }
-
-  return code;
-}
-
-const StyledDialogTitle = styled(DialogTitle)({
-  fontFamily: "Montserrat, sans-serif",
-  fontWeight: "bold",
-});
-
-const StyledDialogContent = styled(DialogContent)({
-  fontFamily: "Montserrat, sans-serif",
-  paddingBottom: '16px'
-});
-
-const StyledButton = styled(Button)({
-  fontFamily: "Montserrat, sans-serif",
-});
-
+//TODO: a successful class creation should trigger an automatic re-fetch of the data in our redux slices
+//      as now the data in our browser is out of sync with the newly posted class.
 const CreateClassPopup = ({ open, onClose }) => {
+  const teacher = useSelector(selectTeacher);
   const [className, setClassName] = useState('');
-  const [grade, setGrade] = useState('');
-  const [existingCodes, setExistingCodes] = useState([]);
+  const [gradeLevel, setGradeLevel] = useState('');
 
-  useEffect(() => {
-    fetchClassCodes().then(setExistingCodes);
-  }, []);
+  async function handleFormSubmission() {
+    const popup = toast.loading('Creating Account'); //initializing toast promise
 
-  const handleClassNameChange = (event) => {
-    setClassName(event.target.value);
-  };
+    try {
+      if(gradeLevel.trim() === "") {
+        toast.update(popup, { render: `Please enter a valid grade`, type: "error", isLoading: false, autoClose: 1500 });
+        return;
+      }
 
-  const handleGradeChange = (selectedGrade) => { 
-    setGrade(selectedGrade);
-  };
+      if(className.trim() === "") {
+        toast.update(popup, { render: `Please enter a class name`, type: "error", isLoading: false, autoClose: 1500 });
+        return;
+      }
+      //checking if teacher doc exists
+      const teacherRef = db.collection("teachers").doc(teacher.email);
+      const teacherSnapshot = await teacherRef.get();
+      if(!teacherSnapshot.exists) {
+        toast.update(popup, { render: `Error creating class. Please contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+        return;
+      }
+
+      const existingCodes = await fetchClassCodes();
+      const newRandomClassCode = generateRandomCode(existingCodes);
+      const newClassData = {
+        classCode: newRandomClassCode,
+        className: className,
+        gradeLevel: gradeLevel,
+      }
+
+      //updating the teacher's Firestore doc
+      const teacherData = teacherSnapshot.data(); //this teacherData is identical to the redux slice teacher. doesn't really matter
+      const classesArray = teacherData.classes;
+      const newClassesArray = [ ...classesArray, newClassData ]; //provided that classesArray is not null or undefined, this destructuring should be fine
+      //see here for .update: https://firebase.google.com/docs/firestore/manage-data/add-data#web_19
+      await teacherRef.update({ classes: newClassesArray }); //updating only the classes property in our Firestore document.
+
+      //quick hack to remove the classes array from this object reference only
+      delete teacherData.classes; //see here for delete keyword: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
+
+      //now adding the new class to our classrooms collection
+      await db.collection("classrooms").doc(newRandomClassCode).set({
+        ...newClassData, 
+        //with the delete keyword above, I am achieving the same thing as --> ```teachers: [{ every property (i.e. teacher.firstName) besides teacher.classes }]```
+        teachers: [{ ...teacherData }],
+      });
+      //success toast
+      toast.update(popup, { render: `${className} successfully created!`, type: "success", isLoading: false, autoClose: 1500 });
+
+    } catch(error) {
+      console.log("ERROR in handleFormSubmission:", error);
+      toast.update(popup, { render: `Error creating class. Please contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+    }
+  }
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <StyledDialogTitle>
-        <strong>Create a Class</strong>
-      </StyledDialogTitle>
-      <StyledDialogContent>
-        <Typography variant="h6" style={{ fontFamily: "Montserrat, sans-serif", marginBottom: '8px' }}>
-          Enter the Class Name
-        </Typography>
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { mb: 1, width: "25ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="standard-basic"
-            label="Class name"
-            variant="standard"
-            style={{ fontFamily: "Montserrat, sans-serif" }}
-            value={className}
-            onChange={handleClassNameChange}
+    <Dialog 
+      fullWidth={true} 
+      /* see: https://mui.com/material-ui/react-dialog/#optional-sizes */
+      maxWidth="xs"
+      open={open}
+      onClose={onClose}
+    >
+      <div className="createClassDialog">
+        <div className="createClassTitle">
+          <h1 style={{ color: 'var(--light)' }}>Create Class</h1>
+        </div>
+
+        <div className="createClassFormEntry">
+          <h4 style={{ marginTop: '1.7rem', marginBottom: '0.7rem' }}><i>Enter Class Name</i></h4>
+          <input 
+            style={{ margin: '0', padding: '1rem 1rem' }} 
+            placeholder="(e.g. Class A)" 
+            onChange={(event) => setClassName(event.target.value)}
           />
-        </Box>
-        <Typography variant="h6" style={{ fontFamily: "Montserrat, sans-serif", marginTop: '16px', marginBottom: '8px' }}>
-          Select the Grade
-        </Typography>
-        <GradeSelect handleChange={handleGradeChange} />
-      </StyledDialogContent>
-      <DialogActions>
-        <SubmitClassButton classCode={generateRandomCode(existingCodes)} className={className} gradeLevel={grade}/>
-        <StyledButton onClick={onClose} color="success">
-          Close
-        </StyledButton>
-      </DialogActions>
+          <p>This is the class name which will be displayed for all students.</p>
+
+          <h4 style={{ marginTop: '1.7rem', marginBottom: '0.7rem' }}><i>Select a Grade</i></h4>
+          {/* the Select MUI component must be wrapped with a FormControl and given an InputLabel to behave as expected */}
+          <FormControl fullWidth sx={{ margin: '0', width: '216px' }}>
+            <InputLabel id="select-grade" sx={{ fontFamily: 'Montserrat' }}>Grades</InputLabel>
+            {/* see: https://stackoverflow.com/questions/51387085/change-color-of-select-components-border-and-arrow-icon-material-ui */}
+            <Select
+              sx={{ 
+                '& .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--light)' },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--tertiary)' },
+                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--tertiary)' }
+              }}
+              labelId="select-grade"
+              id="select-grade-component"
+              value={gradeLevel}
+              label="Grades"
+              onChange={(event) => setGradeLevel(event.target.value)}
+            >
+              <MenuItem value="Grade2">Grade 2</MenuItem>
+              <MenuItem value="Grade3">Grade 3</MenuItem>
+              <MenuItem value="Grade4">Grade 4</MenuItem>
+              <MenuItem value="Grade5">Grade 5</MenuItem>
+            </Select>
+          </FormControl>
+          <p>The class grade does not limit the level of assignments. It is only for identification purposes.</p>
+        </div>
+
+        <div className="createClassFormSubmission">
+          <button 
+            style={{ padding: '0.7rem 1.5rem', color: 'var(--light)', background: 'var(--dark-grey)' }}
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+          <button 
+            style={{ padding: '0.7rem 1.5rem', color: 'var(--light)', background: 'var(--success)' }}
+            onClick={async() => await handleFormSubmission()}
+          >
+              Submit
+          </button>
+        </div>
+      </div>
     </Dialog>
   );
 };

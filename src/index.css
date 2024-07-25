@@ -21,11 +21,13 @@
   --black-light: #313131;
   --black-dark: #1A1A1A;
   --light: #F8F9F9;
+  --purple: #6B3654;
 
   /* these are based on the primary color */
-  --success: #386B36; 
-  --warning: #6B5A36;
-  --error: #6B3654;
+  --success: #5C9E59; 
+  --warning: #D7B879;
+  --error: #D88679;
+  
 
   /* global color scheme */
   color-scheme: light;
@@ -81,7 +83,8 @@ h4 {
 /* see: https://gist.githubusercontent.com/ryanflorence/ba20d473ef59e1965543fa013ae4163f/raw/499707f25a5690d490c7b3d54c65c65eb895930c/react-router-6.4-tutorial-css.css */
 textarea,
 input,
-button {
+button,
+select {
   font-size: 1.2rem;
   font-family: Montserrat;
   border: none;
@@ -104,7 +107,8 @@ button {
 
 textarea:hover,
 input:hover,
-button:hover {
+button:hover,
+select:hover {
   box-shadow: 0 0px 2px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }
 

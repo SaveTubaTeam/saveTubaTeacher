@@ -10,7 +10,7 @@ import { rememberReducer, rememberEnhancer } from 'redux-remember';
 //    Thus, unpersisted state leaves the authorized user with an unpopulated page.
 
 // Q: Is the Firebase Auth object persisted?
-// A: Yes. Firebase uses localStorage under the hood to persist the Auth object by default and with no config needed. 
+// A: Yes. Firebase uses session storage under the hood to persist the Auth object by default.
 //    Please see: https://firebase.google.com/docs/auth/web/auth-state-persistence --> "The default for web browser and React Native apps is local (provided the browser supports this storage mechanism, eg. 3rd party cookies/data are enabled) whereas it is none for Node.js backend apps."
 
 //redux-remember setup taken from here: https://github.com/zewish/redux-remember?tab=readme-ov-file#usage---web

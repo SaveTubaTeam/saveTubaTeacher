@@ -14,7 +14,7 @@ export default function Profile() {
       <input placeholder={`${teacher.lastName}`} disabled={true} />
       <p>Only your last name is displayed to students on the Save Tuba mobile app.</p>
 
-      <span style={{ fontWeight: '600', marginBottom: '0.4rem', marginTop: '1.7rem' }}>Email</span>
+      <span style={{ fontWeight: '600', marginBottom: '0.4rem', marginTop: '1.5rem' }}>Email</span>
       <input placeholder={teacher.email} disabled={true} />
       <p>This is the email by which the support team will contact you if you've recently submitted a help ticket.<br />
          Your email address is never shown to students or anyone else besides the support team.</p>
