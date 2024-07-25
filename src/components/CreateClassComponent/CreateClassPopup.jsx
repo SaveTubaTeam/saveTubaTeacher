@@ -5,13 +5,14 @@ import "./CreateClassPopup.css"
 import { fetchClassCodes, generateRandomCode } from "./classCreationFunctions";
 import { useSelector } from "react-redux";
 import { selectTeacher } from "../../../redux/teacherSlice";
+import { useDispatch } from "react-redux";
+import { populateTeacherSlice } from "../../../redux/teacherSlice";
 import { db } from "../../../firebase";
 import { toast } from 'react-toastify';
 
-//TODO: a successful class creation should trigger an automatic re-fetch of the data in our redux slices
-//      as now the data in our browser is out of sync with the newly posted class.
 const CreateClassPopup = ({ open, onClose }) => {
   const teacher = useSelector(selectTeacher);
+  const dispatch = useDispatch();
   const [className, setClassName] = useState('');
   const [gradeLevel, setGradeLevel] = useState('');
 
@@ -63,10 +64,27 @@ const CreateClassPopup = ({ open, onClose }) => {
       //success toast
       toast.update(popup, { render: `${className} successfully created!`, type: "success", isLoading: false, autoClose: 1500 });
 
+      onClose(); //calling onClose from props
+
+      //Final Step: a successful class creation must trigger an automatic re-fetch of the teacher data in our redux slice, as the data in our browser is now out of sync with the newly posted class. 
+      //            To fix this, we quietly run getTeacher asynchronously in the background after closing the popup.
+      await getTeacher(teacher.email); //referring to the email in our redux slice but it doesn't really matter - we could have also done teacherData.email
     } catch(error) {
       console.log("ERROR in handleFormSubmission:", error);
       toast.update(popup, { render: `Error creating class. Please contact support.`, type: "error", isLoading: false, autoClose: 1500 });
     }
+  }
+
+  async function getTeacher(email) {
+    const teacherDoc = await db.collection('teachers').doc(email).get();
+
+    if(!teacherDoc.exists) { 
+       //edge case: user is authorized but teacher doc is non-existent. They most likely already have a 'users' account on the mobile app...
+       throw new Error(`Teacher doc does not exist`);
+    };
+
+    const teacherData = teacherDoc.data();
+    dispatch(populateTeacherSlice({ data: teacherData })); //dispatching to teacherSlice store
   }
 
   return (
@@ -120,7 +138,11 @@ const CreateClassPopup = ({ open, onClose }) => {
         <div className="createClassFormSubmission">
           <button 
             style={{ padding: '0.7rem 1.5rem', color: 'var(--light)', background: 'var(--dark-grey)' }}
-            onClick={onClose}
+            onClick={() => {
+              onClose(); //calling onClose from props
+              setClassName(''); //resetting form for a clean next popup
+              setGradeLevel('');
+            }}
           >
             Cancel
           </button>

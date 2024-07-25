@@ -3,7 +3,7 @@ import './LoginPage.css';
 import { auth, provider, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signInTeacher } from '../../../redux/teacherSlice';
+import { populateTeacherSlice } from '../../../redux/teacherSlice';
 import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
 import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
@@ -21,6 +21,7 @@ export default function LoginPage() {
       //console.log("TEACHER JSON:", teacher);
 
       const email = teacher.email;
+       //we use a custom getTeacher function because some special logic needs to be run to check if this is a new user w/o an account. This logic only applies to Google auth signin.
       await getTeacher(email);
 
       console.log(`logged in with: ${email}`);
@@ -59,11 +60,11 @@ export default function LoginPage() {
 
     if(teacherDoc.exists) {
       const teacherData = teacherDoc.data();
-      dispatch(signInTeacher({ data: teacherData })); //dispatching to teacherSlice store
+      dispatch(populateTeacherSlice({ data: teacherData })); //dispatching to teacherSlice store
 
     } else { //teacherDoc does not exist
       const newTeacherData = await createNewTeacherAccount(); //this new account will NOT have any assignments
-      dispatch(signInTeacher({ data: newTeacherData })); //dispatching to teacherSlice store
+      dispatch(populateTeacherSlice({ data: newTeacherData })); //dispatching to teacherSlice store
 
       toast.success(`Account Created. Welcome, ${newTeacherData.email}!`);
     }
