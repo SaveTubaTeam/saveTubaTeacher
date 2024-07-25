@@ -1,4 +1,4 @@
-/* root applies globally, is overriden by the #root selector referenced in main.jsx */
+/* root applies globally, can be overriden by the #root selector in App.css */
 :root {
   font-family: Montserrat, sans-serif, Arial, system-ui;
   line-height: 1.15; /* line-height is basically spacing */

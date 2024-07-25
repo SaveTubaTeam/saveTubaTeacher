@@ -6,12 +6,11 @@ import { rememberReducer, rememberEnhancer } from 'redux-remember';
 
 // Q: What is persisted state? Why do we need it? 
 // A: Persisted state is state that is stored in the browser even after closing the tab, closing the browser, or refreshing.
-//    Without a persisted state library like redux-remember, the redux store will completely clear to initialState if any of the above actions are performed.
-//    Thus, unpersisted state leaves the authorized user with an unpopulated page.
+//    Without a persisted state library like redux-remember, the redux store will completely clear to initialState if any of the above actions are performed, leaving the user with an unpopulated page.
 
 // Q: Is the Firebase Auth object persisted?
-// A: Yes. Firebase uses session storage under the hood to persist the Auth object by default.
-//    Please see: https://firebase.google.com/docs/auth/web/auth-state-persistence --> "The default for web browser and React Native apps is local (provided the browser supports this storage mechanism, eg. 3rd party cookies/data are enabled) whereas it is none for Node.js backend apps."
+// A: Yes. Firebase uses session storage (might be wrong about this) under the hood to persist the Auth object by default.
+//    Please see: https://firebase.google.com/docs/auth/web/auth-state-persistence
 
 //redux-remember setup taken from here: https://github.com/zewish/redux-remember?tab=readme-ov-file#usage---web
 

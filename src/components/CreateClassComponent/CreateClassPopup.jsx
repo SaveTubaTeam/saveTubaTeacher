@@ -16,6 +16,7 @@ const CreateClassPopup = ({ open, onClose }) => {
   const [className, setClassName] = useState('');
   const [gradeLevel, setGradeLevel] = useState('');
 
+  //I decided to have this rather large function sit inside of this file because of convenient variable scope access
   async function handleFormSubmission() {
     const popup = toast.loading('Creating Account'); //initializing toast promise
 
@@ -65,6 +66,8 @@ const CreateClassPopup = ({ open, onClose }) => {
       toast.update(popup, { render: `${className} successfully created!`, type: "success", isLoading: false, autoClose: 1500 });
 
       onClose(); //calling onClose from props
+      setClassName(''); //resetting form for sanity
+      setGradeLevel('');
 
       //Final Step: a successful class creation must trigger an automatic re-fetch of the teacher data in our redux slice, as the data in our browser is now out of sync with the newly posted class. 
       //            To fix this, we quietly run getTeacher asynchronously in the background after closing the popup.
