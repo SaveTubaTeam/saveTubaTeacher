@@ -102,7 +102,7 @@
   width: 13%;
   height: 2px;
   margin: 0 5px;
-  margin-top: 13px;
+  margin-top: 14px;
   background: var(--dark-grey);
   right: 51.5%;
 }
@@ -113,9 +113,16 @@
   width: 13%;
   height: 2px;
   margin: 0 5px;
-  margin-top: 13px;
+  margin-top: 14px;
   background: var(--dark-grey);
   left: 51.5%;
+}
+
+#changeLanguage {
+  font-size: 1.05rem;
+  color: var(--dark-grey);
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 #forgotPassword {
@@ -126,4 +133,26 @@
 #forgotPassword:hover {
   color: var(--primary);
   cursor: pointer
+}
+
+#changeLanguage::before {
+  content: "";
+  position: absolute;
+  width: 135px;
+  height: 2px;
+  margin: 0 5px;
+  margin-top: 14px;
+  background: var(--dark-grey);
+  right: 55.3%;
+}
+
+#changeLanguage::after {
+  content: "";
+  position: absolute;
+  width: 135px;
+  height: 2px;
+  margin: 0 5px;
+  margin-top: 14px;
+  background: var(--dark-grey);
+  left: 55.3%;
 }

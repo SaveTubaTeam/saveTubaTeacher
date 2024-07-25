@@ -7,6 +7,7 @@ import { populateTeacherSlice } from '../../../redux/teacherSlice';
 import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
 import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
+import LanguageSelector from '../../components/LanguageSelector/LanguageSelector';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -106,7 +107,7 @@ export default function LoginPage() {
         
         <button 
           id="googleSignIn" 
-          style={{ marginTop: '7rem', width: '85%', alignSelf: 'center' }} 
+          style={{ marginTop: '5rem', width: '85%', alignSelf: 'center' }} 
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />
@@ -114,11 +115,15 @@ export default function LoginPage() {
         </button>
 
         <button 
-          style={{ marginBottom: '2rem', width: '85%', alignSelf: 'center' }} 
+          style={{ width: '85%', alignSelf: 'center', marginBottom: '15px' }} 
           onClick={() => navigate("/alt-login")}
         >
           Other
         </button>
+
+        <span className="smallText" id="changeLanguage">Change Language</span>
+        <LanguageSelector />
+
       </div>
     </div>
   );
