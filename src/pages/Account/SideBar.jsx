@@ -8,6 +8,7 @@ import { IoMdSettings } from "react-icons/io";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import "./SideBar.css";
+import { toast } from 'react-toastify';
 
 export default function SideBar() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function SideBar() {
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);
     } finally {
+      toast.success(`Logged out`);
       navigate('/login');
     }
   }

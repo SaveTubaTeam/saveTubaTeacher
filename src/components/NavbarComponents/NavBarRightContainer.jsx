@@ -14,6 +14,7 @@ import { MdOutlineHelpOutline } from "react-icons/md";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { useNavigate } from "react-router";
 import { Tooltip } from "@mui/material";
+import { toast } from 'react-toastify';
 
 export default function NavBarRightContainer() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export default function NavBarRightContainer() {
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);
     } finally {
+      toast.success(`Logged out`);
       navigate('/login');
     }
   }

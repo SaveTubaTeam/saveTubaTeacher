@@ -107,7 +107,7 @@ export default function LoginPage() {
         
         <button 
           id="googleSignIn" 
-          style={{ marginTop: '5rem', width: '85%', alignSelf: 'center' }} 
+          style={{ marginTop: '5.5rem', width: '85%', alignSelf: 'center' }} 
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />

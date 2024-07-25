@@ -11,6 +11,7 @@ import { ImPlus } from "react-icons/im";
 import { MdLogout } from "react-icons/md";
 import { Tooltip } from '@mui/material';
 import CreateClassPopup from '../../components/CreateClassComponent/CreateClassPopup';
+import { toast } from 'react-toastify';
 
 export default function ClassSelection() {
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ export default function ClassSelection() {
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);
     } finally {
+      toast.success(`Logged out`);
       navigate('/login');
     }
   }
