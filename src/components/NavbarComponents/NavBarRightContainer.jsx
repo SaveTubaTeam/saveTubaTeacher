@@ -131,7 +131,7 @@ export default function NavBarRightContainer() {
       <MenuItem 
         onClick={() => {
           setAnchorElement(null);
-          navigate("/support");
+          navigate("/contact-support");
         }}
         sx={{ fontFamily: 'Montserrat' }}
       >

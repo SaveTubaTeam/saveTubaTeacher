@@ -19,10 +19,10 @@ export default function Footer() {
             style={{ paddingRight: '1.2rem' }} 
             id="contactSupport" 
             onClick={() => {
-               navigate("/support");
+               navigate("/contact-support");
                //to scroll to the top of the contact support page.
                //see the answer provided by @Todd: https://stackoverflow.com/questions/33188994/scroll-to-the-top-of-the-page-after-render-in-react-js?page=2&tab=scoredesc#tab-top
-               document.getElementById('root').scrollIntoView({ behavior: "smooth" });
+               document.getElementById('root').scrollIntoView({ behavior: "instant" }); //see also: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
             }}
          >
             Contact Support

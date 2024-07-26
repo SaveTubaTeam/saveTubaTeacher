@@ -60,7 +60,7 @@ const router = createBrowserRouter([
             element: <AccountPage page="profile" />,
           },
           {
-            path: 'support',
+            path: 'contact-support',
             element: <AccountPage page="support" />
           },
         ]
