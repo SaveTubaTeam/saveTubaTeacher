@@ -2,7 +2,7 @@
 
 .classCodeDisplay {
    height: 600px;
-   background: var(--error);
+   background: var(--purple);
    position: relative;
    display: flex;
    flex-direction: column;

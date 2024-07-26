@@ -9,12 +9,12 @@ export default function NavigationBar({ contentType }) {
   const navigate = useNavigate();
   const classItem = useSelector(state => state.teacher.selectedClass);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if(classItem.classCode === undefined) {
       navigate("/class-selection");
       console.error("NO CLASSCODE AVAILABLE! pushing back to /class-selection");
     }
-  }, [classItem.classCode]);
+  }, [classItem.classCode]); */
 
   let content;
   if(contentType === "dashboard") {

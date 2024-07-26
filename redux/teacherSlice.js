@@ -10,10 +10,10 @@ const teacherSlice = createSlice({
    name: 'teacher',
    initialState: initialState,
    reducers: {
-      signInTeacher(state, action) {
+      populateTeacherSlice(state, action) {
          const { data } = action.payload;
          state.teacher = data;
-         console.log("dispatched signInTeacher | TEACHER:", data);
+         console.log("dispatched populateTeacherSlice | TEACHER:", data);
       },
       signOutTeacher(state, action) {
          console.log("signOutTeacher has successfully reset teacherSlice!")
@@ -27,7 +27,7 @@ const teacherSlice = createSlice({
    }
 });
 
-export const { signInTeacher, signOutTeacher, selectClass } = teacherSlice.actions;
+export const { populateTeacherSlice, signOutTeacher, selectClass } = teacherSlice.actions;
 export default teacherSlice.reducer //exports all reducers
 
 export const selectTeacher = state => state.teacher.teacher; //custom selector

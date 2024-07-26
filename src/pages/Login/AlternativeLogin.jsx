@@ -3,7 +3,7 @@ import './LoginPage.css';
 import { auth, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signInTeacher } from '../../../redux/teacherSlice';
+import { populateTeacherSlice } from '../../../redux/teacherSlice';
 import logoDarkText from '../../assets/logoDarkText.png'
 import { toast } from 'react-toastify';
 
@@ -63,7 +63,7 @@ export default function AlternativeLogin() {
       };
 
       const teacherData = teacherDoc.data();
-      dispatch(signInTeacher({ data: teacherData })); //dispatching to teacherSlice store
+      dispatch(populateTeacherSlice({ data: teacherData })); //dispatching to teacherSlice store
    }
 
    //see: https://firebase.google.com/docs/auth/web/manage-users#send_a_password_reset_email

@@ -11,11 +11,10 @@ export default function ErrorPage() {
   console.error(`ErrorPage.jsx ERROR: ${error.statusText || error.message}`);
   //console.trace(error); //stack trace
 
-  let content = null;
+  //default error message
+  let content = ["Sorry, an unexpected error has occurred.", "Please try again or contact support at savetuba2023@gmail.com."];
   if(error?.status === 404) {
-    content = ["404 Page Not Found", "The page you are looking for does not exist."]
-  } else {
-    content = ["Sorry, an unexpected error has occurred.", "Please try again or contact support at savetuba2023@gmail.com."]
+    content = ["404 Page Not Found", "The page you are looking for does not exist."];
   }
   
   return (

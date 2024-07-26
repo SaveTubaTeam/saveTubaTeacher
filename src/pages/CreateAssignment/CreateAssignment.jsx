@@ -8,6 +8,7 @@ import ClassSelect from './ClassSelect';
 import ChapterSelect from '../../components/DashboardComponents/DataTableComponents/ChapterSelect';
 import LessonSelect from '../../components/DashboardComponents/DataTableComponents/LessonSelect';
 import Footer from '../../components/Footer';
+import AssignmentPreview from './AssignmentPreview';
 
 const CreateAssignment = () => {
   const [grade, setGrade] = useState('');
@@ -17,6 +18,7 @@ const CreateAssignment = () => {
   const [numActivities, setNumActivities] = useState(0);
   const [email, setEmail] = useState('testteacher1@gmail.com');
   const [classCode, setClassCode] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
   const navigate = useNavigate();
 
   const handleClassChange = async (selectedClass) => {
@@ -160,8 +162,18 @@ const CreateAssignment = () => {
             onChange={handleDateDueChange}
           />
         </div>
+        <button type="button" onClick={() => setShowPreview(true)}>Preview</button>
         <button type="submit" className='sas' disabled={!isFormValid}>Create</button>
       </form>
+
+      {showPreview && (
+        <AssignmentPreview
+          grade={grade}
+          chapter={chapter}
+          lesson={lesson}
+          onClose={() => setShowPreview(false)}
+        />
+      )}
 
       <Footer />
     </div>

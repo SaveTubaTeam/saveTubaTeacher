@@ -11,6 +11,7 @@ import { ImPlus } from "react-icons/im";
 import { MdLogout } from "react-icons/md";
 import { Tooltip } from '@mui/material';
 import CreateClassPopup from '../../components/CreateClassComponent/CreateClassPopup';
+import { toast } from 'react-toastify';
 
 export default function ClassSelection() {
   const navigate = useNavigate();
@@ -36,17 +37,19 @@ export default function ClassSelection() {
 
     fetchAssignmentsCounts();
   }, [teacher]);
-
+/* 
   useEffect(() => {
     console.log("AUTH:", auth);
     if(!auth.currentUser) { navigate("/"); }
-  }, [])
+  }, []) */
 
   function handleCreateClassClick() {
+    console.log("Create Class popup is visible!");
     setCreateClassModalVisible(true);
   }
 
   function handleCreateClassClose() {
+    console.log("Closed Create Class popup...");
     setCreateClassModalVisible(false);
   }
 
@@ -68,6 +71,7 @@ export default function ClassSelection() {
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);
     } finally {
+      toast.success(`Logged out`);
       navigate('/login');
     }
   }
@@ -80,7 +84,7 @@ export default function ClassSelection() {
         <h4 style={{ paddingTop: '0.7rem' }}>2024-2025</h4>
         <div className="classesGrid">
           {/* see: https://stackoverflow.com/questions/49268267/dealing-with-an-empty-array-when-using-map-in-react */}
-          {teacher.classes.length && teacher.classes.map((classItem, index) => (
+          {teacher.classes && teacher.classes.length && teacher.classes.map((classItem, index) => (
             <ClassCard 
               key={index} 
               classItem={classItem}
