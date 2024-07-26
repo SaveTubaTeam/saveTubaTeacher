@@ -18,7 +18,12 @@ export default function Footer() {
          <span 
             style={{ paddingRight: '1.2rem' }} 
             id="contactSupport" 
-            onClick={() => navigate("/support")}
+            onClick={() => {
+               navigate("/support");
+               //to scroll to the top of the contact support page.
+               //see the answer provided by @Todd: https://stackoverflow.com/questions/33188994/scroll-to-the-top-of-the-page-after-render-in-react-js?page=2&tab=scoredesc#tab-top
+               document.getElementById('root').scrollIntoView({ behavior: "smooth" });
+            }}
          >
             Contact Support
          </span>

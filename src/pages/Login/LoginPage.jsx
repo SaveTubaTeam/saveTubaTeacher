@@ -3,10 +3,11 @@ import './LoginPage.css';
 import { auth, provider, db } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signInTeacher } from '../../../redux/teacherSlice';
+import { populateTeacherSlice } from '../../../redux/teacherSlice';
 import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
 import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
+import LanguageSelector from '../../components/LanguageSelector/LanguageSelector';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function LoginPage() {
       //console.log("TEACHER JSON:", teacher);
 
       const email = teacher.email;
+       //we use a custom getTeacher function because some special logic needs to be run to check if this is a new user w/o an account. This logic only applies to Google auth signin.
       await getTeacher(email);
 
       console.log(`logged in with: ${email}`);
@@ -59,11 +61,11 @@ export default function LoginPage() {
 
     if(teacherDoc.exists) {
       const teacherData = teacherDoc.data();
-      dispatch(signInTeacher({ data: teacherData })); //dispatching to teacherSlice store
+      dispatch(populateTeacherSlice({ data: teacherData })); //dispatching to teacherSlice store
 
     } else { //teacherDoc does not exist
       const newTeacherData = await createNewTeacherAccount(); //this new account will NOT have any assignments
-      dispatch(signInTeacher({ data: newTeacherData })); //dispatching to teacherSlice store
+      dispatch(populateTeacherSlice({ data: newTeacherData })); //dispatching to teacherSlice store
 
       toast.success(`Account Created. Welcome, ${newTeacherData.email}!`);
     }
@@ -73,12 +75,19 @@ export default function LoginPage() {
     //re: https://firebase.google.com/docs/reference/js/v8/firebase.User
     const teacher = auth.currentUser; // currentUser should be defined here - else the auth error was caught in handleGooglePopupSignin()
 
+    let photoURL = "";
+    if(teacher.photoURL) { 
+      // See: https://support.google.com/mail/thread/11538455/how-can-i-view-someones-profile-picture-in-better-resolution?hl=en
+      const upscaledImage = teacher.photoURL.replace(/=s\d+-c$/, '=s200-c');
+      photoURL = upscaledImage;
+    }
+
     const name = parseDisplayName(teacher.displayName); //an array is returned. [0] is firstName, [1] is lastName
 
     const newTeacherData = {
       classes: [], //initialized as empty
       email: teacher.email,
-      photoURL: teacher.photoURL,
+      photoURL: photoURL,
       firstName: name[0],
       lastName: name[1],
     }
@@ -98,7 +107,7 @@ export default function LoginPage() {
         
         <button 
           id="googleSignIn" 
-          style={{ marginTop: '7rem', width: '85%', alignSelf: 'center' }} 
+          style={{ marginTop: '5.5rem', width: '85%', alignSelf: 'center' }} 
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />
@@ -106,11 +115,15 @@ export default function LoginPage() {
         </button>
 
         <button 
-          style={{ marginBottom: '2rem', width: '85%', alignSelf: 'center' }} 
+          style={{ width: '85%', alignSelf: 'center', marginBottom: '15px' }} 
           onClick={() => navigate("/alt-login")}
         >
           Other
         </button>
+
+        <span className="smallText" id="changeLanguage">Change Language</span>
+        <LanguageSelector />
+
       </div>
     </div>
   );

@@ -12,9 +12,11 @@ import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/Login/LoginPage';
 import AlternativeLogin from './pages/Login/AlternativeLogin';
 import AlternativeRegistration from './pages/Login/AlternativeRegistration';
+import ProtectedRoutes from './pages/ProtectedRoutes';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
 import ClassSelection from './pages/ClassSelection/ClassSelection';
+import "../translations/i18n";
 
 const router = createBrowserRouter([
   {
@@ -25,22 +27,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <LoginPage />,
-      },
-      {
-        path: 'dashboard/:classCode',
-        element: <Dashboard />,
-      },
-      {
-        path: 'account',
-        element: <AccountPage page="profile" />,
-      },
-      {
-        path: 'support',
-        element: <AccountPage page="support" />
-      },
-      {
-        path: 'create-assignment/:classCode',
-        element: <CreateAssignment />,
       },
       {
         path: 'login',
@@ -55,8 +41,29 @@ const router = createBrowserRouter([
         element: <AlternativeRegistration />
       },
       {
-        path: 'class-selection',
-        element: <ClassSelection />,
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            path: 'class-selection',
+            element: <ClassSelection />,
+          },
+          {
+            path: 'dashboard/:classCode',
+            element: <Dashboard />,
+          },
+          {
+            path: 'create-assignment/:classCode',
+            element: <CreateAssignment />,
+          },
+          {
+            path: 'account',
+            element: <AccountPage page="profile" />,
+          },
+          {
+            path: 'support',
+            element: <AccountPage page="support" />
+          },
+        ]
       }
     ]
   }
