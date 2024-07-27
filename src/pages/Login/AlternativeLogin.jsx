@@ -6,8 +6,10 @@ import { useDispatch } from 'react-redux';
 import { populateTeacherSlice } from '../../../redux/teacherSlice';
 import logoDarkText from '../../assets/logoDarkText.png'
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export default function AlternativeLogin() {
+   const { t } = useTranslation();
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const [email, setEmail] = useState('');
@@ -16,39 +18,39 @@ export default function AlternativeLogin() {
    async function handleEmailPasswordSignin() {
       try {
 
-        if(email.trim() === "") { throw new Error("Please enter a valid email"); }
-        //console.log(`Email: ${email}, Password: ${password}`);
-        //please see: https://firebase.google.com/docs/auth/web/password-auth#web_3
-        const result = await auth.signInWithEmailAndPassword(email, password);
-        const user = result.user;
-        console.log(user);
+         if(email.trim() === "") { throw new Error("Please enter a valid email"); }
+         //console.log(`Email: ${email}, Password: ${password}`);
+         //please see: https://firebase.google.com/docs/auth/web/password-auth#web_3
+         const result = await auth.signInWithEmailAndPassword(email, password);
+         const user = result.user;
+         console.log(user);
 
-        await getTeacher(email);
+         await getTeacher(email);
 
-        console.log(`logged in with: ${email}`)
-        navigate("/class-selection");
+         console.log(`logged in with: ${email}`)
+         navigate("/class-selection");
 
       } catch(error) {
 
          if(error.code) {
             console.error(`ERROR WITH EMAIL/PASSWORD SIGNIN | Error Code: ${error.code} | ${error.message}`);
             if(error.code === "auth/wrong-password") {
-               toast.error(`Incorrect Password`);
+               toast.error(t("error:incorrectPassword"));
             } else {
-               toast.error(`Invalid Login`);
+               toast.error(t("error:invalidLogin"));
             }
 
          } else if(error.message == `Teacher doc does not exist`) {
             console.error(error);
-            toast.error(`Please Create a Teacher Account to Continue`);
+            toast.error(t("error:pleaseCreateTeacherAccount"));
 
          } else if(error.message == `Please enter a valid email`) {
             console.error(error);
-            toast.error(`Please enter a valid email`);
+            toast.error(t("error:enterValidEmail"));
 
          }  else {
             console.error("ERROR in handleEmailPasswordSignin:", error);
-            toast.error(`An error occured. Please try again or contact support.`);
+            toast.error(t("error:errorOccured"));
          }
 
       }
@@ -69,22 +71,22 @@ export default function AlternativeLogin() {
    //see: https://firebase.google.com/docs/auth/web/manage-users#send_a_password_reset_email
    async function sendPasswordReset() {
       try {
-         const notifyReset = toast.loading(`Sending Password Reset Email...`);
+         const notifyReset = toast.loading(t("loading:sendingPasswordReset"));
          if(await teacherExists() === false) { //guard clause
             console.error(`Teacher ${email} does not exist`);
             throw new Error(`Teacher DNE`);
          }
 
          await auth.sendPasswordResetEmail(email);
-         toast.update(notifyReset, { render: `Reset password email sent to ${email}`, type: "success", isLoading: false, autoClose: 1500 });
+         toast.update(notifyReset, { render: `${t("success:resetPasswordEmailSent")} ${email}`, type: "success", isLoading: false, autoClose: 1500 });
 
       } catch(error) {
          console.error("ERROR in sendPasswordReset:", error);
 
          if(error.message === `Teacher DNE`) {
-            toast.update(notifyReset, { render: `Teacher ${email} does not exist`, type: "error", isLoading: false, autoClose: 1500 });
+            toast.update(notifyReset, { render: `${t("common:teacher")} ${email} ${t("error:doesNotExist")}`, type: "error", isLoading: false, autoClose: 1500 });
          } else {
-            toast.update(notifyReset, { render: `Invalid Email`, type: "error", isLoading: false, autoClose: 1500 });
+            toast.update(notifyReset, { render: `${t("error:enterValidEmail")}`, type: "error", isLoading: false, autoClose: 1500 });
          }
 
       }
@@ -100,47 +102,51 @@ export default function AlternativeLogin() {
          console.error(email, "not found within 'teachers' collection");
          return false;
       }
-  }
+   }
 
-  return (
+   return (
       <div className='background'>
       <img src={logoDarkText} alt="Logo Dark" id="logoDark" />
 
       <div style={{ padding: '3.5rem' }}></div>
 
          <div className="loginContainer">
-            <h1>Teacher Login</h1>
+            <h1>{t("common:teacherLogin")}</h1>
             
             <input 
-               placeholder='Email' 
+               placeholder={t("common:email")} 
                type='email' 
                style={{ marginTop: '2rem' }}
                onChange={(event) => setEmail(event.target.value)}
                />
             <input 
-               placeholder='Password' 
+               placeholder={t("common:password")} 
                type='password' 
                onChange={(event) => setPassword(event.target.value)}
             />
 
             <button className="altSignIn" onClick={handleEmailPasswordSignin}>
-               Sign in
+               {t("common:signIn")}
             </button>
 
-            <a className="smallText" id="forgotPassword" onClick={sendPasswordReset}>Forgot Password</a>
+            <a className="smallText" id="forgotPassword" onClick={sendPasswordReset}>
+               {t("common:forgotPassword")}
+            </a>
 
-            <span className="smallText" id="or">Or</span>
+            <span className="smallText" id="or">
+               {t("common:or")}
+            </span>
 
             <button 
                className="altSignIn" 
                style={{ width: '65%', margin: 0 }} 
                onClick={() => navigate("/alt-registration")}
             >
-               Create an Account
+               {t("common:createAccount")}
             </button>
 
             <button className="altSignIn" style={{ marginTop: '3rem' }} onClick={() => navigate("/")}>
-               Return
+               {t("common:return")}
             </button>
          </div>
       </div>

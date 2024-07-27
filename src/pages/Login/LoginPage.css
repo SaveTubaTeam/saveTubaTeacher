@@ -27,6 +27,7 @@
 }
 
 /* sorry for writing media queries - couldn't get relative positioning to work for this logo :( */
+/* horizontal and vertical position of logo on very large screens is wack */
 @media (min-width: 1500px) {
   #logoDark {
     right: 25%

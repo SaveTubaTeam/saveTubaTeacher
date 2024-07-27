@@ -9,8 +9,10 @@ import { useDispatch } from "react-redux";
 import { populateTeacherSlice } from "../../../redux/teacherSlice";
 import { db } from "../../../firebase";
 import { toast } from 'react-toastify';
+import { useTranslation } from "react-i18next";
 
 const CreateClassPopup = ({ open, onClose }) => {
+  const { t } = useTranslation();
   const teacher = useSelector(selectTeacher);
   const dispatch = useDispatch();
   const [className, setClassName] = useState('');
@@ -18,23 +20,23 @@ const CreateClassPopup = ({ open, onClose }) => {
 
   //I decided to have this rather large function sit inside of this file because of convenient variable scope access
   async function handleFormSubmission() {
-    const popup = toast.loading('Creating Account'); //initializing toast promise
+    const popup = toast.loading(t("loading:creatingClass")); //initializing toast promise
 
     try {
       if(gradeLevel.trim() === "") {
-        toast.update(popup, { render: `Please enter a valid grade`, type: "error", isLoading: false, autoClose: 1500 });
+        toast.update(popup, { render: `${t("error:enterValidGrade")}`, type: "error", isLoading: false, autoClose: 1500 });
         return;
       }
 
       if(className.trim() === "") {
-        toast.update(popup, { render: `Please enter a class name`, type: "error", isLoading: false, autoClose: 1500 });
+        toast.update(popup, { render: `${t("error:enterClassName")}`, type: "error", isLoading: false, autoClose: 1500 });
         return;
       }
       //checking if teacher doc exists
       const teacherRef = db.collection("teachers").doc(teacher.email);
       const teacherSnapshot = await teacherRef.get();
       if(!teacherSnapshot.exists) {
-        toast.update(popup, { render: `Error creating class. Please contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+        toast.update(popup, { render: `${t("error:errorCreatingClass")}`, type: "error", isLoading: false, autoClose: 1500 });
         return;
       }
 
@@ -62,19 +64,20 @@ const CreateClassPopup = ({ open, onClose }) => {
         //with the delete keyword above, I am achieving the same thing as --> ```teachers: [{ every property (i.e. teacher.firstName) besides teacher.classes }]```
         teachers: [{ ...teacherData }],
       });
+
+      //Final Step: a successful class creation must trigger an automatic re-fetch of the teacher data in our redux slice, as the data in our browser is now out of sync with the newly posted class. 
+      //            To fix this, we run getTeacher once more right before closing the popup.
+      await getTeacher(teacher.email); //referring to the email in our redux slice but it doesn't really matter - we could have also done teacherData.email
+
       //success toast
-      toast.update(popup, { render: `${className} successfully created!`, type: "success", isLoading: false, autoClose: 1500 });
+      toast.update(popup, { render: `${className} ${t("success:successfullyCreated")}!`, type: "success", isLoading: false, autoClose: 1500 });
 
       onClose(); //calling onClose from props
       setClassName(''); //resetting form for sanity
       setGradeLevel('');
-
-      //Final Step: a successful class creation must trigger an automatic re-fetch of the teacher data in our redux slice, as the data in our browser is now out of sync with the newly posted class. 
-      //            To fix this, we quietly run getTeacher asynchronously in the background after closing the popup.
-      await getTeacher(teacher.email); //referring to the email in our redux slice but it doesn't really matter - we could have also done teacherData.email
     } catch(error) {
       console.log("ERROR in handleFormSubmission:", error);
-      toast.update(popup, { render: `Error creating class. Please contact support.`, type: "error", isLoading: false, autoClose: 1500 });
+      toast.update(popup, { render: `${t("error:errorCreatingClass")}`, type: "error", isLoading: false, autoClose: 1500 });
     }
   }
 
@@ -94,22 +97,30 @@ const CreateClassPopup = ({ open, onClose }) => {
     >
       <div className="createClassDialog">
         <div className="createClassTitle">
-          <h1 style={{ color: 'var(--light)' }}>Create Class</h1>
+          <h1 style={{ color: 'var(--light)' }}>
+            {t("common:createClass")}
+          </h1>
         </div>
 
         <div className="createClassFormEntry">
-          <h4 style={{ marginTop: '1.7rem', marginBottom: '0.7rem' }}><i>Enter Class Name</i></h4>
+          <h4 style={{ marginTop: '1.7rem', marginBottom: '0.7rem' }}>
+            <i>{t("common:enterClassName")}</i>
+          </h4>
           <input 
             style={{ margin: '0', padding: '1rem 1rem' }} 
             placeholder="(e.g. Class A)" 
             onChange={(event) => setClassName(event.target.value)}
           />
-          <p>This is the class name which will be displayed for all students.</p>
+          <p>{t("common:classNameDisplayText")}</p>
 
-          <h4 style={{ marginTop: '1.7rem', marginBottom: '0.7rem' }}><i>Select a Grade</i></h4>
+          <h4 style={{ marginTop: '1.7rem', marginBottom: '0.7rem' }}>
+            <i>{t("common:selectAGrade")}</i>
+          </h4>
           {/* the Select MUI component must be wrapped with a FormControl and given an InputLabel to behave as expected */}
           <FormControl fullWidth sx={{ margin: '0', width: '216px' }}>
-            <InputLabel id="select-grade" sx={{ fontFamily: 'Montserrat' }}>Grades</InputLabel>
+            <InputLabel id="select-grade" sx={{ fontFamily: 'Montserrat' }}>
+              {t("common:grades")}
+            </InputLabel>
             {/* see: https://stackoverflow.com/questions/51387085/change-color-of-select-components-border-and-arrow-icon-material-ui */}
             <Select
               sx={{ 
@@ -120,16 +131,16 @@ const CreateClassPopup = ({ open, onClose }) => {
               labelId="select-grade"
               id="select-grade-component"
               value={gradeLevel}
-              label="Grades"
+              label={t("common:grades")}
               onChange={(event) => setGradeLevel(event.target.value)}
             >
-              <MenuItem value="Grade2">Grade 2</MenuItem>
-              <MenuItem value="Grade3">Grade 3</MenuItem>
-              <MenuItem value="Grade4">Grade 4</MenuItem>
-              <MenuItem value="Grade5">Grade 5</MenuItem>
+              <MenuItem value="Grade2">{`${t("common:grade")} 2`}</MenuItem>
+              <MenuItem value="Grade3">{`${t("common:grade")} 3`}</MenuItem>
+              <MenuItem value="Grade4">{`${t("common:grade")} 4`}</MenuItem>
+              <MenuItem value="Grade5">{`${t("common:grade")} 5`}</MenuItem>
             </Select>
           </FormControl>
-          <p>The class grade does not limit the level of assignments. It is only for identification purposes.</p>
+          <p>{t("common:gradeLevelDisplayText")}</p>
         </div>
 
         <div className="createClassFormSubmission">
@@ -141,13 +152,13 @@ const CreateClassPopup = ({ open, onClose }) => {
               setGradeLevel('');
             }}
           >
-            Cancel
+            {t("common:cancel")}
           </button>
           <button 
             style={{ padding: '0.7rem 1.5rem', color: 'var(--light)', background: 'var(--success)' }}
             onClick={async() => await handleFormSubmission()}
           >
-              Submit
+            {t("common:submit")}
           </button>
         </div>
       </div>

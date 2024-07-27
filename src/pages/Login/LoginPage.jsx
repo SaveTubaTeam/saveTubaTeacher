@@ -8,8 +8,10 @@ import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
 import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
 import LanguageSelector from '../../components/LanguageSelector/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,20 +36,20 @@ export default function LoginPage() {
       if(error.code) { //firebase errors have a .code property
         console.error(`ERROR WITH GOOGLE SIGNIN | Error Code: ${error.code} | ${error.message}`);
         if(error.code === "auth/email-already-in-use") {
-          toast.error(`Email already in use.`);
+          toast.error(t("error:emailAlreadyInUse"));
         } else if(error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
-          toast.error(`Google popup was blocked. Please allow popups.`);
+          toast.error(t("error:googlePopupBlocked"));
         } else if(error.code === "auth/network-request-failed") {
-          toast.error("Network Request Failed. Please try again or contact support.")
+          toast.error(t("error:networkRequestFailed"));
         } else if(error.code === "auth/popup-closed-by-user") {
           return; //do nothing here
         } else { //catch others
-          toast.error(`Invalid Login. Please try again.`);
+          toast.error(t("error:invalidLogin"));
         }
 
       } else { //not a firebase auth error
         console.error("ERROR in handleGooglePopupSignin:", error);
-        toast.error(`An error occured. Please try again or contact support.`);
+        toast.error(t("error:errorOccured"));
       }
 
     }
@@ -67,7 +69,7 @@ export default function LoginPage() {
       const newTeacherData = await createNewTeacherAccount(); //this new account will NOT have any assignments
       dispatch(populateTeacherSlice({ data: newTeacherData })); //dispatching to teacherSlice store
 
-      toast.success(`Account Created. Welcome, ${newTeacherData.email}!`);
+      toast.success(`${t("success:accountCreated")}, ${newTeacherData.email}!`);
     }
   }
 
@@ -103,7 +105,7 @@ export default function LoginPage() {
 
     <div style={{ padding: '2rem' }}></div>
       <div className="loginContainer" style={{ height: 420 }}>
-        <h1>Teacher Login</h1>
+        <h1>{t("common:teacherLogin")}</h1>
         
         <button 
           id="googleSignIn" 
@@ -111,17 +113,17 @@ export default function LoginPage() {
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />
-          <span>Log in with Google</span>
+          <span>{t("common:logInWithGoogle")}</span>
         </button>
 
         <button 
           style={{ width: '85%', alignSelf: 'center', marginBottom: '15px' }} 
           onClick={() => navigate("/alt-login")}
         >
-          Other
+          {t("common:otherLogin")}
         </button>
 
-        <span className="smallText" id="changeLanguage">Change Language</span>
+        <span className="smallText" id="changeLanguage">{t("common:changeLanguage")}</span>
         <LanguageSelector />
 
       </div>

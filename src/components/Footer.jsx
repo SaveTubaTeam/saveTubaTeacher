@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+   const { t } = useTranslation();
    const navigate = useNavigate();
 
    // .mainFooter styling can be found in App.css
@@ -14,7 +16,7 @@ export default function Footer() {
          >
             © 2024 Save Tuba
          </a>
-        
+
          <span 
             style={{ paddingRight: '1.2rem' }} 
             id="contactSupport" 
@@ -25,7 +27,7 @@ export default function Footer() {
                document.getElementById('root').scrollIntoView({ behavior: "instant" }); //see also: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
             }}
          >
-            Contact Support
+            {t("common:contactSupport")}
          </span>
       </div>
    );

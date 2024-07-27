@@ -9,20 +9,22 @@ import { MdOutlineHelpOutline } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import "./SideBar.css";
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export default function SideBar() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function handleLogout() {
     try {
       console.log("LOGGING OUT USER");
-      await auth.signOut();
       dispatch(signOutTeacher()); //clearing redux store teacherSlice
+      await auth.signOut();
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);
     } finally {
-      toast.success(`Logged out`);
+      toast.success(t("success:loggedOut"));
       navigate('/login');
     }
   }
@@ -36,7 +38,7 @@ export default function SideBar() {
           id="sidebarDivider"
         >
           <PiUserSquareFill style={{ margin: '0 0.6rem' }} size="25px" color="var(--black-dark)"/>
-          <span>Account</span>
+          <span>{t("common:account")}</span>
         </NavLink>
       </nav>
 
@@ -53,17 +55,17 @@ export default function SideBar() {
 
       <nav>
         <NavLink 
-          to={`/support`}
+          to={`/contact-support`}
           className={({ isActive }) => isActive ? "sidebarSection active" : "sidebarSection"}
         >
           <MdOutlineHelpOutline style={{ margin: '0 0.8rem' }} size="20px" color="var(--black-dark)"/>
-          <span>Help</span>
+          <span>{t("common:help")}</span>
         </NavLink>
       </nav>
 
       <div className="sidebarSection" onClick={handleLogout}>
           <MdLogout style={{ margin: '0 0.8rem' }} size="20px" color="var(--black-dark)"/>
-          <span>Log Out</span>
+          <span>{t("common:logOut")}</span>
       </div>
     </div>
   )

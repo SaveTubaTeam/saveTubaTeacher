@@ -4,8 +4,10 @@ import logoWhiteText from "../../assets/logoWhiteText.png";
 import "./NavigationBar.css"
 import NavBarRightContainer from "./NavBarRightContainer";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export default function NavigationBar({ contentType }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const classItem = useSelector(state => state.teacher.selectedClass);
 
@@ -26,7 +28,7 @@ export default function NavigationBar({ contentType }) {
           className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
           id="navBarDashboard"
         >
-          {`Dashboard - ${classItem.className}`}
+          {`${t("common:dashboard")} - ${classItem.className}`}
         </NavLink>
       </nav>
 
@@ -36,7 +38,7 @@ export default function NavigationBar({ contentType }) {
           className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
           id="navBarCreateAssignment"
         >
-          Create Assignment
+          {t("common:createAssignment")}
         </NavLink>
       </nav>
       </>
@@ -49,7 +51,7 @@ export default function NavigationBar({ contentType }) {
           className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
           id="navBarClassrooms"
         >
-          Back to Classrooms
+          {t("common:backToClassrooms")}
         </NavLink>
       </nav>
     );
