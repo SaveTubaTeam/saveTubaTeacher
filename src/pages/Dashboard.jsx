@@ -7,7 +7,7 @@ import LessonSelect from "../components/DashboardComponents/DataTableComponents/
 import ActivitySelect from "../components/DashboardComponents/DataTableComponents/ActivitySelect";
 import "./Dashboard.css";
 import DateSlider from "../components/DateSlider";
-//import CompletionTimeLine from "../components/DashboardComponents/Charts/CompletionTimeLine";
+import CompletionTimeLine from "../components/DashboardComponents/Charts/CompletionTimeLine";
 import ActivityCompletionBar from "../components/DashboardComponents/Charts/ActivityCompletionBar";
 import AssignmentCompletionPieChart from "../components/DashboardComponents/Charts/AssignmentCompletionPieChart";
 import TimeButtonGroup from "../components/TimeButtonGroup";
@@ -65,13 +65,22 @@ function Dashboard() {
           classCode={urlClassCode}
           assignmentID={assignmentID}
         />
-        <button style={{width: 80, height: 35}}onClick={handleResetAssignment}>Reset</button>
+        <button
+          style={{ width: 80, height: 35 }}
+          onClick={handleResetAssignment}
+        >
+          Reset
+        </button>
       </div>
 
       <div className="dashboardGrid">
         <div className="childOne">
-{/*           <CompletionTimeLine />
- */}        </div>
+          <CompletionTimeLine
+            email={email}
+            classCode={urlClassCode}
+            assignmentID={assignmentID}
+          />
+        </div>
         <div className="childTwo">
           <AssignmentCompletionPieChart
             email={email}

@@ -122,20 +122,29 @@ export default function StudentDataGrid({ email, classCode }) {
           }
           return {
             ...student,
-            completionsCount: totalCompletions + "/" + totalNumAssignments + ", " + Math.round((totalCompletions / totalNumAssignments) * 100) + "%",
-            dateCompleted: completionsData.map((completion) => {
-              if(!completion.completionID){
-                console.log("No completion ID");
-              }
-              let name = completion.completionID;
-              let completionName = name.split("_")[0];
-              if (!assignmentID || completionName === assignmentID) {
-                return {
-                  ...completion,
-                };
-              }
-              return null;
-            }).filter(Boolean),
+            completionsCount:
+              totalCompletions +
+              "/" +
+              totalNumAssignments +
+              ", " +
+              Math.round((totalCompletions / totalNumAssignments) * 100) +
+              "%",
+            dateCompleted: completionsData
+              .map((completion) => {
+                if (!completion.completionID) {
+                  console.log("No completion ID");
+                  return null; // Skip this entry if completionID is missing
+                }
+                const name = completion.completionID;
+                const completionName = name.split("_")[0];
+                if (!assignmentID || completionName === assignmentID) {
+                  return {
+                    ...completion,
+                  };
+                }
+                return null;
+              })
+              .filter(Boolean), // Remove null entries
           };
         })
       );
