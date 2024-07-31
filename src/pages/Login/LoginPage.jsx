@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './LoginPage.css';
-import { auth, provider, db } from '../../../firebase';
+import { auth, provider, db, firebase } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { populateTeacherSlice } from '../../../redux/teacherSlice';
@@ -11,13 +11,16 @@ import LanguageSelector from '../../components/LanguageSelector/LanguageSelector
 import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //TODO: localize OAuth flow: https://firebase.google.com/docs/auth/web/google-signin#web_5
+  //seems like it doesn't work? https://stackoverflow.com/questions/59735207/how-to-make-the-popup-show-up-in-different-languages-when-i-use-the-custom-sign
   async function handleGooglePopupSignin() {
     try {
+      auth.languageCode = i18n.language;
+      //console.log("Google OAuth popup localized to:", i18n.language);
       //please see: https://firebase.google.com/docs/auth/web/google-signin
       const result = await auth.signInWithPopup(provider);
       const teacher = result.user;
@@ -103,13 +106,13 @@ export default function LoginPage() {
     <div className='background'>
     <img src={logoDarkText} alt="Logo Dark" id="logoDark" />
 
-    <div style={{ padding: '2rem' }}></div>
-      <div className="loginContainer" style={{ height: 420 }}>
+    <div style={{ padding: '3.5rem' }}></div>
+      <div className="loginContainer">
         <h1>{t("common:teacherLogin")}</h1>
         
         <button 
           id="googleSignIn" 
-          style={{ marginTop: '5.5rem', width: '85%', alignSelf: 'center' }} 
+          style={{ marginTop: '7rem', width: '85%', alignSelf: 'center' }} 
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />
@@ -117,7 +120,7 @@ export default function LoginPage() {
         </button>
 
         <button 
-          style={{ width: '85%', alignSelf: 'center', marginBottom: '15px' }} 
+          style={{ width: '85%', alignSelf: 'center', marginBottom: '30px' }} 
           onClick={() => navigate("/alt-login")}
         >
           {t("common:otherLogin")}
