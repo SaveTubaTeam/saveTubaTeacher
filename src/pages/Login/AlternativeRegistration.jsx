@@ -14,6 +14,11 @@ export default function AlternativeRegistration() {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
 
+   useEffect(() => {
+      toast.info(`${t("common:havegoogle")} ${t("common:backtogooglelogin")}`, 
+      { onClick: () => navigate("/") });
+   }, []);
+
    //createUserWithEmailAndPassword: https://firebase.google.com/docs/auth/web/password-auth
    //auth error codes: https://firebase.google.com/docs/reference/js/auth#autherrorcodes
   //if we successfully register, we add the teacher (and initial teacher metadata) to Firestore

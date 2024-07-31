@@ -45,6 +45,8 @@ const en = {
     displayEmailTextTwo: "Your email address is never shown to students or anyone else besides the support team.",
     settings: "Settings",
     currentLanguage: "Current Language",
+    havegoogle: "Have a Google Account?",
+    backtogooglelogin: "No need to register! Head back to the Google login page.",
   },
   error: {
     emailAlreadyInUse: "Email already in use.",

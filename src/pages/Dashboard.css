@@ -13,11 +13,11 @@
 /* @jac927 07/20/24 | I would HIGHLY recommend you check out the below link to learn about css grid: */
 /* Josh Comeau's dev blog: https://www.joshwcomeau.com/css/interactive-guide-to-grid/ */
 .dashboardGrid {
-   height: 800px;
+   height: 1000px;
    width: 100%;
    display: grid;
    grid-template-columns: repeat(6, 1fr);
-   grid-template-rows: 1fr 1fr;
+   grid-template-rows: 400px 600px;
    /* border: 1px solid black; */
    background: var(--light);
 }
