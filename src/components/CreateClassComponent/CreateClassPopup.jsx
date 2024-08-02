@@ -108,7 +108,7 @@ const CreateClassPopup = ({ open, onClose }) => {
           </h4>
           <input 
             style={{ margin: '0', padding: '1rem 1rem' }} 
-            placeholder="(e.g. Class A)" 
+            placeholder={t("common:exemplaGratia")}
             onChange={(event) => setClassName(event.target.value)}
           />
           <p>{t("common:classNameDisplayText")}</p>
