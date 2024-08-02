@@ -8,11 +8,13 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import MemoryMinigameModal from './MemoryMinigameModal';
 import SortingMinigameModal from './SortingMinigameModal';
+import QuizMinigameModal from './QuizMinigameModal'; // Import QuizMinigameModal
 
 const AssignmentPreview = ({ grade, chapter, lesson, onClose }) => {
   const [minigames, setMinigames] = useState([]);
   const [selectedMemoryMinigame, setSelectedMemoryMinigame] = useState(null);
   const [selectedSortingMinigame, setSelectedSortingMinigame] = useState(null);
+  const [selectedQuizMinigame, setSelectedQuizMinigame] = useState(null); // New state for quiz
 
   useEffect(() => {
     const fetchMinigames = async () => {
@@ -67,16 +69,7 @@ const AssignmentPreview = ({ grade, chapter, lesson, onClose }) => {
               <Typography variant="body1">
                 {minigame.prompt}
               </Typography>
-              {minigame.navigation === 'Quiz' && minigame.content && minigame.content.map((question, index) => (
-                <Box key={index} sx={{ marginTop: '1rem' }}>
-                  <Typography variant="body1" component="p">{question.prompt}</Typography>
-                  {question.answers && question.answers.map((answer, idx) => (
-                    <Typography key={idx} variant="body2" component="p">
-                      {answer}
-                    </Typography>
-                  ))}
-                </Box>
-              ))}
+              {console.log(minigame.navigation)} {/* Debugging Line */}
               {minigame.navigation === 'Memory' && (
                 <Button
                   variant="contained"
@@ -97,6 +90,16 @@ const AssignmentPreview = ({ grade, chapter, lesson, onClose }) => {
                   View
                 </Button>
               )}
+              {minigame.navigation === 'Quiz' && (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ marginTop: '1rem' }}
+                  onClick={() => setSelectedQuizMinigame(minigame)} // New button for quiz
+                >
+                  View
+                </Button>
+              )}
             </CardContent>
           </Card>
         ))}
@@ -113,6 +116,13 @@ const AssignmentPreview = ({ grade, chapter, lesson, onClose }) => {
           open={Boolean(selectedSortingMinigame)}
           onClose={() => setSelectedSortingMinigame(null)}
           minigame={selectedSortingMinigame}
+        />
+      )}
+      {selectedQuizMinigame && (
+        <QuizMinigameModal
+          open={Boolean(selectedQuizMinigame)}
+          onClose={() => setSelectedQuizMinigame(null)}
+          minigame={selectedQuizMinigame}
         />
       )}
     </Box>
