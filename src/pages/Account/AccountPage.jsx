@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import "./AccountPage.css"
-import NavigationBar from '../../components/NavbarComponents/NavigationBar';
+import NavigationBar from '../../global-components/NavbarComponents/NavigationBar';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
-import ViewStudentsDialog from '../../components/AccountComponents/ViewStudentsDialog';
+import ViewStudentsDialog from '../../global-components/AccountComponents/ViewStudentsDialog';
 import SideBar from "./SideBar";
-import Footer from '../../components/Footer';
+import Footer from '../../global-components/Footer';
 import { FaUserCircle } from "react-icons/fa";
 import Profile from './Profile';
 import ContactSupport from './ContactSupport';

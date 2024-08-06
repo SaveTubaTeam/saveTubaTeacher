@@ -27,26 +27,26 @@
 
 /* for the main graph */
 .childOne {
-   border: 1px solid black;
+   /* border: 1px solid black; */
    grid-row: 1 / 2;
    grid-column: 1 / 5;
 }
 
 /*  */
 .childTwo {
-   border: 1px solid black;
+   /* border: 1px solid black; */
    grid-row: 1 / 2;
    grid-column: 5 / 7;
 }
 
 .childThree {
-   border: 1px solid black;
+   /* border: 1px solid black; */
    grid-row: 2 / 3;
    grid-column: 1 / 4;
 }
 
 .childFour {
-   border: 1px solid black;
+   /* border: 1px solid black; */
    grid-row: 2 / 3;
    grid-column: 4 / 7;
 }

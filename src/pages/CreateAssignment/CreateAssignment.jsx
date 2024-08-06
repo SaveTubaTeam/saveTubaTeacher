@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../../../firebase';
 import './CreateAssignmentCSS.css';
 import '../../App.css';
-import NavigationBar from '../../components/NavbarComponents/NavigationBar';
+import NavigationBar from '../../global-components/NavbarComponents/NavigationBar';
 import ClassSelect from './ClassSelect';
-import ChapterSelect from '../../components/DashboardComponents/DataTableComponents/ChapterSelect';
-import LessonSelect from '../../components/DashboardComponents/DataTableComponents/LessonSelect';
-import Footer from '../../components/Footer';
+import ChapterSelect from '../../global-components/DashboardComponents/DataTableComponents/ChapterSelect';
+import LessonSelect from '../../global-components/DashboardComponents/DataTableComponents/LessonSelect';
+import Footer from '../../global-components/Footer';
 import AssignmentPreview from './AssignmentPreview';
 
 const CreateAssignment = () => {

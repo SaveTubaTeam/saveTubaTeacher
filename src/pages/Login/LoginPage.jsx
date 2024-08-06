@@ -7,7 +7,7 @@ import { populateTeacherSlice } from '../../../redux/teacherSlice';
 import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
 import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
-import LanguageSelector from '../../components/LanguageSelector/LanguageSelector';
+import LanguageSelector from '../../global-components/LanguageSelector/LanguageSelector';
 import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {

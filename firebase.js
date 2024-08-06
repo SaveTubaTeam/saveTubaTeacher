@@ -28,4 +28,27 @@ const auth = firebase.auth();
 const storage = firebase.storage().ref(); //.ref() is a reference to the root of our bucket
 const provider = new firebase.auth.GoogleAuthProvider();
 
-export { db, auth, storage, provider, firebase };
+//manually setting the authUser in localStorage for later use in ProtectedRoutes.jsx
+async function setAuthPersistence() {
+  try {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); //this line doesn't seem to work...
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        localStorage.setItem('authUser', JSON.stringify(user)); //User is signed in, saving user data to local storage
+      } else {
+        localStorage.removeItem('authUser');
+      }
+    });
+  } catch (error) {
+    console.error("Error setting persistence:", error);
+  }
+}
+setAuthPersistence();
+
+//defining a function to retrieve the persisted user data from local storage if it exists
+function getPersistedAuthUser() {
+  const authUser = localStorage.getItem('authUser');
+  return authUser ? JSON.parse(authUser) : null;
+}
+
+export { db, auth, storage, provider, firebase, getPersistedAuthUser };

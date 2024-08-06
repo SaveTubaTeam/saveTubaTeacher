@@ -121,13 +121,10 @@ async function getAssignmentsData(email, classCode) {
   console.log(`\n\tgetAssignmentsData() called. Now in ${email} Assignments\n\t\tEMAIL:`, email);
   let assignmentsList = [];
   try {
-    
-    const snapshot = await db
-      .collection("teachers").doc(email).collection(`Assignments_${classCode}`).get();
+    const snapshot = await db.collection("teachers").doc(email).collection(`Assignments_${classCode}`).get();
 
     snapshot.forEach((doc) => {
       assignmentsList.push(doc.data());
-      
     });
   } catch (error) {
     console.log("Error in getAssignmentsData():", error);
@@ -304,6 +301,7 @@ async function getCompletedPerAssignment(assignment, classCode) {
   return studentCompletions;
 }
 
+//no longer used
 async function getClassroomStudents(classCode) {
   let students = [];
   try{

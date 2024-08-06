@@ -9,14 +9,14 @@ import { useTranslation } from "react-i18next";
 export default function NavigationBar({ contentType }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const classItem = useSelector(state => state.teacher.selectedClass);
+  const classObject = useSelector(state => state.currentClass.selectedClass);
 
   /* useEffect(() => {
-    if(classItem.classCode === undefined) {
+    if(classObject.classCode === undefined) {
       navigate("/class-selection");
       console.error("NO CLASSCODE AVAILABLE! pushing back to /class-selection");
     }
-  }, [classItem.classCode]); */
+  }, [classObject.classCode]); */
 
   let content;
   if(contentType === "dashboard") {
@@ -24,17 +24,17 @@ export default function NavigationBar({ contentType }) {
       <>
       <nav>
         <NavLink 
-          to={`/dashboard/${classItem.classCode}`} 
+          to={`/dashboard/${classObject.classCode}`} 
           className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
           id="navBarDashboard"
         >
-          {`${t("common:dashboard")} - ${classItem.className}`}
+          {`${t("common:dashboard")} - ${classObject.className}`}
         </NavLink>
       </nav>
 
       <nav>
         <NavLink 
-          to={`/create-assignment/${classItem.classCode}`}
+          to={`/create-assignment/${classObject.classCode}`}
           className={({ isActive }) => isActive ? "navBarTab active" : "navBarTab"}
           id="navBarCreateAssignment"
         >

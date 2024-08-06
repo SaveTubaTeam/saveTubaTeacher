@@ -4,10 +4,10 @@ import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import "./CreateClassPopup.css"
 import { fetchClassCodes, generateRandomCode } from "./classCreationFunctions";
 import { useSelector } from "react-redux";
-import { selectTeacher } from "../../../redux/teacherSlice";
+import { selectTeacher } from "../../../../redux/teacherSlice";
 import { useDispatch } from "react-redux";
-import { populateTeacherSlice } from "../../../redux/teacherSlice";
-import { db } from "../../../firebase";
+import { populateTeacherSlice } from "../../../../redux/teacherSlice";
+import { db } from "../../../../firebase";
 import { toast } from 'react-toastify';
 import { useTranslation } from "react-i18next";
 
@@ -134,10 +134,10 @@ const CreateClassPopup = ({ open, onClose }) => {
               label={t("common:grades")}
               onChange={(event) => setGradeLevel(event.target.value)}
             >
-              <MenuItem value="Grade2">{`${t("common:grade")} 2`}</MenuItem>
-              <MenuItem value="Grade3">{`${t("common:grade")} 3`}</MenuItem>
-              <MenuItem value="Grade4">{`${t("common:grade")} 4`}</MenuItem>
-              <MenuItem value="Grade5">{`${t("common:grade")} 5`}</MenuItem>
+              <MenuItem value="Grade2" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:grade")} 2`}</MenuItem>
+              <MenuItem value="Grade3" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:grade")} 3`}</MenuItem>
+              <MenuItem value="Grade4" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:grade")} 4`}</MenuItem>
+              <MenuItem value="Grade5" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:grade")} 5`}</MenuItem>
             </Select>
           </FormControl>
           <p>{t("common:gradeLevelDisplayText")}</p>

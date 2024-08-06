@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import teacherSlice from "./teacherSlice";
+import currentClassSlice from "./currentClassSlice";
 import { rememberReducer, rememberEnhancer } from 'redux-remember';
 
 // @jac927 07/20/24 | We are using redux-remember because the more popular alternative package to persisted state (redux-persist) is no longer maintained.
@@ -9,18 +10,18 @@ import { rememberReducer, rememberEnhancer } from 'redux-remember';
 //    Without a persisted state library like redux-remember, the redux store will completely clear to initialState if any of the above actions are performed, leaving the user with an unpopulated page.
 
 // Q: Is the Firebase Auth object persisted?
-// A: Yes. Firebase uses session storage (might be wrong about this) under the hood to persist the Auth object by default.
-//    Please see: https://firebase.google.com/docs/auth/web/auth-state-persistence
+// A: Yes. We manually persist the Auth object in firebase.js via localStorage.
 
 //redux-remember setup taken from here: https://github.com/zewish/redux-remember?tab=readme-ov-file#usage---web
 
 //see: https://redux.js.org/api/combinereducers
 const reducers = combineReducers({
    teacher: teacherSlice,
+   currentClass: currentClassSlice,
 });
 
-const rememberedKeys = ['teacher']; // specify slices to remember by their key
-const rememberedReducer = rememberReducer(reducers);
+const rememberedKeys = ['teacher', 'currentClass']; //NOTE: specify slices here to remember by their key!!!
+const rememberedReducer = rememberReducer(reducers); //boilerplate
 
 //for configureStore see: https://redux-toolkit.js.org/tutorials/quick-start
 export const store = configureStore({

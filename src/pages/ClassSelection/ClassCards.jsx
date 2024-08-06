@@ -5,10 +5,10 @@ import DisplayClassCodeModal from './DisplayClassCodeModal';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
 import { useDispatch } from 'react-redux';
-import { selectClass } from '../../../redux/teacherSlice';
+import { selectClass } from '../../../redux/currentClassSlice';
 import { useTranslation } from 'react-i18next';
 
-function ClassCard({ classItem, assignmentsCount }) {
+function ClassCard({ classObject, assignmentsCount }) {
   const { t } = useTranslation();
   const teacher = useSelector(selectTeacher);
   const navigate = useNavigate();
@@ -24,22 +24,22 @@ function ClassCard({ classItem, assignmentsCount }) {
   }
 
   //regex to match the numbers and letters in the grade string
-  const splicedGrade = classItem.gradeLevel.match(/[a-zA-Z]+|[0-9]+/g);
+  const splicedGrade = classObject.gradeLevel.match(/[a-zA-Z]+|[0-9]+/g);
   //console.log(splicedGrade); // e.g. ["Grade", "5"]
  
-  function handleClassCardClick(classItem) {
-    dispatch(selectClass({ selectedClass: classItem }));
-    navigate(`/dashboard/${classItem.classCode}`);
+  function handleClassCardClick(classObject) {
+    dispatch(selectClass({ selectedClass: classObject }));
+    navigate(`/dashboard/${classObject.classCode}`);
   }
  
   return (
     <div className="classCard">
-      <div className="cardTop" onClick={() => handleClassCardClick(classItem)}>
+      <div className="cardTop" onClick={() => handleClassCardClick(classObject)}>
         <span>
-          {classItem.className}
+          {classObject.className}
         </span>
         <span style={{ fontWeight: 500, color: 'var(--dark-grey)', paddingTop: '0.3rem' }}>
-          {classItem.classCode} - {t("common:grade")} {splicedGrade[1]}
+          {classObject.classCode} - {t("common:grade")} {splicedGrade[1]}
         </span>
         <span style={{ fontWeight: 500, color: 'var(--dark-grey)', paddingTop: '0.3rem' }}>
           {teacher.lastName}
@@ -56,7 +56,7 @@ function ClassCard({ classItem, assignmentsCount }) {
       <DisplayClassCodeModal 
         displayCodeVisible={displayCodeVisible}
         setDisplayCodeVisible={setDisplayCodeVisible}
-        classItem={classItem}
+        classObject={classObject}
       />
     </div>
   );

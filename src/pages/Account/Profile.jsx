@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./AccountPage.css"
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
-import LanguageSelector from '../../components/LanguageSelector/LanguageSelector';
+import LanguageSelector from '../../global-components/LanguageSelector/LanguageSelector';
 import { useTranslation } from 'react-i18next';
 
 export default function Profile() {

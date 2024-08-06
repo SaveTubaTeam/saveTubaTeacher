@@ -10,7 +10,7 @@ import { ClassCard } from './ClassCards';
 import { ImPlus } from "react-icons/im";
 import { MdLogout } from "react-icons/md";
 import { Tooltip } from '@mui/material';
-import CreateClassPopup from '../../components/CreateClassComponent/CreateClassPopup';
+import CreateClassPopup from './CreateClassComponent/CreateClassPopup';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
@@ -28,10 +28,10 @@ export default function ClassSelection() {
 
       // Fetch assignments count for each class
       const assignmentsCounts = {};
-      for (const classItem of teacher.classes) {
-        console.log(`\tClass ${classItem.classCode}: ${JSON.stringify(classItem, null, 2)}`);
-        const count = await getAssignmentsCount(teacher.email, classItem.classCode);
-        assignmentsCounts[classItem.classCode] = count;
+      for (const classObject of teacher.classes) {
+        console.log(`\tClass ${classObject.classCode}: ${JSON.stringify(classObject, null, 2)}`);
+        const count = await getAssignmentsCount(teacher.email, classObject.classCode);
+        assignmentsCounts[classObject.classCode] = count;
       }
 
       setAssignmentsCounts(assignmentsCounts);
@@ -90,11 +90,11 @@ export default function ClassSelection() {
         </h4>
         <div className="classesGrid">
           {/* see: https://stackoverflow.com/questions/49268267/dealing-with-an-empty-array-when-using-map-in-react */}
-          {teacher.classes && teacher.classes.length && teacher.classes.map((classItem, index) => (
+          {teacher.classes && teacher.classes.length && teacher.classes.map((classObject, index) => (
             <ClassCard 
               key={index} 
-              classItem={classItem}
-              assignmentsCount={assignmentsCounts[classItem.classCode] || null}
+              classObject={classObject}
+              assignmentsCount={assignmentsCounts[classObject.classCode] || null}
             />
           ))}
           <CreateAClass />
