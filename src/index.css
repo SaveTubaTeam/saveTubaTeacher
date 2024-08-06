@@ -12,6 +12,7 @@
 
   /* CSS HEX THEME - see: https://color.adobe.com/create/color-wheel */
   --grey: #EBEDF0;
+  --med-grey: #d4d5d8;
   --dark-grey: #4E4E4E;
   --accent: #cde6f7;
   --primary: #364b6c;
@@ -55,7 +56,7 @@ a {
 
 h1 {
   font-family: Montserrat;
-  font-size: 3.4rem;
+  font-size: 3rem;
   font-weight: 600;
   margin: 0;
   line-height: 1.2;

@@ -5,7 +5,7 @@ import { RiCloseFill } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
 
-function DisplayClassCodeModal({ displayCodeVisible, setDisplayCodeVisible, classItem }) {
+function DisplayClassCodeModal({ displayCodeVisible, setDisplayCodeVisible, classObject }) {
    const teacher = useSelector(selectTeacher);
 
    return (
@@ -17,9 +17,9 @@ function DisplayClassCodeModal({ displayCodeVisible, setDisplayCodeVisible, clas
          onClose={() => setDisplayCodeVisible(false)}
       > 
          <div className='classCodeDisplay'>
-            <h1 >{classItem.classCode}</h1>
+            <h1 >{classObject.classCode}</h1>
             <div className='textUnderClassCode'>
-               <span>{teacher.lastName} - {classItem.className}</span>
+               <span>{teacher.lastName} - {classObject.className}</span>
             </div>
 
             <div id='exitIcon' onClick={() => setDisplayCodeVisible(false)}>

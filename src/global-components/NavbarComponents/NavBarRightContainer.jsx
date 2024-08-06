@@ -15,8 +15,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { useNavigate } from "react-router";
 import { Tooltip } from "@mui/material";
 import { toast } from 'react-toastify';
+import { useTranslation } from "react-i18next";
 
 export default function NavBarRightContainer() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,12 +29,12 @@ export default function NavBarRightContainer() {
   async function handleLogout() {
     try {
       console.log("LOGGING OUT USER");
-      await auth.signOut();
       dispatch(signOutTeacher()); //clearing redux store teacherSlice
+      await auth.signOut();
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);
     } finally {
-      toast.success(`Logged out`);
+      toast.success(t("success:loggedOut"));
       navigate('/login');
     }
   }
@@ -41,7 +43,7 @@ export default function NavBarRightContainer() {
     <>
     <div className="navBarRightContainer">
 
-      <Tooltip title="Back to Classrooms" placement="bottom-end" arrow={true}>
+      <Tooltip title={t("common:backToClassrooms")} placement="bottom-end" arrow={true}>
         <div style={{ width: '100%', height: '100%' }} onClick={() => navigate("/class-selection")}>
         <ImBooks size="45px" color="var(--grey)" />
         </div>
@@ -110,7 +112,7 @@ export default function NavBarRightContainer() {
         <ListItemIcon>
           <PiUserSquareFill size="20px" color="var(--black-light)" />
         </ListItemIcon>
-        Account
+        {t("common:account")}
       </MenuItem>
 
       <Divider />
@@ -138,7 +140,7 @@ export default function NavBarRightContainer() {
         <ListItemIcon>
           <MdOutlineHelpOutline size="20px" color="var(--black-light)" />
         </ListItemIcon>
-        Help
+        {t("common:help")}
       </MenuItem>
 
       <MenuItem 
@@ -151,7 +153,7 @@ export default function NavBarRightContainer() {
         <ListItemIcon>
           <MdLogout size="20px" color="var(--black-light)" />
         </ListItemIcon>
-        Log Out
+        {t("common:logOut")}
       </MenuItem>
 
     </Menu>

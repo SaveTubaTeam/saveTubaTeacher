@@ -9,8 +9,8 @@ import { initReactI18next } from 'react-i18next';
 
 //Cases: 
 //1) on first app load, localStorage will retrieve null key so we revert to default kk
-//2) If a language is selected by the user, we set the cache w/ the selected language code. If a language is not selected by the user, we set the cache w/ default.
-//3) On subsequent app loads, there will exist a cache with the key 'user-language'. We retrieve the cached language code.
+//2) If a language is selected by the user, we set localStorage w/ the selected language code.
+//3) On subsequent app loads, there will exist a localStorage with the key 'user-language'. We retrieve the cached language code.
 const LANGUAGE_DETECTOR = {
   type: 'languageDetector',
   async: true,

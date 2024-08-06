@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react';
 import './LoginPage.css';
-import { auth, provider, db } from '../../../firebase';
+import { auth, provider, db, firebase } from '../../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { populateTeacherSlice } from '../../../redux/teacherSlice';
 import googleLogoButton from '../../assets/googleLogoButton.png';
 import logoDarkText from '../../assets/logoDarkText.png';
 import { toast } from 'react-toastify'; //see: https://fkhadra.github.io/react-toastify/api/toast
-import LanguageSelector from '../../components/LanguageSelector/LanguageSelector';
+import LanguageSelector from '../../global-components/LanguageSelector/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
+  const { i18n, t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //TODO: localize OAuth flow: https://firebase.google.com/docs/auth/web/google-signin#web_5
+  //seems like it doesn't work? https://stackoverflow.com/questions/59735207/how-to-make-the-popup-show-up-in-different-languages-when-i-use-the-custom-sign
   async function handleGooglePopupSignin() {
     try {
+      auth.languageCode = i18n.language;
+      //console.log("Google OAuth popup localized to:", i18n.language);
       //please see: https://firebase.google.com/docs/auth/web/google-signin
       const result = await auth.signInWithPopup(provider);
       const teacher = result.user;
@@ -34,20 +39,20 @@ export default function LoginPage() {
       if(error.code) { //firebase errors have a .code property
         console.error(`ERROR WITH GOOGLE SIGNIN | Error Code: ${error.code} | ${error.message}`);
         if(error.code === "auth/email-already-in-use") {
-          toast.error(`Email already in use.`);
+          toast.error(t("error:emailAlreadyInUse"));
         } else if(error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
-          toast.error(`Google popup was blocked. Please allow popups.`);
+          toast.error(t("error:googlePopupBlocked"));
         } else if(error.code === "auth/network-request-failed") {
-          toast.error("Network Request Failed. Please try again or contact support.")
+          toast.error(t("error:networkRequestFailed"));
         } else if(error.code === "auth/popup-closed-by-user") {
           return; //do nothing here
         } else { //catch others
-          toast.error(`Invalid Login. Please try again.`);
+          toast.error(t("error:invalidLogin"));
         }
 
       } else { //not a firebase auth error
         console.error("ERROR in handleGooglePopupSignin:", error);
-        toast.error(`An error occured. Please try again or contact support.`);
+        toast.error(t("error:errorOccured"));
       }
 
     }
@@ -67,7 +72,7 @@ export default function LoginPage() {
       const newTeacherData = await createNewTeacherAccount(); //this new account will NOT have any assignments
       dispatch(populateTeacherSlice({ data: newTeacherData })); //dispatching to teacherSlice store
 
-      toast.success(`Account Created. Welcome, ${newTeacherData.email}!`);
+      toast.success(`${t("success:accountCreated")}, ${newTeacherData.email}!`);
     }
   }
 
@@ -101,27 +106,27 @@ export default function LoginPage() {
     <div className='background'>
     <img src={logoDarkText} alt="Logo Dark" id="logoDark" />
 
-    <div style={{ padding: '2rem' }}></div>
-      <div className="loginContainer" style={{ height: 420 }}>
-        <h1>Teacher Login</h1>
+    <div style={{ padding: '3.5rem' }}></div>
+      <div className="loginContainer">
+        <h1>{t("common:teacherLogin")}</h1>
         
         <button 
           id="googleSignIn" 
-          style={{ marginTop: '5.5rem', width: '85%', alignSelf: 'center' }} 
+          style={{ marginTop: '7rem', width: '85%', alignSelf: 'center' }} 
           onClick={handleGooglePopupSignin}
         >
           <img src={googleLogoButton} alt="Google Logo" />
-          <span>Log in with Google</span>
+          <span>{t("common:logInWithGoogle")}</span>
         </button>
 
         <button 
-          style={{ width: '85%', alignSelf: 'center', marginBottom: '15px' }} 
+          style={{ width: '85%', alignSelf: 'center', marginBottom: '30px' }} 
           onClick={() => navigate("/alt-login")}
         >
-          Other
+          {t("common:otherLogin")}
         </button>
 
-        <span className="smallText" id="changeLanguage">Change Language</span>
+        <span className="smallText" id="changeLanguage">{t("common:changeLanguage")}</span>
         <LanguageSelector />
 
       </div>

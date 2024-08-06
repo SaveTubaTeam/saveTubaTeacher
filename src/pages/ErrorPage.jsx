@@ -3,8 +3,10 @@ import { useRouteError } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../pages/Login/LoginPage.css";
 import logoDarkText from "../assets/logoDarkText.png";
+import { useTranslation } from "react-i18next";
 
 export default function ErrorPage() {
+  const { t } = useTranslation();
   const error = useRouteError();
   const navigate = useNavigate();
 
@@ -12,9 +14,9 @@ export default function ErrorPage() {
   //console.trace(error); //stack trace
 
   //default error message
-  let content = ["Sorry, an unexpected error has occurred.", "Please try again or contact support at savetuba2023@gmail.com."];
+  let content = [t("error:pageRouterError"), t("error:pleaseTryAgain")];
   if(error?.status === 404) {
-    content = ["404 Page Not Found", "The page you are looking for does not exist."];
+    content = [t("error:pageNotFound"), t("error:pageDoesNotExist")];
   }
   
   return (
@@ -22,7 +24,7 @@ export default function ErrorPage() {
     <img src={logoDarkText} alt="Logo Dark" id="logoDark" />
 
       <h1 style={{ fontSize: '6rem', paddingTop: '3.2rem' }}>
-        Oops!
+        {t("error:oops")}
       </h1>
       <h3 style={{ marginTop: '1.8rem', marginBottom: '1.3rem' }}>
         {content[0]}
@@ -35,7 +37,7 @@ export default function ErrorPage() {
         style={{ fontSize: '0.9rem', padding: '0.5rem 2rem', marginTop: '0.4rem' }}
         onClick={() => navigate("/class-selection")}
       >
-        Back to Classrooms
+        {t("common:backToClassrooms")}
       </button>
     </div>
   );

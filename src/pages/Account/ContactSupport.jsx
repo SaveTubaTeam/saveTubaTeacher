@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 
 export default function ContactSupport() {
   const { t } = useTranslation();
+  const { t } = useTranslation();
   return (
     <>
       <div>

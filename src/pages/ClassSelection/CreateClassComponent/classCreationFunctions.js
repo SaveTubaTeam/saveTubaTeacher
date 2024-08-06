@@ -1,4 +1,4 @@
-import { db } from "../../../firebase";
+import { db } from "../../../../firebase";
 
 async function fetchClassCodes() {
   const classList = await db.collection("classrooms").get();

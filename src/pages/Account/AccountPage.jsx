@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import "./AccountPage.css"
-import NavigationBar from '../../components/NavbarComponents/NavigationBar';
+import NavigationBar from '../../global-components/NavbarComponents/NavigationBar';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
-import ViewStudentsDialog from '../../components/AccountComponents/ViewStudentsDialog';
+import ViewStudentsDialog from '../../global-components/AccountComponents/ViewStudentsDialog';
 import SideBar from "./SideBar";
-import Footer from '../../components/Footer';
+import Footer from '../../global-components/Footer';
 import { FaUserCircle } from "react-icons/fa";
 import Profile from './Profile';
 import ContactSupport from './ContactSupport';
+import { useTranslation } from 'react-i18next';
 
 //The purpose of this page is to display the teacher's profile and the classes they are teaching
 export default function AccountPage({ page }) {
@@ -45,6 +46,7 @@ export default function AccountPage({ page }) {
 };
 
 function AccountHeader() {
+  const { t } = useTranslation();
   const teacher = useSelector(selectTeacher);
 
   let userCircle;
@@ -70,8 +72,12 @@ function AccountHeader() {
       {userCircle}
 
       <div className="profileContainer">
-        <span style={{ fontSize: '1.5rem' }}><strong>{`${teacher.firstName} ${teacher.lastName}`}</strong></span>
-        <span style={{ fontSize: '1rem', marginTop: '0.2rem' }}>Your personal account</span>
+        <span style={{ fontSize: '1.5rem' }}>
+          <strong>{`${teacher.firstName} ${teacher.lastName}`}</strong>
+        </span>
+        <span style={{ fontSize: '1rem', marginTop: '0.2rem' }}>
+          {t("common:yourPersonalAccount")}
+        </span>
       </div>
       
     </div>
