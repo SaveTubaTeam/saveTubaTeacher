@@ -18,7 +18,7 @@ export default function ContactSupport() {
           )}
         </h3>
       </div>
-      <Grid container spacing={2} className="montserrat-font">
+      <Grid container spacing={2}>
         <Grid item xs={5}>
           <TextField
             
@@ -48,11 +48,11 @@ export default function ContactSupport() {
         </Grid>
         <Grid item xs={5}>
           <TextField
-            
             id="phonenumber-field"
             label="Phone Number"
             variant="outlined"
             sx={{ }}
+            
           />
         </Grid>
         <Grid item xs={10}>
