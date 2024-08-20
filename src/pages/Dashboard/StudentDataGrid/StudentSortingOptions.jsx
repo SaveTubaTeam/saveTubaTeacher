@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import { sortByLastName, sortByFirstName } from "./sortingFunctions";
+import { sortByLastName, sortByFirstName } from "./studentSortingFunctions";
 
 export default function StudentSortingOptions({ sortedStudentsArray, setSortedStudentsArray }) {
   const [sortingParam, setSortingParam] = useState("lastName"); //default sorting by Last Name

@@ -1,7 +1,7 @@
 import React from "react";
 import { CircularProgress } from "@mui/material";
 
-//see: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient
+//boilerplate spinner taken from https://mui.com/material-ui/react-progress/#customization
 export default function Spinner() {
   return (
     <>

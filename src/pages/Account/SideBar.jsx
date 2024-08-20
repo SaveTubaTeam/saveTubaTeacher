@@ -3,6 +3,7 @@ import { auth } from '../../../firebase';
 import { useLocation, NavLink, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { signOutTeacher } from '../../../redux/teacherSlice';
+import { clearClassSlice } from '../../../redux/currentClassSlice';
 import { PiUserSquareFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
 import { MdOutlineHelpOutline } from "react-icons/md";
@@ -20,6 +21,7 @@ export default function SideBar() {
     try {
       console.log("LOGGING OUT USER");
       dispatch(signOutTeacher()); //clearing redux store teacherSlice
+      dispatch(clearClassSlice()); //clearing currentClassSlice
       await auth.signOut();
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);

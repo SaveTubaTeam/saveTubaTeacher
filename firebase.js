@@ -43,7 +43,7 @@ async function setAuthPersistence() {
     console.error("Error setting persistence:", error);
   }
 }
-setAuthPersistence();
+setAuthPersistence(); //this function runs once on the initial React DOM mount (i believe)
 
 //defining a function to retrieve the persisted user data from local storage if it exists
 function getPersistedAuthUser() {

@@ -5,6 +5,7 @@ import './ClassSelection.css';
 import { getAssignmentsCount } from './classSelectionFunctions';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutTeacher } from '../../../redux/teacherSlice';
+import { clearClassSlice } from '../../../redux/currentClassSlice';
 import { selectTeacher } from '../../../redux/teacherSlice';
 import { ClassCard } from './ClassCards';
 import { ImPlus } from "react-icons/im";
@@ -71,6 +72,7 @@ export default function ClassSelection() {
     try {
       console.log("LOGGING OUT USER");
       dispatch(signOutTeacher()); //clearing redux store teacherSlice
+      dispatch(clearClassSlice()); //clearing currentClassSlice
       await auth.signOut();
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);

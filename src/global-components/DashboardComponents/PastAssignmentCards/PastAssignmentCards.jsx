@@ -17,10 +17,8 @@ export default function PastAssignmentCards({ email, classCode }) {
   const [assignmentTitles, setAssignmentTitles] = useState([]);
   const [assignmentImg, setAssignmentImg] = useState([]);
   const [pastAssignmentTitles, setPastAssignmentTitles] = useState([]);
-  const [pastAssignmentImg, setPastAssignmentImg] = useState([]);
-  const [currentTime, setCurrentTime] = useState(
-    moment().format("DD/MM/YYYY HH:mm:ss")
-  );
+  //see: https://momentjs.com/docs/#/displaying/format/
+  const [currentTime, setCurrentTime] = useState( moment().format("DD/MM/YYYY HH:mm:ss") );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,14 +32,13 @@ export default function PastAssignmentCards({ email, classCode }) {
         assignments.forEach((assignment) => {
           const assignmentObj = {
             assignmentID: assignment.assignmentID,
-            assignmentDateAssigned: moment(
-              assignment.dateAssigned,
-              "DD/MM/YYYY"
-            ),
+            //refer to the first method signature here: https://momentjs.com/docs/#/parsing/string-format/
+            assignmentDateAssigned: moment(assignment.dateAssigned, "DD/MM/YYYY"),
             assignmentDateDue: moment(assignment.dateDue, "DD/MM/YYYY"),
             assignmentSize: assignment.numActivities,
           };
 
+          //see: https://momentjs.com/docs/#/query/is-after/
           if (moment().isAfter(assignmentObj.assignmentDateDue, "day")) {
             pastAssignments.push(assignmentObj);
           } else {
@@ -62,27 +59,15 @@ export default function PastAssignmentCards({ email, classCode }) {
         const assignmentData = await convertIDToName(currentAssignments);
         const pastAssignmetData = await convertIDToName(pastAssignments);
 
-        let titleArray = [];
-        let imgArray = [];
-        let pastTitleArray = [];
-        let pastImgArray = [];
+        const cleanCurrentTitles = currentTitles.map((title) =>
+          title.replace(/^\d+\. /, "") //replaces beginning digits followed by '. ' (e.g. '123. abc' --> 'abc')
+        );
+        const cleanPastTitles = pastTitles.map((title) =>
+          title.replace(/^\d+\. /, "")
+        );
 
-        for (let i = 0; i < assignmentData.length; i++) {
-          titleArray.push(assignmentData[i].title.replace(/^\d+\. /, ""));
-          imgArray.push(assignmentData[i].downloadURL);
-        }
-
-        for (let i = 0; i < pastAssignmetData.length; i++) {
-          pastTitleArray.push(
-            pastAssignmetData[i].title.replace(/^\d+\. /, "")
-          );
-          pastImgArray.push(pastAssignmetData[i].downloadURL);
-        }
-
-        console.log("Assignments titles:", titleArray);
-        console.log("Assignments images:", imgArray);
-        console.log("Past Assignments titles:", pastTitleArray);
-        console.log("Past Assignments images:", pastImgArray);
+        setAssignmentTitles(cleanCurrentTitles);
+        setPastAssignmentTitles(cleanPastTitles);
 
         setAssignmentTitles(titleArray);
         setPastAssignmentTitles(pastTitleArray);
@@ -96,7 +81,7 @@ export default function PastAssignmentCards({ email, classCode }) {
     fetchData();
     setCurrentTime(moment().format("DD/MM/YYYY HH:mm:ss"));
     console.log("Current Time:", currentTime);
-  }, [email, classCode]);
+  }, [email, classCode]); //every time these params change, we are essentially setting a new current time. (which is never for a single login!)
 
   const handleSelectAssignment = (assignmentId) => {
     localStorage.setItem(

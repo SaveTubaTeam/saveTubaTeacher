@@ -8,6 +8,7 @@ function ProtectedRoutes() {
 	let authStatus = false;
 
 	//a function to retrieve the persisted user data from local storage if it exists
+	//returns a boolean actually
 	function getPersistedAuthUser() {
 		const authUser = localStorage.getItem('authUser');
 		return authUser ? JSON.parse(authUser) : null;

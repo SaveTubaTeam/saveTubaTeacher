@@ -1,0 +1,17 @@
+.assignmentCardsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  padding-left: 25px;
+  padding-top: 0.6rem;
+  overflow-y: scroll;
+  /* border-top: 2px dashed var(--dark-grey); */
+}
+
+.assignmentCardsContainer h2 {
+  margin-bottom: 8px;
+  font-size: 2.2rem;
+  font-style: italic;
+}

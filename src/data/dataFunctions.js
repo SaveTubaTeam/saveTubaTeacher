@@ -111,7 +111,7 @@ async function getMasteryAndMinigamesData(grade, chpt, lesson, languageCode) {
   return masteryAndMinigamesList;
 }
 
-
+//moved to dashboardFunctions
 async function getAssignmentsData(email, classCode) {
   if (!email || !classCode) {
     console.error("Invalid arguments passed to getAssignmentsData():", email, classCode);
@@ -134,8 +134,8 @@ async function getAssignmentsData(email, classCode) {
   return assignmentsList;
 }
 
-
-
+//fetches all assignments for the given classCode
+//not used anymore
 async function getAssignmentData(grade, chpt, lesson, email, classCode) {
   console.log(
     `\n\tgetAssignmentData() called. Now in ${grade} ${chpt} ${lesson} Assignments\n\t\tGRADE:`,
@@ -184,6 +184,8 @@ async function getAssignmentData(grade, chpt, lesson, email, classCode) {
   return finalAssignment;
 }
 
+//a partial duplicate of the getCompletionData func.
+//This func was moved to dashboardFunctions
 async function getCompletionsData(email) {
   // console.log(
   //   `\n\tgetCompletionsData() called. Now in ${email} Completions\n\t\tEMAIL:`,
@@ -208,6 +210,10 @@ async function getCompletionsData(email) {
   //console.log("Completions: ", completionsList);
   return completionsList;
 }
+
+//first we get all completions from the given user. then we try to match the user's completions with a given assignment ID (plus activity tag)
+//why?
+//apparently not used anywhere
 async function getCompletionData(grade, chpt, lesson, activity, email) {
   console.log(
     `\n\tgetCompletionData() called. Now in ${grade} ${chpt} ${lesson} ${activity} Completions\n\t\tEMAIL:`,
@@ -257,6 +263,7 @@ async function getCompletionData(grade, chpt, lesson, activity, email) {
   return completion;
 }
 
+//moved to dashboardFunctions
 async function getStudents(classCode) {
   try {
     //see: https://firebase.google.com/docs/firestore/query-data/queries#web_3
@@ -276,6 +283,7 @@ async function getStudents(classCode) {
   }
 }
 
+//should be reimplemented into studentdatagrid
 async function getCompletedPerAssignment(assignment, classCode) {
   let completed = 0;
   const students = await getStudents(classCode);
@@ -319,31 +327,22 @@ async function getClassroomStudents(classCode) {
   return students;
 }
 
-async function convertIDToName(idArray) {
-  const regex = /G(\d+)C(\d+)L(\d+)/;
-  let titleArray = [];
-  for (let i = 0; i < idArray.length; i++) {
-    const matches = idArray[i].assignmentID.match(regex);
-    if (matches) {
-      const grade = `Grade${matches[1]}`;
-      const chapter = `Chapter${matches[2]}`;
-      const lesson = `Lesson${matches[3]}`;
-      const lessonInfo = await db.collection(grade).doc(chapter).collection(lesson).doc("en").get();
-      if (lessonInfo.exists) {
-        let lessonData = {
-          title: lessonInfo.data().title,
-          downloadURL: lessonInfo.data().thumbnailDownloadURL,
-        };
-        console.log("Lesson Data: ", lessonData);
-        titleArray.push(lessonData);
-      } else {
-        console.log(`No data found for ID: ${idArray[i].assignmentID}`);
-      }
-    } else {
-      console.log(`Invalid ID format: ${idArray[i].assignmentID}`);
-    }
-  }
-  return titleArray;
+//we take an array of assignment IDs (e.g. [G2C1L5, etc.]) and iterate.
+//we extract the numbers in order from the id and concat them to their respective words (e.g. 'Grade', 'Chapter')
+//we are then able to get the title of the assignment via our firebase db .get()
+//returns the title of the assignment
+//currently hardcoded to english
+
+//comments are outdated as this function was rewritten to perform one task.
+function convertIDToGradeChapterLesson(assignmentID){
+  const regex = /G(\d+)C(\d+)L(\d+)/; 
+  const matches = assignmentID.match(regex);
+  const grade = matches[1];
+  const chapter = matches[2];
+  const lesson = matches[3];
+  // console.log("HELLLO WORLD", [grade, chapter, lesson]);
+
+  return [grade, chapter, lesson];
 }
   
 
@@ -359,5 +358,5 @@ export {
   getCompletedPerAssignment,
   getClassroomStudents,
   getMasteryAndMinigamesData,
-  convertIDToName,
+  convertIDToGradeChapterLesson,
 };

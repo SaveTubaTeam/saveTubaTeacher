@@ -1,12 +1,13 @@
 import { db } from "../../../firebase";
 
-async function getAssignmentsData(email, classCode) {
+//returns an array of objects, each one containing the assignment id under the attribute 'id'
+async function getAssignments(email, classCode) {
   if (!email || !classCode) {
-    console.error("Invalid arguments passed to getAssignmentsData():", email, classCode);
+    console.error("Invalid arguments passed to getAssignments():", email, classCode);
     return [];
   }
 
-  console.log(`\n\tgetAssignmentsData() called. Now in ${email} Assignments\n\t\tEMAIL:`, email);
+  //console.log(`\n\tgetAssignments() called. Now in ${email} Assignments\n\t\tEMAIL:`, email);
   let assignmentsList = [];
   try {
     const snapshot = await db.collection("teachers").doc(email).collection(`Assignments_${classCode}`).get();
@@ -15,11 +16,38 @@ async function getAssignmentsData(email, classCode) {
       assignmentsList.push(doc.data());
     });
   } catch (error) {
-    console.log("Error in getAssignmentsData():", error);
+    console.log("Error in getAssignments():", error);
   }
 
-  console.log("Assignments: ", assignmentsList);
+  //console.log("Assignments: ", assignmentsList);
   return assignmentsList;
+}
+
+//returns a copied assignment object with a new attribute 'lessonData' which is the JSON
+//lesson doc corresponding to this assignment.
+//note the singular in the function var name. We get only one doc but iterate thru all assignments in our dashboard fetch.
+async function getAssignmentLessonData(assignmentDoc, languageCode) {
+  const newAssignmentObject = { ...assignmentDoc };
+  let lessonData = {}
+  const assignmentID = newAssignmentObject.assignmentID;
+  //console.log(assignmentID);
+  const regex = /G(\d+)C(\d+)L(\d+)/;
+
+  try{
+    const matches = assignmentID.match(regex);
+    const grade = `Grade${matches[1]}`;
+    const chapter = `Chapter${matches[2]}`;
+    const lesson = `Lesson${matches[3]}`;
+
+    const lessonSnapshot = await db.collection(grade).doc(chapter).collection(lesson).doc(languageCode).get();
+    if (lessonSnapshot.exists) { lessonData = lessonSnapshot.data(); }
+
+    return { ...newAssignmentObject, lessonData: lessonData };
+
+  } catch(error) {
+    console.log("ERROR in getAssignmentLessonData:", error);
+    return { ...newAssignmentObject, lessonData: {} };
+  }
 }
 
 async function getStudents(classCode) {
@@ -67,4 +95,4 @@ async function getStudentCompletions(studentDoc) {
   }
 }
 
-export { getAssignmentsData, getStudents, getStudentCompletions }
+export { getAssignments, getAssignmentLessonData, getStudents, getStudentCompletions }

@@ -22,31 +22,27 @@
   align-items: center;
   height: 40px;
   /* border: 1px solid black; */
-  background: var(--grey);
+  background: var(--primary);
 
   /* text font for the children */
-  color: var(--black-light);
+  color: var(--light);
   font-size: 0.9rem;
   font-weight: 600;
 }
 
 #contactSupport:hover {
   cursor: pointer;
-  color: var(--black-dark);
   text-decoration: underline;
 }
 
 #copyrightFooter:hover {
   cursor: pointer;
-  color: var(--black-dark);
 }
 
 .mainFooter a {
   /* overriding default behaviour of links here */
-  color: var(--black-light);
+  color: var(--light);
 }
-
-
 
 .grid-container { /* marked */
   display: grid;

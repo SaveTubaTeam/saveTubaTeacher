@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../../../firebase";
 import { useDispatch } from "react-redux";
 import { signOutTeacher } from "../../../redux/teacherSlice";
+import { clearClassSlice } from "../../../redux/currentClassSlice";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
@@ -30,6 +31,7 @@ export default function NavBarRightContainer() {
     try {
       console.log("LOGGING OUT USER");
       dispatch(signOutTeacher()); //clearing redux store teacherSlice
+      dispatch(clearClassSlice()); //clearing currentClassSlice
       await auth.signOut();
     } catch(error) {
       console.error("ERROR LOGGING OUT:", error);

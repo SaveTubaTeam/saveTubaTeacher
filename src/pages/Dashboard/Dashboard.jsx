@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTeacher } from "../../../redux/teacherSlice";
 import "./Dashboard.css"
@@ -7,21 +6,25 @@ import CompletionTimeLine from "../../global-components/DashboardComponents/Char
 import AssignmentCompletionPieChart from "../../global-components/DashboardComponents/Charts/AssignmentCompletionPieChart";
 import NavigationBar from "../../global-components/NavbarComponents/NavigationBar";
 import Footer from "../../global-components/Footer";
-import PastAssignmentCards from "../../global-components/DashboardComponents/PastAssignmentCards/PastAssignmentCards";
-import CurrentAssignmentCard from "../../global-components/DashboardComponents/CurrentAssignmentCard";
+import AssignmentCards from "./AssignmentCards/AssignmentCards";
 import StudentDataGrid from "./StudentDataGrid/StudentDataGrid";
-import { getAssignmentsData, getStudents, getStudentCompletions } from "./dashboardFunctions";
+import { getAssignments, getAssignmentLessonData, getStudents, getStudentCompletions } from "./dashboardFunctions";
 import Spinner from "../../global-components/Spinner"
 import { Backdrop } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router";
 
-//TODO: get all students and their respective completions, also get all assignments
-//pass these in as props to the below grid children
+//pass assignments and students in as props to the below grid children
 //handle nulls in these children as well.
 
-//useEffect if studentsArray === null we refetch. null can be passed back up from children if they invalidated the array.
+//for student removal in StudentDataGrid: useEffect if studentsArray === null we refetch. null can be passed back up from children if they invalidated the array.
+//we should first warn with a modal. Then we can just trigger a page refresh - that would be easiest.
 // Creating an assignment invalidates the assignments, but this doesn't matter because we always trigger a fetch on the initial dashboard page render anyways.
 export default function Dashboard() {
+  const { i18n } = useTranslation();
+  const navigate = useNavigate();
   const [assignmentID, setAssignmentID] = useState(null);
+  const { classCode: urlClassCode } = useParams();
 
   const [assignmentsArray, setAssignmentsArray] = useState(null);
   const [studentsArray, setStudentsArray] = useState(null);
@@ -30,25 +33,42 @@ export default function Dashboard() {
 
   const [spinnerVisible, setSpinnerVisible] = useState(false);
 
+  // @jac927 08/20/24 | Please note that we have not implemented router parameters correctly.
+  // This means that manual entry of class codes into the url exhibits odd behaviour (partly due to the behaviour of redux-remember).
+  // The team has deemed this a non-critical issue as we do not forsee teachers manually entering class codes
+
+  useEffect(() => { //check against mismatch between manually entered URL and "stale" redux-remember store
+    if(urlClassCode !== classObject.classCode) {
+      console.error("INVALID URL ENTERED! redirecting to class-selection...");
+      navigate("/class-selection");
+    }
+  }, [urlClassCode]);
+
   useEffect(() => {
     async function fetchDashboardData() {
       const start = performance.now(); // Starting performance timer
       console.log("fetching dashboard data . . .");
+      setSpinnerVisible(true);
 
-      const assignmentsArr = await getAssignmentsData(teacher.email, classObject.classCode);
-      setAssignmentsArray(assignmentsArr);
+      const assignmentsArr = await getAssignments(teacher.email, classObject.classCode);
+      //loading promises onto an array to be resolved all at once!
+      const assignmentsArrPromises = assignmentsArr.map((assignmentDoc) => getAssignmentLessonData(assignmentDoc, i18n.language)); //note the lack of await here!
+      const assignmentsArrWithLessonData = await Promise.all(assignmentsArrPromises);
+
+      console.log("ASSIGNMENTS:", assignmentsArrWithLessonData)
+      setAssignmentsArray(assignmentsArrWithLessonData);
 
       const studentsArr = await getStudents(classObject.classCode); //this array is incomplete as each object does not include the student's completions!
-
-      const studentsArrPromises = studentsArr.map((studentDoc) => getStudentCompletions(studentDoc));
+      //loading promises onto an array to be resolved all at once!
+      const studentsArrPromises = studentsArr.map((studentDoc) => getStudentCompletions(studentDoc)); //note the lack of await here!
       const studentsArrWithCompletions = await Promise.all(studentsArrPromises);
-      Promise.all(studentsArrWithCompletions);
 
       console.log("STUDENTS:", studentsArrWithCompletions);
       setStudentsArray(studentsArrWithCompletions);
 
       const elapsedTimeSeconds = (performance.now() - start) / 1000;
       console.log(`\n\t!!! fetchDashboardData done in ${elapsedTimeSeconds.toFixed(2)} seconds\n`);
+      setSpinnerVisible(false);
     }
 
     fetchDashboardData();
@@ -74,14 +94,6 @@ export default function Dashboard() {
     };
   }, []);
 
-  useEffect(() => {
-    if(studentsArray === null || assignmentsArray === null) {
-      setSpinnerVisible(true);
-    } else {
-      setSpinnerVisible(false);
-    }
-  }, [studentsArray, assignmentsArray]);
-
 //note: grid layout styling can be found in Dashboard.css
   return ( 
     <div className="mainContainer">
@@ -89,11 +101,6 @@ export default function Dashboard() {
 
       <div className="dashboardHeader">
         <h1>{classObject.className}</h1>
-        <CurrentAssignmentCard
-          email={teacher.email}
-          classCode={classObject.classCode}
-          assignmentID={assignmentID}
-        />
       </div>
 
       <div className="dashboardGrid">
@@ -104,10 +111,10 @@ export default function Dashboard() {
           <AssignmentCompletionPieChart email={teacher.email} classCode={classObject.classCode} />
         </div>
         <div className="childThree">
-          <StudentDataGrid studentsArray={studentsArray}/>
+          <StudentDataGrid studentsArray={studentsArray} />
         </div>
         <div className="childFour">
-          <PastAssignmentCards email={teacher.email} classCode={classObject.classCode} />
+          <AssignmentCards assignmentsArray={assignmentsArray} />
         </div>
       </div>
 

@@ -14,7 +14,7 @@ function sortByLastName(array) {
     return 0;
   });
 
-  console.log("NOW SORTED BY LAST NAME:", sortedArray);
+  console.log("STUDENT DATA GRID NOW SORTED BY LAST NAME:", sortedArray);
   return sortedArray;
 }
 
@@ -31,7 +31,7 @@ function sortByFirstName(array) {
     return 0;
   });
 
-  console.log("NOW SORTED BY FIRST NAME:", sortedArray);
+  console.log("STUDENT DATA GRID NOW SORTED BY FIRST NAME:", sortedArray);
   return sortedArray;
 }
 
