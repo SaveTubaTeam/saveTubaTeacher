@@ -23,6 +23,13 @@ export default function ClassSelection() {
   const [assignmentsCounts, setAssignmentsCounts] = useState({});
   const [createClassModalVisible, setCreateClassModalVisible] = useState(false);
 
+  //@jac927 08/23/24 | in the below useEffect we are clearing stale redux-remember persisted state. 
+  //A better solution should be implemented. Such a solution would involve breaking the currentClassSlice into two parts.
+  useEffect(() => {
+    dispatch(clearClassSlice());
+  }, []);
+
+  //loading data for all of the class cards.
   useEffect(() => {
     async function fetchAssignmentsCounts() {
       if(!teacher.classes) { return null; }

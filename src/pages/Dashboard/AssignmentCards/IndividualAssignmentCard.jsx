@@ -4,13 +4,13 @@ import { convertIDToGradeChapterLesson } from "../../../data/dataFunctions";
 import { selectAssignment } from "../../../../redux/currentClassSlice";
 import { useDispatch } from "react-redux";
 
-export default function IndividualAssignmentCard({ assignmentObject, doGlowAnimation }) {
+export default function IndividualAssignmentCard({ assignmentObject, assignmentSelected }) {
   const dispatch = useDispatch();
 
   let idArray = convertIDToGradeChapterLesson(assignmentObject.assignmentID);
   return (
     <div 
-      className={`individualAssignmentContainer ${doGlowAnimation ? "glow" : ""}`} 
+      className={`individualAssignmentContainer ${assignmentSelected ? "glow" : ""}`} 
       key={assignmentObject.assignmentID}
     >
 
@@ -35,16 +35,26 @@ export default function IndividualAssignmentCard({ assignmentObject, doGlowAnima
         </div>
 
         <div className="cardLeftHalfBottom">
-          <button 
-            onClick={() => {
-              console.log("SELECTED ASSIGNMENT:", assignmentObject.assignmentID);
-              dispatch(selectAssignment({ selectedAssignmentObject: assignmentObject }));
-              document.getElementById('assignmentCardsTop').scrollIntoView({ behavior: "instant" });
-              //the id "specialStickingPoint" (yes, this is a bad variable name, I am sorry) can be found in PieChartContainer.jsx.
-              document.getElementById('specialStickingPoint').scrollIntoView({ behavior: "smooth" });
-            }}>
-            Select Assignment
-          </button>
+          {assignmentSelected ? (
+            <span style={{ fontSize: "0.6rem", fontStyle: "italic" }}>
+              This assignment is currently selected.
+            </span>
+          ) : (
+            <button 
+              onClick={() => {
+                console.log("SELECTED ASSIGNMENT:", assignmentObject.assignmentID);
+                dispatch(selectAssignment({ selectedAssignmentObject: assignmentObject }));
+
+                //the below two element selectors force all scroll behaviours to the top when an assignment is selected.
+                //we do this to force the graph and the selected assignment into view, although behaviour can be a bit clunky at times...
+
+                document.getElementById('assignmentCardsTop').scrollIntoView({ behavior: "instant" });
+                //the id "specialStickingPoint" (yes, this is a bad variable name, I am sorry) can be found in PieChartContainer.jsx.
+                document.getElementById('specialStickingPoint').scrollIntoView({ behavior: "instant" });
+              }}>
+              Select Assignment
+            </button>
+          )}
         </div>
 
       </div>

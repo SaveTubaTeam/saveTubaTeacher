@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./CompletionPieChart.css"
 import { useSelector } from "react-redux";
-import CompletionPieChart from "./CompletionPieChart.jsx";
+import "./CompletionTimeline.css"
+import CompletionTimeline from "./CompletionTimeline";
 
-export default function PieChartContainer({ studentsArray }) {
+export default function TimelineContainer({ studentsArray }) {
   const selectedAssignment = useSelector(state => state.currentClass.selectedAssignmentObject);
 
   let content;
@@ -12,17 +12,17 @@ export default function PieChartContainer({ studentsArray }) {
   } else if(selectedAssignment === null) {
     content = (<h4 style={{ fontStyle: "italic" }}>No Assignment Selected</h4>);
   } else {
-    content = <CompletionPieChart studentsArray={studentsArray} />;
+    content = <CompletionTimeline studentsArray={studentsArray} />;
   }
 
   return (
-    <div className="pieChartContainer">
+    <div className="timelineContainer">
 
-      <h2 style={{ paddingLeft: "1.5rem", paddingTop: "1rem", fontSize: "2.2rem" }} id="specialStickingPoint">
-        Completion Rate
+      <h2 style={{ paddingLeft: "1.5rem", paddingTop: "1rem", fontSize: "2.2rem" }}>
+        Assignment Timeline
       </h2>
 
-      <div className="innerPieChartContainer">
+      <div className="innerTimelineContainer">
         {content}
       </div>
 

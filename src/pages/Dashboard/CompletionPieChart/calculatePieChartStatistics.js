@@ -1,12 +1,13 @@
-//this function calculates the number of students who have 
+//this function return an object w/ the percentage of students who have 
 // 1) fully completed the given assignment (full completion)
 // 2) completed only a few of the activities in the given assignment (in progress)
 // 3) completed none of the activities in the given assignment (not started)
 
-function calculateStudentCompletionStatistics(studentsArray, selectedAssignment) {
+function calculatePieChartStatistics(studentsArray, selectedAssignment) {
+  if(!selectedAssignment || !studentsArray) { return; }
+  
   const assignmentID = selectedAssignment.assignmentID;
   const numActivities = selectedAssignment.numActivities; //the number of activities in the given assignment
-  console.log(`calculating student completion statistics for Pie Chart (${assignmentID}). . .`);
   
   let numStudentsFullCompletion = 0;
   let numStudentsInProgress = 0;
@@ -33,12 +34,14 @@ function calculateStudentCompletionStatistics(studentsArray, selectedAssignment)
     }
   }
 
-  const result = { 
+  const result = { //rounding to full numbers, calculating percentages
     percentStudentsFullCompletion: Math.round((numStudentsFullCompletion / studentsArray.length) * 100), 
     percentStudentsInProgress: Math.round((numStudentsInProgress / studentsArray.length) * 100),
     percentStudentsNotStarted: Math.round((numStudentsNotStarted / studentsArray.length) * 100),
   };
+  console.log("finished calculating student completion statistics for Pie Chart:", assignmentID, result);
+
   return result;
 }
 
-export { calculateStudentCompletionStatistics };
+export { calculatePieChartStatistics };

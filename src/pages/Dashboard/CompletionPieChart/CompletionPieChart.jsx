@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./CompletionPieChart.css"
-import { calculateStudentCompletionStatistics } from "./calculateStudentCompletionStatistics";
+import { calculatePieChartStatistics } from "./calculatePieChartStatistics";
 import { useSelector } from "react-redux";
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 
 export default function CompletionPieChart({ studentsArray }) {
   const selectedAssignment = useSelector(state => state.currentClass.selectedAssignmentObject);
+  let studentCompletionStatistics = calculatePieChartStatistics(studentsArray, selectedAssignment);
 
-  let studentCompletionStatistics = calculateStudentCompletionStatistics(studentsArray, selectedAssignment);
   const data = [
     { name: 'Completed', value: studentCompletionStatistics.percentStudentsFullCompletion },
     { name: 'In Progress', value: studentCompletionStatistics.percentStudentsInProgress },
@@ -17,8 +17,8 @@ export default function CompletionPieChart({ studentsArray }) {
 
   // @jac926 08/22/24 | below there are two special functions named "renderActiveShape"  and "renderCustomizedLabel"
   // which were originally boilerplate from the example docs. 
-  // !!! these functions and their position variables have been heavily modified to fit the design of the pie chart !!!
-  // Also note that the class components in the example docs were rewritten to functional components.
+  // !!! these functions and their position variables have been heavily modified to fit the design of our pie chart !!!
+  // Also note that the class components in the example docs have been rewritten to functional components.
   // see: https://recharts.org/en-US/examples/CustomActiveShapePieChart
   // see also: https://recharts.org/en-US/examples/PieChartWithCustomizedLabel
   // see also: https://recharts.org/en-US/examples/PieChartWithPaddingAngle
@@ -78,27 +78,27 @@ export default function CompletionPieChart({ studentsArray }) {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={600} height={600}>
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            labelLine={false}
-            label={renderCustomizedLabel}
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius="45%"
-            outerRadius="75%"
-            fill="#8884d8"
-            dataKey="value"
-            paddingAngle={4}
-            onMouseEnter={onPieEnter}
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
+      <PieChart width={600} height={600}>
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          data={data}
+          cx="50%"
+          cy="50%"
+          innerRadius="40%"
+          outerRadius="65%"
+          fill="#8884d8"
+          dataKey="value"
+          paddingAngle={4}
+          onMouseEnter={onPieEnter}
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectTeacher } from "../../../redux/teacherSlice";
 import "./Dashboard.css"
-import CompletionTimeLine from "../../global-components/DashboardComponents/Charts/CompletionTimeLine";
+import TimelineContainer from "./CompletionTimeline/TimelineContainer";
 import PieChartContainer from "./CompletionPieChart/PieChartContainer";
 import HeaderDashboard from "./HeaderDashboard";
 import NavigationBar from "../../global-components/NavbarComponents/NavigationBar";
@@ -106,7 +106,7 @@ export default function Dashboard() {
         </div>
 
         <div className="lineGraph">
-          <CompletionTimeLine />
+          <TimelineContainer studentsArray={studentsArray} />
         </div>
         <div className="pieChart">
           <PieChartContainer studentsArray={studentsArray}/>

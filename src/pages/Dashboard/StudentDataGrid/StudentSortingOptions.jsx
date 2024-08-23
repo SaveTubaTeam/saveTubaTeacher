@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import { sortByLastName, sortByFirstName } from "./studentSortingFunctions";
+import { sortByLastName, sortByFirstName, sortByLeastCompletions, sortByMostCompletions } from "./studentSortingFunctions";
 
-export default function StudentSortingOptions({ sortedStudentsArray, setSortedStudentsArray }) {
+export default function StudentSortingOptions({ sortedStudentsArray, setSortedStudentsArray, selectedAssignment }) {
   const [sortingParam, setSortingParam] = useState("lastName"); //default sorting by Last Name
 
   useEffect(() => {
-    if(sortedStudentsArray === null) { return; }
+    if(sortedStudentsArray === null || selectedAssignment === null) { return; } //guard clause whilst we load
+
+    const assignmentID = selectedAssignment.assignmentID;
 
     if(sortingParam === "lastName") {
       setSortedStudentsArray(sortByLastName(sortedStudentsArray));
-    } else if(sortingParam === "leastCompletions") {
-      setSortedStudentsArray(sortedStudentsArray);
     } else if(sortingParam === "firstName") {
       setSortedStudentsArray(sortByFirstName(sortedStudentsArray));
+    } else if(sortingParam === "leastCompletions") {
+      setSortedStudentsArray(sortByLeastCompletions(sortedStudentsArray, assignmentID));
+    } else if(sortingParam === "mostCompletions") {
+      setSortedStudentsArray(sortByMostCompletions(sortedStudentsArray, assignmentID));
     }
 
   }, [sortingParam]);
 
-  if(sortedStudentsArray === null) { //guard clause whilst we load in Dashboard.jsx
+  if(sortedStudentsArray === null || selectedAssignment === null) { //guard clause whilst we load
     return null;
   }
 

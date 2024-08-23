@@ -23,7 +23,7 @@ export default function AssignmentCards({ assignmentsArray }) {
       {selectedAssignment ? (
         <>
           <h2 id="assignmentCardsTop">{"Selected Assignment"}</h2>
-          <IndividualAssignmentCard assignmentObject={selectedAssignment} key="helloPasserby!" doGlowAnimation={true}/>
+          <IndividualAssignmentCard assignmentObject={selectedAssignment} key="helloPasserby!" assignmentSelected={true}/>
         </>
       ) : null}
 
