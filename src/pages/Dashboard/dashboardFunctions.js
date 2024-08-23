@@ -69,7 +69,7 @@ async function getStudents(classCode) {
   }
 }
 
-//studentDoc refers to the user's document/object returned from .data()
+//studentDoc refers to the student's document/object returned from .data()
 async function getStudentCompletions(studentDoc) {
   const newStudentObject = { ...studentDoc } //destructuring for safe mutation
   const studentCompletionsArray = [];
@@ -95,4 +95,4 @@ async function getStudentCompletions(studentDoc) {
   }
 }
 
-export { getAssignments, getAssignmentLessonData, getStudents, getStudentCompletions }
+export { getAssignments, getAssignmentLessonData, getStudents, getStudentCompletions };

@@ -28,14 +28,18 @@ export default function AssignmentCards({ assignmentsArray }) {
       ) : null}
 
       <h2 style={{ marginTop: "20px" }}>Upcoming Assignments</h2>
-      {upcomingAssignments && upcomingAssignments.map((assignmentObject) => (
+      {upcomingAssignments ? upcomingAssignments.map((assignmentObject) => (
         <IndividualAssignmentCard assignmentObject={assignmentObject} key={assignmentObject.assignmentID}/>
-      ))}
+      )): (
+        <h4>None</h4>
+      )}
 
       <h2 style={{ marginTop: "20px" }}>Past Assignments</h2>
-      {pastAssignments && pastAssignments.map((assignmentObject) => (
+      {pastAssignments ? pastAssignments.map((assignmentObject) => (
         <IndividualAssignmentCard assignmentObject={assignmentObject} key={assignmentObject.assignmentID}/>
-      ))}
+      )) : (
+        <h4>None</h4>
+      )}
 
       {/* the below element is a small spacer for y-axis overflow padding */}
       <div style={{ paddingBottom: "8px"}}></div>

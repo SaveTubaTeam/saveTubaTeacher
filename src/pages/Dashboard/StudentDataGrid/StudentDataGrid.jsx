@@ -11,7 +11,7 @@ export default function StudentDataGrid({ studentsArray }) {
 
   useEffect(() => {
     if(studentsArray !== null) {
-      //we to sort by last name on initial load
+      //we sort by last name on initial load
       const sortedArray = sortByLastName([...studentsArray]);
       setSortedStudentsArray(sortedArray);
     }
