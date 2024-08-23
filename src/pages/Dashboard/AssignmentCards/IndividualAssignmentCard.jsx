@@ -40,6 +40,8 @@ export default function IndividualAssignmentCard({ assignmentObject, doGlowAnima
               console.log("SELECTED ASSIGNMENT:", assignmentObject.assignmentID);
               dispatch(selectAssignment({ selectedAssignmentObject: assignmentObject }));
               document.getElementById('assignmentCardsTop').scrollIntoView({ behavior: "instant" });
+              //the id "specialStickingPoint" (yes, this is a bad variable name, I am sorry) can be found in PieChartContainer.jsx.
+              document.getElementById('specialStickingPoint').scrollIntoView({ behavior: "smooth" });
             }}>
             Select Assignment
           </button>

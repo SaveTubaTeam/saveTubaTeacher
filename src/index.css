@@ -10,7 +10,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* CSS HEX THEME - see: https://color.adobe.com/create/color-wheel */
+  /* CSS HEX THEME */
   --grey: #EBEDF0;
   --med-grey: #d4d5d8;
   --dark-grey: #4E4E4E;
@@ -24,7 +24,7 @@
   --light: #F8F9F9;
   --purple: #6B3654;
 
-  /* these are based on the primary color */
+  /* these are based on the primary color - see: https://color.adobe.com/create/color-wheel */
   --success: #5C9E59; 
   --warning: #D7B879;
   --error: #D88679;

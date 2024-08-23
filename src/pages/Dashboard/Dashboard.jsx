@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { selectTeacher } from "../../../redux/teacherSlice";
 import "./Dashboard.css"
 import CompletionTimeLine from "../../global-components/DashboardComponents/Charts/CompletionTimeLine";
-import AssignmentCompletionPieChart from "../../global-components/DashboardComponents/Charts/AssignmentCompletionPieChart";
+import PieChartContainer from "./CompletionPieChart/PieChartContainer";
+import HeaderDashboard from "./HeaderDashboard";
 import NavigationBar from "../../global-components/NavbarComponents/NavigationBar";
 import Footer from "../../global-components/Footer";
 import AssignmentCards from "./AssignmentCards/AssignmentCards";
@@ -35,9 +36,9 @@ export default function Dashboard() {
 
   // @jac927 08/20/24 | Please note that we have not implemented router parameters correctly.
   // This means that manual entry of class codes into the url exhibits odd behaviour (partly due to the behaviour of redux-remember).
-  // The team has deemed this a non-critical issue as we do not forsee teachers manually entering class codes
+  // The team has deemed this a non-critical issue as we don't forsee teachers (or anyone, for that matter) manually entering urls
 
-  useEffect(() => { //check against mismatch between manually entered URL and "stale" redux-remember store
+  useEffect(() => { //checking against mismatch between manually entered URL and "stale" redux-remember store
     if(urlClassCode !== classObject.classCode) {
       console.error("INVALID URL ENTERED! redirecting to class-selection...");
       navigate("/class-selection");
@@ -99,21 +100,21 @@ export default function Dashboard() {
     <div className="mainContainer">
       <NavigationBar contentType="dashboard" />
 
-      <div className="dashboardHeader">
-        <h1>{classObject.className}</h1>
-      </div>
-
       <div className="dashboardGrid">
-        <div className="childOne">
+        <div className="dashboardHeader" id="dashboardHeader">
+          <HeaderDashboard />
+        </div>
+
+        <div className="lineGraph">
           <CompletionTimeLine />
         </div>
-        <div className="childTwo">
-          <AssignmentCompletionPieChart email={teacher.email} classCode={classObject.classCode} />
+        <div className="pieChart">
+          <PieChartContainer studentsArray={studentsArray}/>
         </div>
-        <div className="childThree">
+        <div className="studentDataGrid">
           <StudentDataGrid studentsArray={studentsArray} />
         </div>
-        <div className="childFour">
+        <div className="assignmentCards">
           <AssignmentCards assignmentsArray={assignmentsArray} />
         </div>
       </div>
