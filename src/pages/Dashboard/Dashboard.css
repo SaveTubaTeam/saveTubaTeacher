@@ -17,12 +17,6 @@
    grid-row: 1 / 2;
    grid-column: 1 / 5;
    /* border: 1px solid black; */
-
-   padding-left: 50px;
-   padding-right: 50px;
-   display: flex;
-   justify-content: flex-start;
-   align-items: center;
    background: var(--light);
 }
 
@@ -54,4 +48,28 @@
    /* border: 1px solid black; */
    grid-row: 3 / 4;
    grid-column: 4 / 7;
+}
+
+.headerDashboardContainer {
+   height: 100%;
+   width: 100%;
+   padding-left: 50px;
+   padding-right: 50px;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.assignmentHeaderCard {
+   min-width: 200px;
+   height: 70%;
+   background-color: var(--grey);
+   border-radius: 6px;
+   margin-right: 75px;
+   border: 3px solid var(--med-grey);
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }

@@ -19,7 +19,7 @@ export default function TimelineContainer({ studentsArray }) {
     <div className="timelineContainer">
 
       <h2 style={{ paddingLeft: "1.5rem", paddingTop: "1rem", fontSize: "2.2rem" }}>
-        Assignment Timeline
+        Assignment Completion Timeline
       </h2>
 
       <div className="innerTimelineContainer">

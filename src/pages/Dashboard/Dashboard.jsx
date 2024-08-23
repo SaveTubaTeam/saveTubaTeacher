@@ -101,7 +101,7 @@ export default function Dashboard() {
       <NavigationBar contentType="dashboard" />
 
       <div className="dashboardGrid">
-        <div className="dashboardHeader" id="dashboardHeader">
+        <div className="dashboardHeader">
           <HeaderDashboard />
         </div>
 

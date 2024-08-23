@@ -4,7 +4,6 @@ import "./AccountPage.css"
 import NavigationBar from '../../global-components/NavbarComponents/NavigationBar';
 import { useSelector } from 'react-redux';
 import { selectTeacher } from '../../../redux/teacherSlice';
-import ViewStudentsDialog from '../../global-components/AccountComponents/ViewStudentsDialog';
 import SideBar from "./SideBar";
 import Footer from '../../global-components/Footer';
 import { FaUserCircle } from "react-icons/fa";

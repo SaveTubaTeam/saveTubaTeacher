@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { selectTeacher } from "../../../redux/teacherSlice";
 import { convertIDToGradeChapterLesson } from "../../data/dataFunctions";
 
 export default function HeaderDashboard() {
   const selectedAssignment = useSelector(state => state.currentClass.selectedAssignmentObject);
   const classObject = useSelector(state => state.currentClass.selectedClass);
+  const teacher = useSelector(selectTeacher);
 
   const [assignmentName, setAssignmentName] = useState("No Assignment Selected");
 
@@ -17,9 +19,13 @@ export default function HeaderDashboard() {
   }, [selectedAssignment]);
 
   return (
-    <>
-      <h1>{classObject.className}</h1>
-      <h4 style={{ fontStyle: "italic" }}>{assignmentName}</h4>
-    </>
+    <div className="headerDashboardContainer">
+      <h1 style={{ fontStyle: "italic", fontSize: "2.1rem" }}>{`${teacher.lastName} - ${classObject.className}`}</h1>
+      <div className="assignmentHeaderCard">
+        <h4 style={{ fontWeight: "600", padding: "0 20px", paddingTop: "3px" }}>
+          {`Lesson: ${assignmentName}`}
+        </h4>
+      </div>
+    </div>
   )
 }
