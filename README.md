@@ -1,6 +1,6 @@
 ## Save Tuba Teacher Interface
 
-This is our teacher interface for the Save Tuba platform. Please refer to the main [/saveTuba README](https://github.com/SaveTubaTeam/saveTuba) for non-technical project descriptions, learning resources, developer access, etc.
+This is our teacher interface for the Save Tuba platform. Please refer to the main [/saveTuba README](https://github.com/SaveTubaTeam/saveTuba?tab=readme-ov-file#savetuba) for non-technical project descriptions, learning resources, developer access, etc.
 
 
 https://github.com/user-attachments/assets/efb5abd2-ccd2-46e9-b23e-5345a85679ae
@@ -23,24 +23,24 @@ cd ./saveTubaTeacher
 npm install
 ```
 
-### Run the following to open up in localhost:
+### Run the following to open up dev environment in localhost:
 ```
 npm run dev
 ```
 
-### Deployment
+## Deployment
 
-We are using Firebase Hosting for deployment onto our subdomain https://teacher.savetuba.com 
+As of 2024 the savetuba.com domain is paid for by our faculty advisor Sean Vassilaros. All DNS Records for the domain can be accessed via the team's WordPress account. For this repo, we are using Firebase Hosting for deployment onto our subdomain https://teacher.savetuba.com
 
-As of 2024 the savetuba.com domain is paid for by our faculty advisor, Sean Vassilaros. All DNS Records for the domain can be accessed via the team's WordPress account. Please remember to [review security rules](https://github.com/SaveTubaTeam/saveTuba?tab=readme-ov-file#mobile-app-deployment) before deploying.
+In order to deploy with Firebase Hosting, we first need to install the Firebase CLI. Follow the instructions here to install: https://firebase.google.com/docs/cli
 
-To build our website, run the following: 
+To build our application bundle, run the following: 
 
 ```
 npm run build
 ```
 
-After running you will see that a gitignored 'dist' folder has been made; this is where our application bundle lives. Next, to deploy to Hosting, run the below command.
+After running you will see that a gitignored 'dist' folder has been created; this is where our application bundle lives. Next, to deploy to Hosting, run the below command:
 
 ```
 firebase deploy --only hosting
@@ -48,10 +48,10 @@ firebase deploy --only hosting
 
 Documentation for the above instructions can be found here: https://firebase.google.com/docs/hosting/quickstart
 
-@jac927 11/2/24 | I've  set up deployment so that our public build folder is set to 'dist' (which is gitignored), so every time you want to deploy you should follow the above steps for manual deployment. In the future, a proper [GitHub Actions pipeline](https://firebase.google.com/docs/hosting/github-integration) can be set up to avoid manual deployment to prod. Use the below command to start configuring GitHub Actions:
+*@jac927 11/2/24 | I've  set up deployment so that our public build folder is set to 'dist' (see the firebase.json config file), so every time you want to deploy you should follow the above steps for manual deployment. In the future, a proper [GitHub Actions pipeline](https://firebase.google.com/docs/hosting/github-integration) can be set up to avoid manual deployment to prod. Use the below command to start configuring GitHub Actions:*
 
 ```
 firebase init hosting:github
 ```
 
-You might also look into a pre-prod staging environment using Firebase Hosting's preview feature: https://firebase.google.com/docs/hosting/test-preview-deploy
+*You might also look into a pre-prod staging environment using Firebase Hosting's preview feature: https://firebase.google.com/docs/hosting/test-preview-deploy*
