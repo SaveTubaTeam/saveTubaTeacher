@@ -32,7 +32,7 @@ npm run dev
 
 We are using Firebase Hosting for deployment onto our subdomain https://teacher.savetuba.com 
 
-As of 2024 the savetuba.com domain is paid for by our faculty advisor, Sean Vassilaros. All DNS Records for the domain can be accessed via the team's WordPress account. 
+As of 2024 the savetuba.com domain is paid for by our faculty advisor, Sean Vassilaros. All DNS Records for the domain can be accessed via the team's WordPress account. Please remember to [review security rules](https://github.com/SaveTubaTeam/saveTuba?tab=readme-ov-file#mobile-app-deployment) before deploying.
 
 To build our website, run the following: 
 
@@ -40,7 +40,7 @@ To build our website, run the following:
 npm run build
 ```
 
-After running you will see that a 'dist' folder has been made; this is where our application bundle lives. Next, to deploy to Hosting, run the below command.
+After running you will see that a gitignored 'dist' folder has been made; this is where our application bundle lives. Next, to deploy to Hosting, run the below command.
 
 ```
 firebase deploy --only hosting
