@@ -56,20 +56,38 @@ export default function CompletionPieChart({ studentsArray }) {
     const sy = cy + (outerRadius + 5) * sin;
     const mx = cx + (outerRadius + 20) * cos;
     const my = cy + (outerRadius + 20) * sin;
-    const ex = mx + (cos >= 0 ? 1 : -1) * 10;
-    const ey = my;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 10 + 3; //controls the data along the x-axis (higher == more to the right, lower == more to the left) 
+    const ey = my + 5; //controls the data along the y-axis, higher value == move downwards, lower value == move higher
     const textAnchor = cos >= 0 ? 'start' : 'end';
+    let textPosY = 16;
   
+
+    // Adjust the position for 'In Progress'
+    let adjustedY = ey;
+    if (name === "In Progress") {
+      adjustedY -= 20; // Move 'In Progress' text, line, and %data collectively higher
+      textPosY = -17; //move just the "In Progress" text above the % data
+    }
+
+    // Adjust the position for 'Completed'
+    // let adjustedYC = ey;
+    if (name === "Completed") {
+      adjustedY += 10; // Move 'Completed' lower
+    }
+
+    //Rendering the pie chart data (percentages, lines, and text (in progress, completed, no started))
     return (
       <g>
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${adjustedY}`} stroke={fill} fill="none" />
+        <circle cx={ex} cy={adjustedY} r={2} fill={fill} stroke="none" />
 
-        <text x={ex + (cos >= 0 ? 1 : -1) * 6} y={ey} textAnchor={textAnchor} fill="#1A1A1A"style={{ fontWeight: "600" }}>
+        {/* Renders & positions the % data */}
+        <text x={ex + (cos >= 0 ? 1 : -1) * 6} y={adjustedY} textAnchor={textAnchor} fill="#1A1A1A"style={{ fontWeight: "600" }}>
           {`${value}%`}
         </text>
 
-        <text x={ex + (cos >= 0 ? -1 : 1) * 22} y={ey} dy={16} textAnchor={textAnchor} fill="#4E4E4E" style={{ fontSize: "0.8rem" }}>
+        {/* Renders & positions the text (In progress, Completed, or Not Startes) */}
+        <text x={ex + (cos >= 0 ? -1 : 1) * 22} y={adjustedY} dy={textPosY} textAnchor={textAnchor} fill="#4E4E4E" style={{ fontSize: "0.8rem" }}>
           {name}
         </text>
       </g>
@@ -82,7 +100,7 @@ export default function CompletionPieChart({ studentsArray }) {
         <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
-          labelLine={false}
+          labelLine={true}
           label={renderCustomizedLabel}
           data={data}
           cx="50%"

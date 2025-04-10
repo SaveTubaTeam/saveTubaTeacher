@@ -16,10 +16,13 @@ const CreateAssignment = () => {
   const [lesson, setLesson] = useState('');
   const [dateDue, setDateDue] = useState('');
   const [numActivities, setNumActivities] = useState(0);
-  const [email, setEmail] = useState('testteacher1@gmail.com');
+  const [email, setEmail] = useState('savetuba2023@gmail.com'); //has 0 classrooms
+  // const [email, setEmail] = useState('testteacher1@gmail.com'); //has multiple classrooms
   const [classCode, setClassCode] = useState('');
   const [showPreview, setShowPreview] = useState(false);
   const navigate = useNavigate();
+  const [isCreated, setIsCreated] = useState(false); // Track successful creation
+
 
   const handleClassChange = async (selectedClass) => {
     setGrade(selectedClass.grade);
@@ -113,6 +116,8 @@ const CreateAssignment = () => {
         .set(assignmentData);
 
       console.log('Assignment created successfully!');
+      setIsCreated(true); // Set to true after successful creation
+      
     } catch (error) {
       console.error('Error creating assignment:', error);
     }
@@ -163,7 +168,12 @@ const CreateAssignment = () => {
           />
         </div>
         <button type="button" onClick={() => setShowPreview(true)}>Preview</button>
-        <button type="submit" className='sas' disabled={!isFormValid}>Create</button>
+        <button type="submit" className='sas' disabled={!isFormValid}>Create</button> {/* Create button to create the new assignment */}
+        {isCreated && (
+          <div>
+            Assignment created successfully!
+          </div>
+        )}
       </form>
 
       {showPreview && (

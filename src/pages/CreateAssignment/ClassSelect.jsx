@@ -9,7 +9,8 @@ import { db } from '../../../firebase';
 const ClassSelect = ({ onChange }) => {
   const [selectedClass, setSelectedClass] = useState("");
   const [teacher, setTeacher] = useState(null);
-  const [email, setEmail] = useState('testteacher1@gmail.com');
+  // const [email, setEmail] = useState('testteacher1@gmail.com'); //has multiple classrooms
+  const [email, setEmail] = useState('savetuba2023@gmail.com'); //has 0 classrooms
 
   useEffect(() => {
     const fetchTeacherData = async () => {

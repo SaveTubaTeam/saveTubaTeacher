@@ -62,11 +62,18 @@ export default function LoginPage() {
   // retrieving assignments is done after entry.
   async function getTeacher(email) {
     //TODO: replace w/ real teacher doc name
-    const teacherDoc = await db.collection('teachers').doc('testteacher1@gmail.com').get();
+    // const teacherDoc = await db.collection('teachers').doc('savetuba2023@gmail.com').get(); //THIS IS THE ONE THAT CHANGES THE CLASSROOMS PAGE
+    const teacherDoc = await db.collection('teachers').doc('testteacher1@gmail.com').get(); //You have to log out and back in for the classrooms to change
 
     if(teacherDoc.exists) {
       const teacherData = teacherDoc.data();
+      console.log('teacher classes data:' + teacherData.classes);
       dispatch(populateTeacherSlice({ data: teacherData })); //dispatching to teacherSlice store
+
+      //If there are no classrooms attached to the teach a 0 will render
+      if(teacherData.classes.length < 0){
+        dispatch(populateTeacherSlice({ data: teacherData })); //dispatching to teacherSlice store
+      }
 
     } else { //teacherDoc does not exist
       const newTeacherData = await createNewTeacherAccount(); //this new account will NOT have any assignments

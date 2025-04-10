@@ -98,14 +98,15 @@ export default function ClassSelection() {
           2024-2025
         </h4>
         <div className="classesGrid">
-          {/* see: https://stackoverflow.com/questions/49268267/dealing-with-an-empty-array-when-using-map-in-react */}
-          {teacher.classes && teacher.classes.length && teacher.classes.map((classObject, index) => (
+          {/* Classroom cards created; see: https://stackoverflow.com/questions/49268267/dealing-with-an-empty-array-when-using-map-in-react */}
+          {/* 0 renders here if a teacher doesn't have an associated classroom unless you specify teacher.classes.length > 0 */}
+          {teacher.classes  && teacher.classes.length > 0 && teacher.classes.map((classObject, index) => (
             <ClassCard 
               key={index} 
               classObject={classObject}
               assignmentsCount={assignmentsCounts[classObject.classCode] || null}
             />
-          ))}
+          ))} 
           <CreateAClass />
         </div>
       </div>

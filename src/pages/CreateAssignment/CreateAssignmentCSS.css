@@ -17,6 +17,12 @@ label {
     font-weight: bold;
 }
 
-.sas{
+/* .sas{
+    justify-content: flex-end;
     width:50%;
-}
+    transform: translateX(50%); moves the box 50% to the right
+    margin: 0;
+    position: center;
+    top: 50%;
+    left: 50%;
+} */

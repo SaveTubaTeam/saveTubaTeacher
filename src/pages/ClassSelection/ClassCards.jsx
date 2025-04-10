@@ -16,12 +16,26 @@ function ClassCard({ classObject, assignmentsCount }) {
   const [displayCodeVisible, setDisplayCodeVisible] = useState(false);
 
   let assignmentString = "";
+  console.log(assignmentsCount + " assignmnent count");
   if(assignmentsCount) {
     //checking for singular/plural
-    assignmentsCount === 1 ? assignmentString = `${assignmentsCount} ${t("common:assignment")}` : assignmentString = `${assignmentsCount} ${t("common:assignments")}`;
+    if (assignmentsCount === -1){
+      assignmentString = `${t("0 Assignments")}`;
+    }
+    else if (assignmentsCount === 1 ){
+      assignmentString = `${assignmentsCount} ${t("common:assignment")}`;
+      // assignmentsCount === 1 ? assignmentString = `${assignmentsCount} ${t("common:assignment")}` : assignmentString = `${assignmentsCount} ${t("common:assignments")}`;
+    }
+    else{
+      assignmentString = `${assignmentsCount} ${t("common:assignments")}`;
+    }
   } else { //still loading data (assignmentsCount is null in ClassSelection.jsx)
-    assignmentString = `${t("loading:loading")}`
+    assignmentString = `${t("loading:loading")}`;
   }
+
+  // if(assignmentString == "Loading..."){
+  //   assignmentString = `${t("0 Assignments")}`
+  // }
 
   //regex to match the numbers and letters in the grade string
   const splicedGrade = classObject.gradeLevel.match(/[a-zA-Z]+|[0-9]+/g);

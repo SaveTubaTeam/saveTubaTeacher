@@ -24,18 +24,22 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      // load log in page
       {
         path: '/',
         element: <LoginPage />,
       },
+      // load sign in with google page
       {
         path: 'login',
         element: <LoginPage />,
       },
+      // load log in with other page
       {
         path: 'alt-login',
         element: <AlternativeLogin />
       },
+      // load create an account page in other log section
       {
         path: 'alt-registration',
         element: <AlternativeRegistration />
