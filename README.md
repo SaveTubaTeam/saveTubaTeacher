@@ -16,16 +16,23 @@ We use React, Redux, Firebase, and a few other notable libraries:
 - [MUI](https://mui.com/material-ui/getting-started/) - for a few custom styled components
 - [i18next](https://react.i18next.com/) - Javascript internationalization framework.
 
+### Screen Requirment
+- Screens need to have a resolution width of 1920 x (#)
+
 ### To get started:
 ```
 git clone https://github.com/SaveTubaTeam/saveTubaTeacher.git
 cd ./saveTubaTeacher
 npm install
+or
+npx npm install
 ```
 
 ### Run the following to open up dev environment in localhost:
 ```
 npm run dev
+or
+npx vite
 ```
 
 ## Deployment
@@ -34,10 +41,18 @@ As of 2024 the savetuba.com domain is paid for by our faculty advisor Sean Vassi
 
 In order to deploy with Firebase Hosting, we first need to install the Firebase CLI. Follow the instructions here to install: https://firebase.google.com/docs/cli
 
+    Windows:
+    npm install -g firebase-tools
+    OR
+    npx npm install -g firebase-tools
+
+
 To build our application bundle, run the following: 
 
 ```
 npm run build
+OR 
+npx npm run build
 ```
 
 After running you will see that a gitignored 'dist' folder has been created; this is where our application bundle lives. Next, to deploy to Hosting, run the below command:
