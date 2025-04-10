@@ -5,12 +5,22 @@ import "firebase/compat/firestore";
 import "firebase/compat/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCa8CJLDlxZav6LylYflDDQQbL_m8tTZGs", //This is the Google Cloud Console browser key inside of project savetuba-5e519
-    authDomain: "savetuba-5e519.firebaseapp.com",
-    projectId: "savetuba-5e519",
-    storageBucket: "savetuba-5e519.appspot.com",
-    messagingSenderId: "218900793188",
-    appId: "1:218900793188:web:a1cc3aa38d180fc6815c71"
+    //development database
+    // apiKey: "AIzaSyCa8CJLDlxZav6LylYflDDQQbL_m8tTZGs", //This is the Google Cloud Console browser key inside of project savetuba-5e519
+    // authDomain: "savetuba-5e519.firebaseapp.com",
+    // projectId: "savetuba-5e519",
+    // storageBucket: "savetuba-5e519.appspot.com",
+    // messagingSenderId: "218900793188",
+    // appId: "1:218900793188:web:a1cc3aa38d180fc6815c71",
+
+    //production database
+    apiKey: "AIzaSyA4KXOgT6JLTMLm4r2Pw9S0Z3agFzXSmrY",
+    authDomain: "savetuba-t.firebaseapp.com",
+    projectId: "savetuba-t",
+    storageBucket: "savetuba-t.firebasestorage.app",
+    messagingSenderId: "952931746511",
+    appId: "1:952931746511:web:c5086a496048dbb4a22dba",
+    // measurementId: "G-TD8RYK4JKE"
 };
 
 

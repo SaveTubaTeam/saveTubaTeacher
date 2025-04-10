@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "savetuba-5e519"
+    "default": "savetuba-5e519",
+    "secondary": "savetuba-t"
   }
 }
