@@ -17,9 +17,9 @@ function ClassCard({ classObject, assignmentsCount }) {
 
   let assignmentString = "";
   console.log(assignmentsCount + " assignmnent count");
-  if(assignmentsCount) {
+  if(assignmentsCount != null) {
     //checking for singular/plural
-    if (assignmentsCount === -1){
+    if (assignmentsCount === 0){
       assignmentString = `${t("0 Assignments")}`;
     }
     else if (assignmentsCount === 1 ){
@@ -30,7 +30,7 @@ function ClassCard({ classObject, assignmentsCount }) {
       assignmentString = `${assignmentsCount} ${t("common:assignments")}`;
     }
   } else { //still loading data (assignmentsCount is null in ClassSelection.jsx)
-    assignmentString = `${t("loading:loading")}`;
+    assignmentString = `${t("common:noAssignments")}`; //add in the kk.js and ru.js the translated version
   }
 
   // if(assignmentString == "Loading..."){

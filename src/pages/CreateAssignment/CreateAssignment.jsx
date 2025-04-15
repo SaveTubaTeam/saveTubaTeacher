@@ -9,8 +9,11 @@ import ChapterSelect from '../../global-components/DashboardComponents/DataTable
 import LessonSelect from '../../global-components/DashboardComponents/DataTableComponents/LessonSelect';
 import Footer from '../../global-components/Footer';
 import AssignmentPreview from './AssignmentPreview';
+import { useTranslation } from 'react-i18next'; //needed for translations
+
 
 const CreateAssignment = () => {
+  const { t } = useTranslation(); //needed for translations
   const [grade, setGrade] = useState('');
   const [chapter, setChapter] = useState('');
   const [lesson, setLesson] = useState('');
@@ -140,7 +143,7 @@ const CreateAssignment = () => {
     <div className='mainContainer'>
       <NavigationBar contentType="dashboard" />
       
-      <h1>Create Assignment</h1>
+      <h1>{`${t("common:createAssignment")}`}</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <ClassSelect onChange={handleClassChange} />
@@ -159,7 +162,7 @@ const CreateAssignment = () => {
           />
         </div>
         <div>
-          <label htmlFor="dateDue">Date Due:</label>
+          <label htmlFor="dateDue">{`${t("common:dueDate")}`}</label>
           <input
             type="datetime-local"
             id="dateDue"
@@ -167,8 +170,8 @@ const CreateAssignment = () => {
             onChange={handleDateDueChange}
           />
         </div>
-        <button type="button" onClick={() => setShowPreview(true)}>Preview</button>
-        <button type="submit" className='sas' disabled={!isFormValid}>Create</button> {/* Create button to create the new assignment */}
+        <button type="button" onClick={() => setShowPreview(true)}>{`${t("common:preview")}`}</button>
+        <button type="submit" className='sas' disabled={!isFormValid}>{`${t("common:create")}`}</button> {/* Create button to create the new assignment */}
         {isCreated && (
           <div>
             Assignment created successfully!
