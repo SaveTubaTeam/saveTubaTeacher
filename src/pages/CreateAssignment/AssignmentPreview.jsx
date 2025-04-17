@@ -63,9 +63,9 @@ const AssignmentPreview = ({ grade, chapter, lesson, onClose }) => {
               <Typography variant="h5" component="div">
                 {minigame.navigation}
               </Typography>
-              <Typography variant="body2" color="textSecondary">
+              {/* <Typography variant="body2" color="textSecondary">
                 {minigame.title}
-              </Typography>
+              </Typography> */}
               <Typography variant="body1">
                 {minigame.prompt}
               </Typography>

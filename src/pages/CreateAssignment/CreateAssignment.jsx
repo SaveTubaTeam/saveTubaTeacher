@@ -19,8 +19,8 @@ const CreateAssignment = () => {
   const [lesson, setLesson] = useState('');
   const [dateDue, setDateDue] = useState('');
   const [numActivities, setNumActivities] = useState(0);
-  const [email, setEmail] = useState('savetuba2023@gmail.com'); //has 0 classrooms
-  // const [email, setEmail] = useState('testteacher1@gmail.com'); //has multiple classrooms
+  // const [email, setEmail] = useState('savetuba2023@gmail.com'); //has 0 classrooms --> 
+  const [email, setEmail] = useState('testteacher1@gmail.com'); //has multiple classrooms --> only teachers with classrooms will show associated assignment selections for create assignments page
   const [classCode, setClassCode] = useState('');
   const [showPreview, setShowPreview] = useState(false);
   const navigate = useNavigate();

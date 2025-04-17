@@ -9,8 +9,8 @@ import { db } from '../../../firebase';
 const ClassSelect = ({ onChange }) => {
   const [selectedClass, setSelectedClass] = useState("");
   const [teacher, setTeacher] = useState(null);
-  // const [email, setEmail] = useState('testteacher1@gmail.com'); //has multiple classrooms
-  const [email, setEmail] = useState('savetuba2023@gmail.com'); //has 0 classrooms
+  const [email, setEmail] = useState('testteacher1@gmail.com'); //has multiple classrooms --> all associated classrooms will appear as selection options in create assignment
+  // const [email, setEmail] = useState('savetuba2023@gmail.com'); //has 0 classrooms --> no classrooms will appear in create assignment bc none are associated
 
   useEffect(() => {
     const fetchTeacherData = async () => {
