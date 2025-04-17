@@ -28,15 +28,15 @@ export default function CompletionTimeline({ studentsArray }) {
   //aligning bars to points on the x-axis can be done by changing the x-axis scale prop from "band" to "point"
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <ComposedChart width={500} height={400} data={timelineData} margin={{ top: 25, right: 20, bottom: 10, left: 0 }}>
+      <ComposedChart width={500} height={400} data={timelineData} margin={{ top: 25, right: 20, bottom: 10, left: 10 }}>
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="day" scale="band" />
-        <YAxis label={{ value: 'Number of Completions', angle: -90, position: 'outsideLeft' }}/>
+        <YAxis label={{ value: 'Number of Completions', angle: -90, position: 'outsideLeft', dx : -20 }}/>
         <Tooltip />
         <Legend />
         <Area type="monotone" dataKey="numAssignmentsInProgressOrComplete" fill="#c6d5ee" stroke="#88a7d7" name="Overall Assignment Progress" />
         <Bar dataKey="numActivityCompletions" barSize={12} fill="#5C9E59" name="Activity Completions" />
-        <ReferenceLine x={timelineData[timelineData.length - 1].day} label={{ value: "Due Date", angle: 60 }} stroke="#D88679" strokeDasharray="3 3" strokeWidth={2} />
+        <ReferenceLine x={timelineData[timelineData.length - 1].day} label={{ value: "Due Date", angle: 60}} stroke="#D88679" strokeDasharray="3 3" strokeWidth={2} />
       </ComposedChart>
     </ResponsiveContainer>
   );
