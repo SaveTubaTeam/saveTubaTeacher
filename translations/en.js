@@ -1,3 +1,5 @@
+import { selectAssignment } from "../redux/currentClassSlice";
+
 const en = {
   common: {
     teacherLogin: "Teacher Login",
@@ -35,7 +37,15 @@ const en = {
     cancel: "Cancel",
     submit: "Submit",
     dashboard: "Dashboard",
+    selectAnAssignment: "Select Assignment",
+    upcomingAssignment: "Upcoming Assignments",
+    pastAssignment: "Past Assignments",
     createAssignment: "Create Assignment",
+    currentAssignment: "This assignment is currently selected.",
+    lesson: "Lesson",
+    chapter: "chapter",
+    numberOfActivities: "Number of Activities",
+    dateAssigned: "Date Assigned",
     preview: "Preview",
     create: "Create",
     dueDate: "Date due:",

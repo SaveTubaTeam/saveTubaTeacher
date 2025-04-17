@@ -3,8 +3,11 @@ import "./AssignmentCards.css";
 import { sortAssignmentCards } from "./sortAssignmentCards";
 import IndividualAssignmentCard from "./IndividualAssignmentCard";
 import { useSelector } from "react-redux";
+import { useTranslation } from 'react-i18next'; //needed for translations
+
 
 export default function AssignmentCards({ assignmentsArray }) {
+  const { t } = useTranslation(); //needed for translations
   const [pastAssignments, setPastAssignments] = useState(null);
   const [upcomingAssignments, setUpcomingAssignments] = useState(null);
   const selectedAssignment = useSelector(state => state.currentClass.selectedAssignmentObject);
@@ -22,19 +25,19 @@ export default function AssignmentCards({ assignmentsArray }) {
 
       {selectedAssignment ? (
         <>
-          <h2 id="assignmentCardsTop">{"Selected Assignment"}</h2>
+          <h2 id="assignmentCardsTop">{`${t("common:selectAnAssignment")}`}</h2>
           <IndividualAssignmentCard assignmentObject={selectedAssignment} key="helloPasserby!" assignmentSelected={true}/>
         </>
       ) : null}
 
-      <h2 style={{ marginTop: "20px" }}>Upcoming Assignments</h2>
+      <h2 style={{ marginTop: "20px" }}>{`${t("common:upcomingAssignment")}`}</h2>
       {upcomingAssignments ? upcomingAssignments.map((assignmentObject) => (
         <IndividualAssignmentCard assignmentObject={assignmentObject} key={assignmentObject.assignmentID}/>
       )): (
         <h4>None</h4>
       )}
 
-      <h2 style={{ marginTop: "20px" }}>Past Assignments</h2>
+      <h2 style={{ marginTop: "20px" }}>{`${t("common:pastAssignment")}`}</h2>
       {pastAssignments ? pastAssignments.map((assignmentObject) => (
         <IndividualAssignmentCard assignmentObject={assignmentObject} key={assignmentObject.assignmentID}/>
       )) : (

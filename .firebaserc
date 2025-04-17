@@ -1,6 +1,9 @@
 {
   "projects": {
     "default": "savetuba-5e519",
-    "secondary": "savetuba-t"
-  }
+    "secondary": "savetuba-t",
+    "production": "savetuba-t"
+  },
+  "targets": {},
+  "etags": {}
 }

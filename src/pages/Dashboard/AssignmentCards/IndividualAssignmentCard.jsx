@@ -3,9 +3,13 @@ import "./IndividualAssignmentCard.css"
 import { convertIDToGradeChapterLesson } from "../../../data/dataFunctions";
 import { selectAssignment } from "../../../../redux/currentClassSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from 'react-i18next'; //needed for translations
+
 
 export default function IndividualAssignmentCard({ assignmentObject, assignmentSelected }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //needed for translations
+  
 
   let idArray = convertIDToGradeChapterLesson(assignmentObject.assignmentID);
   return (
@@ -18,26 +22,26 @@ export default function IndividualAssignmentCard({ assignmentObject, assignmentS
 
         <div className="cardLeftHalfTop">
         <h4 style={{ margin: "0" }}>
-          {`Date Due: ${assignmentObject.dateDue.slice(0, -3)}`}
+          {`${t("common:dueDate")} ${assignmentObject.dateDue.slice(0, -3)}`}
         </h4>
 
         <h4 style={{ margin: "0.5rem 0", paddingBottom: '4px' }}>
-          {`Lesson: Grade ${idArray[0]} / Chapter ${idArray[1]} / Lesson ${idArray[2]}`}
+          {`${t("common:lesson")}: ${t("common:grade")} ${idArray[0]} / ${t("common:chapter")} ${idArray[1]} / ${t("common:lesson")} ${idArray[2]}`}
         </h4>
 
         <p style={{ margin: "0" }}>
-          {`Number of Activities: ${assignmentObject.numActivities}`}
+          {`${t("common:numberOfActivities")}: ${assignmentObject.numActivities}`}
         </p>
 
         <p style={{ margin: "0" }}>
-          {`Date Assigned: ${assignmentObject.dateAssigned.slice(0, -3)}`}
+          {`${t("common:dateAssigned")}: ${assignmentObject.dateAssigned.slice(0, -3)}`}
         </p>
         </div>
 
         <div className="cardLeftHalfBottom">
           {assignmentSelected ? (
             <span style={{ fontSize: "0.6rem", fontStyle: "italic" }}>
-              This assignment is currently selected.
+              {`${t("common:currentAssignment")}`}
             </span>
           ) : (
             <button 
@@ -52,7 +56,7 @@ export default function IndividualAssignmentCard({ assignmentObject, assignmentS
                 //the id "specialStickingPoint" (yes, this is a bad variable name, I am sorry) can be found in PieChartContainer.jsx.
                 document.getElementById('specialStickingPoint').scrollIntoView({ behavior: "instant" });
               }}>
-              Select Assignment
+              {`${t("common:selectAnAssignment")}`}
             </button>
           )}
         </div>

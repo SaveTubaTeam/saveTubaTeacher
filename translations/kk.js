@@ -1,3 +1,5 @@
+import { selectAssignment } from "../redux/currentClassSlice";
+
 const kk = {
   common: {
     teacherLogin: "Мұғалімнің кіруі",
@@ -24,6 +26,7 @@ const kk = {
     logOut: "Шығу",
     assignment: "Тапсырма",
     assignments: "Тапсырмалар",
+    noAssignments: "0 Тапсырмалар...",
     grade: "Сынып",
     grades: "Сыныптар",
     showClassCode: "Сынып кодын көрсету",
@@ -34,7 +37,15 @@ const kk = {
     cancel: "Бас тарту",
     submit: "Жіберу",
     dashboard: "Басқару тақтасы",
+    selectAnAssignment: "Тапсырманы таңдаңыз",
+    upcomingAssignment: "Алдағы тапсырма",
+    pastAssignment: "Өткен тапсырмалар",
     createAssignment: "Тапсырма жасау",
+    currentAssignment: "Бұл тапсырма қазір таңдалған.",
+    lesson: "Сабақ",
+    chapter: "тарау",
+    numberOfActivities: "Әрекеттер саны",
+    dateAssigned: "Тағайындалған күні",
     preview: "Алдын ала қарау",
     create: "Жасау",
     account: "Есептік жазба",

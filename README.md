@@ -42,9 +42,12 @@ As of 2024 the savetuba.com domain is paid for by our faculty advisor Sean Vassi
 In order to deploy with Firebase Hosting, we first need to install the Firebase CLI. Follow the instructions here to install: https://firebase.google.com/docs/cli
 
     Windows:
-    npm install -g firebase-tools
-    OR
-    npx npm install -g firebase-tools
+        npm install -g firebase-tools
+        OR
+        npx npm install -g firebase-tools
+
+    Login:
+        Used savetuba email login
 
 
 To build our application bundle, run the following: 
@@ -60,6 +63,39 @@ After running you will see that a gitignored 'dist' folder has been created; thi
 ```
 firebase deploy --only hosting
 ```
+
+
+Connecting a new database environment:
+
+    Add the new database 
+        ```
+        firebase use --add
+        ```
+    Select the database and name it's alias
+
+    Ensure you have added the "authDomain" from firebase.js into Firebase console:
+        Console --> Authentication --> Settings --> Authorized Domains
+        **look at the existing domains in the console, there's two domains you have to add for 1 database
+
+
+
+Switch between databases:
+```
+firebase use production  (savetuba-t)
+or
+firebase use default   (savetuba-5e519)
+```
+
+
+Ensure you are accessing the right domain:
+    Production:
+        https://savetuba-t.web.app
+
+    Development:
+        https://savetuba-5e519.web.app/
+
+
+
 
 Documentation for the above instructions can be found here: https://firebase.google.com/docs/hosting/quickstart
 
