@@ -65,7 +65,7 @@ firebase deploy --only hosting
 ```
 
 
-Connecting a new database environment:
+# Connecting a new database environment:
 
     Add the new database 
         ```

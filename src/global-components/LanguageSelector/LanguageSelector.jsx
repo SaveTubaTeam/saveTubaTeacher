@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import "./LanguageSelector.css"
-import kkFlag from '../../assets/kz.jpeg';
+import kkFlag from '../../assets/kz.png';
 import ruFlag from '../../assets/ru.png';
 import enFlag from '../../assets/en.png';
 
