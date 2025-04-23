@@ -3,15 +3,18 @@ import "./CompletionPieChart.css"
 import { calculatePieChartStatistics } from "./calculatePieChartStatistics";
 import { useSelector } from "react-redux";
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
+import { useTranslation } from 'react-i18next'; //needed for translations
+
 
 export default function CompletionPieChart({ studentsArray }) {
   const selectedAssignment = useSelector(state => state.currentClass.selectedAssignmentObject);
   let studentCompletionStatistics = calculatePieChartStatistics(studentsArray, selectedAssignment);
+  const { t } = useTranslation(); //needed for translations
 
   const data = [
-    { name: 'Completed', value: studentCompletionStatistics.percentStudentsFullCompletion },
-    { name: 'In Progress', value: studentCompletionStatistics.percentStudentsInProgress },
-    { name: 'Not Started', value: studentCompletionStatistics.percentStudentsNotStarted },
+    { name: `${t("common:completed")}`, value: studentCompletionStatistics.percentStudentsFullCompletion }, //Completed
+    { name: `${t("common:inProgress")}`, value: studentCompletionStatistics.percentStudentsInProgress }, //In progress
+    { name: `${t("common:notStarted")}`, value: studentCompletionStatistics.percentStudentsNotStarted }, //Not started
   ];
   const COLORS = ['#5C9E59', '#D7B879', '#D88679']; //success, warning, error colors taken from index.css
 
@@ -64,14 +67,14 @@ export default function CompletionPieChart({ studentsArray }) {
 
     // Adjust the position for 'In Progress'
     let adjustedY = ey;
-    if (name === "In Progress") {
+    if (name === `${t("common:inProgress")}`) {
       adjustedY -= 20; // Move 'In Progress' text, line, and %data collectively higher
       textPosY = -17; //move just the "In Progress" text above the % data
     }
 
     // Adjust the position for 'Completed'
     // let adjustedYC = ey;
-    if (name === "Completed") {
+    if (name === `${t("common:completed")}`) {
       adjustedY += 10; // Move 'Completed' lower
     }
 

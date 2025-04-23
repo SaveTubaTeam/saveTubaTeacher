@@ -13,7 +13,7 @@ export default function PieChartContainer({ studentsArray }) {
   if(studentsArray === null) {
     content = null;
   } else if(selectedAssignment === null) {
-    content = (<h4 style={{ fontStyle: "italic" }}>No Assignment Selected</h4>);
+    content = (<h4 style={{ fontStyle: "italic" }}>{`${t("common:noAssignmentSelected")}`}</h4>); //No Assignment Selected
   } else {
     content = <CompletionPieChart studentsArray={studentsArray} />;
   }
