@@ -54,7 +54,7 @@ export default function StudentSortingOptions({ sortedStudentsArray, setSortedSt
       labelId="select-sorting-param"
       id="select-sorting-param-component"
       value={sortingParam}
-      label={`Sort By`}
+      label={`${t("common:sortBy")}`}
       onChange={(event) => setSortingParam(event.target.value)}
     >
       {/* lastName */}
