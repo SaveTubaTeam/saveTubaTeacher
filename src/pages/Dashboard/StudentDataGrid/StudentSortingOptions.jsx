@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { sortByLastName, sortByFirstName, sortByLeastCompletions, sortByMostCompletions } from "./studentSortingFunctions";
+import { useTranslation } from 'react-i18next'; //needed for translations
 
 export default function StudentSortingOptions({ sortedStudentsArray, setSortedStudentsArray, selectedAssignment }) {
   const [sortingParam, setSortingParam] = useState("lastName"); //default sorting by Last Name
+  const { t } = useTranslation(); //needed for translations
 
   useEffect(() => {
     if(sortedStudentsArray === null || selectedAssignment === null) { return; } //guard clause whilst we load
@@ -37,7 +39,8 @@ export default function StudentSortingOptions({ sortedStudentsArray, setSortedSt
         '&.Mui-focused:hover': { color: 'black' }
       }}
     >
-      {`Sort By`}
+      {/* {`Sort By`} */}
+      {`${t("common:sortBy")}`}
     </InputLabel>
     {/* see: https://stackoverflow.com/questions/51387085/change-color-of-select-components-border-and-arrow-icon-material-ui */}
     <Select
@@ -54,10 +57,14 @@ export default function StudentSortingOptions({ sortedStudentsArray, setSortedSt
       label={`Sort By`}
       onChange={(event) => setSortingParam(event.target.value)}
     >
-      <MenuItem value="lastName" sx={{ fontFamily: 'Montserrat' }}>Last Name</MenuItem>
-      <MenuItem value="firstName" sx={{ fontFamily: 'Montserrat' }}>First Name</MenuItem>
-      <MenuItem value="leastCompletions" sx={{ fontFamily: 'Montserrat' }}>Least Completions</MenuItem>
-      <MenuItem value="mostCompletions" sx={{ fontFamily: 'Montserrat' }}>Most Completions</MenuItem>
+      {/* lastName */}
+      <MenuItem value="lastName" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:lastName")}`}</MenuItem> 
+      {/* firstName */}
+      <MenuItem value="firstName" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:firstName")}`}</MenuItem>
+      {/* leastCompletions */}
+      <MenuItem value="leastCompletions" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:leastCompleted")}`}</MenuItem>
+      {/* mostCompletions */}
+      <MenuItem value="mostCompletions" sx={{ fontFamily: 'Montserrat' }}>{`${t("common:mostCompleted")}`}</MenuItem>
     </Select>
   </FormControl>
   )
