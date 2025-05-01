@@ -174,7 +174,8 @@ const CreateAssignment = () => {
         <button type="submit" className='sas' disabled={!isFormValid}>{`${t("common:create")}`}</button> {/* Create button to create the new assignment */}
         {isCreated && (
           <div>
-            Assignment created successfully!
+            {/* Assignment created successfully! */}
+            {`${t("common:assignmentCreatedSuccessfully")}`}
           </div>
         )}
       </form>

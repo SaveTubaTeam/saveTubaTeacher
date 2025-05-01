@@ -68,10 +68,14 @@ function getStudentCompletionCount(student, assignmentID) {
   const completionsArray = student.completionsArray;
   let studentCompletionCount = 0;
 
+  console.log("student: ", student)
+  console.log("assignmentID: ", assignmentID)
+
   completionsArray.forEach((completion) => {
     if(completion.completionID === undefined) { return; }
 
     if(completion.completionID.includes(assignmentID)) {
+      console.log("task: ", completion)
       studentCompletionCount++;
     }
   })

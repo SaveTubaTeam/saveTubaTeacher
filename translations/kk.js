@@ -65,6 +65,8 @@ const kk = {
     create: "Жасау",
     account: "Есептік жазба",
     dueDate: "Мерзімі:",
+    dateDue: "Төлеу күні",
+    assignmentCreatedSuccessfully: "Тапсырма сәтті жасалды!",
     help: "Көмек",
     contactSupport: "Қолдау қызметіне хабарласыңыз",
     yourPersonalAccount: "Сіздің жеке есептік жазбаңыз",

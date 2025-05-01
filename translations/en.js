@@ -64,6 +64,8 @@ const en = {
     preview: "Preview",
     create: "Create",
     dueDate: "Date due:",
+    dateDue: "Due Date",
+    assignmentCreatedSuccessfully: "Assignment created successfully!",
     account: "Account",
     help: "Help",
     contactSupport: "Contact Support",

@@ -62,6 +62,8 @@ const ru = {
     preview: "Предварительный просмотр",
     create: "Создавать",
     dueDate: "Дата выполнения:",
+    dateDue: "Срок оплаты",
+    assignmentCreatedSuccessfully: "Задание успешно создано!",
     account: "Аккаунт",
     help: "Помощь",
     contactSupport: "Связаться с поддержкой",

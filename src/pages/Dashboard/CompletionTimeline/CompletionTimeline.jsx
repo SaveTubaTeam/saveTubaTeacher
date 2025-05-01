@@ -38,7 +38,7 @@ export default function CompletionTimeline({ studentsArray }) {
         <Legend />
         <Area type="monotone" dataKey="numAssignmentsInProgressOrComplete" fill="#c6d5ee" stroke="#88a7d7" name={`${t("common:overallAssignProg")}`} /> {/* Overall Assignment Progress */}
         <Bar dataKey="numActivityCompletions" barSize={12} fill="#5C9E59" name={`${t("common:activityCompletion")}`} /> {/*Activity Completions */}
-        <ReferenceLine x={timelineData[timelineData.length - 1].day} label={{ value: "Due Date", angle: 60}} stroke="#D88679" strokeDasharray="3 3" strokeWidth={2} />
+        <ReferenceLine x={timelineData[timelineData.length - 1].day} label={{ value: `${t("common:dateDue")}`, angle: 60}} stroke="#D88679" strokeDasharray="3 3" strokeWidth={2} /> {/* Due Date */}
       </ComposedChart>
     </ResponsiveContainer>
   );
