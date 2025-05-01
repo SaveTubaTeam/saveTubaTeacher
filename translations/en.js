@@ -101,6 +101,8 @@ const en = {
     enterValidGrade: "Please enter a valid grade",
     enterClassName: "Please enter a class name",
     errorCreatingClass: "Error creating class. Please contact support.",
+    oauthAccountNoPassword: "This account uses Google or another provider and doesn't have a password to reset.",
+
   },
   success: {
     accountCreated: "Account Created. Welcome",

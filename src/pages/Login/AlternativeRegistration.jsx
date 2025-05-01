@@ -31,7 +31,7 @@ export default function AlternativeRegistration() {
       const popup = toast.loading(t("loading:creatingAccount"));
 
       try {
-         if(email.trim() === "") { throw new Error("Please enter a valid email"); }
+         if(!email || email.trim() === "") { throw new Error("Please enter a valid email"); }
          if(firstName.trim() === "") { throw new Error("Please enter a first name"); }
          if(lastName.trim() === "") { throw new Error("Please enter a last name"); }
 

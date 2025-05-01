@@ -44,6 +44,8 @@ export default function LoginPage() {
           toast.error(t("error:googlePopupBlocked"));
         } else if(error.code === "auth/network-request-failed") {
           toast.error(t("error:networkRequestFailed"));
+        } else if(error.code == "auth/user-not-found" || error.code == "auth/invalid-email"){
+          toast.error(t("error:oauthAccountNoPassword"));
         } else if(error.code === "auth/popup-closed-by-user") {
           return; //do nothing here
         } else { //catch others
